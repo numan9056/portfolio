@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Numan — Product Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,500&family=Roboto+Condensed:ital,wght@1,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t);</script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="#" class="nav__logo">
+      <img src="assets/logo.svg" alt="nümnʊ" height="34" />
+    </a>
+    <ul class="nav__links">
+      <li><a href="#" class="nav__link nav__link--active">Home</a></li>
+      <li><a href="about.html" class="nav__link">About</a></li>
+      <li><a href="portfolio.html" class="nav__link">Portfolio</a></li>
+      <li><a href="contact.html" class="nav__link">Contact</a></li>
+    </ul>
+    <button class="nav__toggle" id="theme-toggle" aria-label="Toggle theme">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <circle cx="11" cy="11" r="10" class="toggle-light" fill="#e0ddd8"/>
+        <path d="M11 1a10 10 0 0 1 0 20V1z" class="toggle-dark" fill="#444"/>
+        <circle cx="11" cy="11" r="10" class="toggle-ring" stroke="#ccc" stroke-width="1" fill="none"/>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__content">
+      <p class="hero__title">Product Designer</p>
+      <p class="hero__bio">I design digital products that turn complex problems into measurable business results. Research-led, Founder of <a href="https://mistetfunnet.no" class="hero__bio-link">MistetFunnet.no</a></p>
+    </div>
+    <div class="hero__visual">
+      <img src="assets/hero_photo.png" alt="Numan — Product Designer" class="hero__photo-img" />
+      <div class="hero__location">
+        <svg width="16" height="22" viewBox="0 0 29 41" fill="none">
+          <path d="M14.5 0C6.492 0 0 6.492 0 14.5 0 25.375 14.5 41 14.5 41S29 25.375 29 14.5C29 6.492 22.508 0 14.5 0zm0 19.5a5 5 0 1 1 0-10 5 5 0 0 1 0 10z" fill="#636363"/>
+        </svg>
+        <span>Oslo, Norway</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER + LOGOS -->
+  <div class="logos-section">
+    <div class="logos-section__line"></div>
+    <div class="logos-section__row reveal">
+      <img src="assets/logo-big.svg" alt="MistetFunnet" class="logo-img" />
+      <img src="assets/front.svg" alt="Front" class="logo-img" />
+      <img src="assets/brand4.svg" alt="Brand" class="logo-img" />
+      <img src="assets/brand3.svg" alt="Brand" class="logo-img" />
+      <img src="assets/brand2.svg" alt="Brand" class="logo-img" />
+      <img src="assets/brand1.svg" alt="Brand" class="logo-img" />
+    </div>
+  </div>
+
+  <!-- SKILLS CARDS -->
+  <section class="skills">
+    <div class="skill-card reveal">
+      <div class="skill-card__header">
+        <div class="skill-card__icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <circle cx="18" cy="18" r="16" stroke="#007891" stroke-width="2"/>
+            <circle cx="18" cy="18" r="9" stroke="#007891" stroke-width="2"/>
+            <circle cx="18" cy="18" r="3" fill="#007891"/>
+            <line x1="26" y1="10" x2="30" y2="6" stroke="#007891" stroke-width="2" stroke-linecap="round"/>
+            <line x1="28" y1="8" x2="22" y2="14" stroke="#007891" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="skill-card__title">Startup Leadership</h3>
+      </div>
+      <p class="skill-card__desc">Focused on solving real world problems, Founder of MistetFunnet, building Norway's lost-and-found infrastructure connecting transport, hospitality, and public services.</p>
+    </div>
+    <div class="skill-card reveal" data-delay="1">
+      <div class="skill-card__header">
+        <div class="skill-card__icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <rect x="2" y="2" width="13" height="13" rx="2" stroke="#007891" stroke-width="2"/>
+            <rect x="21" y="2" width="13" height="13" rx="2" stroke="#007891" stroke-width="2"/>
+            <rect x="2" y="21" width="13" height="13" rx="2" stroke="#007891" stroke-width="2"/>
+            <rect x="21" y="21" width="13" height="13" rx="2" stroke="#007891" stroke-width="2"/>
+          </svg>
+        </div>
+        <h3 class="skill-card__title">Design Systems</h3>
+      </div>
+      <p class="skill-card__desc">Reusable patterns, standards, and decision frameworks that scale across products and teams.</p>
+    </div>
+    <div class="skill-card reveal" data-delay="2">
+      <div class="skill-card__header">
+        <div class="skill-card__icon">
+          <svg width="40" height="28" viewBox="0 0 40 28" fill="none">
+            <path d="M1 20 L7 8 L11 15 L15 10 L19 22 L24 4 L29 14 L33 7 L39 12" stroke="#007891" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="skill-card__title">AI-Assisted Code</h3>
+      </div>
+      <p class="skill-card__desc">Leveraging AI to accelerate early stage products into real world testing to gather essential human feedback.</p>
+    </div>
+  </section>
+
+  <!-- CASE STUDIES -->
+  <section class="cases" id="portfolio">
+
+    <header class="cases__header reveal">
+      <p class="cases__eyebrow">Selected Work</p>
+      <h2 class="cases__heading">Case Studies</h2>
+    </header>
+
+    <!-- Featured: MistetFunnet -->
+    <article class="case case--featured case--peach reveal">
+      <div class="case__info">
+        <div class="case__tags">
+          <span class="case__tag">Product Strategy</span>
+          <span class="case__tag">UX Research</span>
+          <span class="case__tag">SaaS</span>
+        </div>
+        <h3 class="case__name">MistetFunnet.no</h3>
+        <p class="case__pitch">Norway's Lost &amp; Found Platform</p>
+        <p class="case__desc">Built from zero to launch — full product lifecycle from user research and service design to SaaS architecture, connecting transport, hospitality, and public services across Norway.</p>
+        <div class="case__meta">
+          <span class="case__year">2023 — Present</span>
+          <a href="https://mistetfunnet.no" class="case__cta" target="_blank" rel="noopener">Visit Live ↗</a>
+        </div>
+      </div>
+      <div class="case__mockup">
+        <div class="browser">
+          <div class="browser__bar">
+            <div class="browser__dots">
+              <span style="background:#ff5f57"></span>
+              <span style="background:#febc2e"></span>
+              <span style="background:#28c840"></span>
+            </div>
+            <div class="browser__url">mistetfunnet.no / dashboard</div>
+          </div>
+          <div class="browser__body">
+            <div class="ui__nav">
+              <div class="ui__logo-block"></div>
+              <div class="ui__nav-r">
+                <div class="ui__bar ui__bar--sm"></div>
+                <div class="ui__bar ui__bar--sm"></div>
+                <div class="ui__bar ui__bar--sm"></div>
+                <div class="ui__pill ui__pill--teal">Report Item</div>
+              </div>
+            </div>
+            <div class="ui__search-hero">
+              <div class="ui__bar ui__bar--xl"></div>
+              <div class="ui__bar ui__bar--lg"></div>
+              <div class="ui__search-row">
+                <div class="ui__search-input"></div>
+                <div class="ui__search-btn"></div>
+              </div>
+            </div>
+            <div class="ui__items">
+              <div class="ui__item">
+                <div class="ui__thumb" style="background:#d6e7e1"></div>
+                <div class="ui__item-text">
+                  <div class="ui__bar ui__bar--md"></div>
+                  <div class="ui__bar ui__bar--sm" style="opacity:.5"></div>
+                </div>
+                <div class="ui__badge" style="background:#d6e7e1;color:#007891">Found</div>
+              </div>
+              <div class="ui__item">
+                <div class="ui__thumb" style="background:#fbece5"></div>
+                <div class="ui__item-text">
+                  <div class="ui__bar ui__bar--lg"></div>
+                  <div class="ui__bar ui__bar--sm" style="opacity:.5"></div>
+                </div>
+                <div class="ui__badge" style="background:#f4f1ea;color:#636363">Looking</div>
+              </div>
+              <div class="ui__item">
+                <div class="ui__thumb" style="background:#ede9f7"></div>
+                <div class="ui__item-text">
+                  <div class="ui__bar ui__bar--md"></div>
+                  <div class="ui__bar ui__bar--sm" style="opacity:.5"></div>
+                </div>
+                <div class="ui__badge" style="background:#e5f2e9;color:#2a6e3f">Claimed</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Grid row -->
+    <div class="cases__row">
+
+      <!-- Design System -->
+      <article class="case case--lavender reveal">
+        <div class="case__info">
+          <div class="case__tags">
+            <span class="case__tag">Design Systems</span>
+            <span class="case__tag">Figma</span>
+          </div>
+          <h3 class="case__name">UI Design System</h3>
+          <p class="case__pitch">Component Library &amp; Tokens</p>
+          <p class="case__desc">Scalable component architecture and design tokens enabling consistent product experience across all surfaces — built for teams, not just projects.</p>
+          <div class="case__meta">
+            <span class="case__year">2024</span>
+            <span class="case__cta case__cta--muted">Coming Soon</span>
+          </div>
+        </div>
+        <div class="dsv">
+          <div class="dsv__row">
+            <div class="dsv__btn dsv__btn--filled">Button</div>
+            <div class="dsv__btn dsv__btn--outline">Button</div>
+            <div class="dsv__chip">Tag</div>
+          </div>
+          <div class="dsv__input-row">
+            <div class="dsv__label-line"></div>
+            <div class="dsv__field"><div class="dsv__cursor"></div></div>
+          </div>
+          <div class="dsv__swatches">
+            <div class="dsv__swatch" style="background:#007891" title="Teal"></div>
+            <div class="dsv__swatch" style="background:#d6e7e1" title="Mint"></div>
+            <div class="dsv__swatch" style="background:#f4f1ea" title="Beige"></div>
+            <div class="dsv__swatch" style="background:#636363" title="Gray"></div>
+            <div class="dsv__swatch" style="background:#000" title="Black"></div>
+          </div>
+          <div class="dsv__card-row">
+            <div class="dsv__mini-card">
+              <div class="dsv__mini-img" style="background:#d6e7e1"></div>
+              <div class="dsv__mini-line"></div>
+              <div class="dsv__mini-line dsv__mini-line--sm"></div>
+            </div>
+            <div class="dsv__mini-card">
+              <div class="dsv__mini-img" style="background:#fbece5"></div>
+              <div class="dsv__mini-line"></div>
+              <div class="dsv__mini-line dsv__mini-line--sm"></div>
+            </div>
+            <div class="dsv__mini-card">
+              <div class="dsv__mini-img" style="background:#f4f1ea"></div>
+              <div class="dsv__mini-line"></div>
+              <div class="dsv__mini-line dsv__mini-line--sm"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Master Thesis -->
+      <article class="case case--mint reveal" data-delay="1">
+        <div class="case__info">
+          <div class="case__tags">
+            <span class="case__tag">UX Research</span>
+            <span class="case__tag">Service Design</span>
+          </div>
+          <h3 class="case__name">Digital Service Design</h3>
+          <p class="case__pitch">Master's Thesis — HVO 2026</p>
+          <p class="case__desc">Human-centred research exploring how digital services bridge gaps in public infrastructure — combining interviews, service blueprinting, and iterative usability testing.</p>
+          <div class="case__meta">
+            <span class="case__year">2025 — 2026</span>
+            <span class="case__cta case__cta--muted">Coming Soon</span>
+          </div>
+        </div>
+        <div class="rsv">
+          <div class="rsv__track">
+            <div class="rsv__step">
+              <div class="rsv__dot"></div>
+              <div class="rsv__num">01</div>
+              <div class="rsv__label">Discover</div>
+            </div>
+            <div class="rsv__line"></div>
+            <div class="rsv__step">
+              <div class="rsv__dot"></div>
+              <div class="rsv__num">02</div>
+              <div class="rsv__label">Define</div>
+            </div>
+            <div class="rsv__line"></div>
+            <div class="rsv__step">
+              <div class="rsv__dot"></div>
+              <div class="rsv__num">03</div>
+              <div class="rsv__label">Design</div>
+            </div>
+            <div class="rsv__line"></div>
+            <div class="rsv__step">
+              <div class="rsv__dot"></div>
+              <div class="rsv__num">04</div>
+              <div class="rsv__label">Validate</div>
+            </div>
+          </div>
+          <div class="rsv__methods">
+            <span class="rsv__method">User Interviews</span>
+            <span class="rsv__method">Service Blueprint</span>
+            <span class="rsv__method">Usability Testing</span>
+            <span class="rsv__method">Journey Mapping</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- CURRENTLY -->
+  <section class="currently">
+    <p class="currently__label reveal">CURRENTLY</p>
+    <h2 class="currently__heading reveal" data-delay="1">What I'm up to</h2>
+    <div class="currently__grid">
+      <div class="currently__item reveal">
+        <div class="currently__icon">
+          <!-- grommet-icons:grow -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 16V7m0 4c0-3 0-6-7-6c0 3 0 6 7 6Zm-8 5h16m-2 0l-2 7H8l-2-7m6-9c0-3 0-6 7-6c0 3 0 6-7 6Z"/>
+          </svg>
+        </div>
+        <p class="currently__text">Growing <strong>MistetFunnet.no</strong> in Norwegian market</p>
+      </div>
+      <div class="currently__item reveal" data-delay="1">
+        <div class="currently__icon">
+          <!-- tdesign:education-filled -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.835 8.5L12 .807L.165 8.5L12 16.192l8-5.2V16h2V9.693z"/>
+            <path d="M5 17.5v-3.665l7 4.55l7-4.55V17.5c0 1.47-1.014 2.615-2.253 3.338C15.483 21.576 13.802 22 12 22s-3.482-.424-4.747-1.162C6.014 20.115 5 18.97 5 17.5"/>
+          </svg>
+        </div>
+        <p class="currently__text">Finished a <strong>Master's Degree</strong> June 2026 at HVO</p>
+      </div>
+      <div class="currently__item reveal" data-delay="2">
+        <div class="currently__icon">
+          <!-- twemoji:flag-norway -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="38" height="28" viewBox="0 0 40 29">
+            <rect width="40" height="29" rx="2" fill="#EF2B2D"/>
+            <rect x="10" width="6" height="29" fill="#002868"/>
+            <rect y="11" width="40" height="7" fill="#002868"/>
+            <rect x="11" width="4" height="29" fill="#fff"/>
+            <rect y="12" width="40" height="5" fill="#fff"/>
+          </svg>
+        </div>
+        <p class="currently__text">Learning <strong>Bokmål Norsk</strong> (A2 → B1)</p>
+      </div>
+      <div class="currently__item reveal" data-delay="3">
+        <div class="currently__icon">
+          <!-- material-symbols-light:coffee -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M11.25 17.23q-2.579 0-4.414-1.729Q5 13.771 5 11.231V5q0-.402.299-.701T6 4h12.25q1.142 0 1.946.766Q21 5.53 21 6.654q0 1.18-.794 2.013T18.25 9.5h-.942v1.73q0 2.503-1.769 4.252T11.25 17.23M6 8.5h10.308V5H6zm11.308 0h.942q.74 0 1.245-.543T20 6.654q0-.702-.524-1.178T18.25 5h-.942zM5 20v-1h14v1z"/>
+          </svg>
+        </div>
+        <p class="currently__text">Drinking far too much filter <strong>coffee</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="footer-divider"></div>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="contact">
+    <div class="footer__inner reveal">
+      <p class="footer__heading">Let's Connect</p>
+      <p class="footer__sub">Feel free to reach out for collaborations or just a friendly hello</p>
+      <a href="mailto:numan@hellonuman.com" class="footer__email">numan@hellonuman.com</a>
+      <div class="footer__socials">
+        <a href="#" class="footer__social" aria-label="Facebook">
+          <svg width="33" height="33" viewBox="0 0 33 33" fill="none">
+            <path d="M18 33V18h5l1-6h-6v-3.3C18 7 18.5 6 21 6h3V0s-1.5-.2-3.8-.2C13.5.8 11 4 11 9.5V12H6v6h5v15h7z" fill="#636363"/>
+          </svg>
+        </a>
+        <a href="#" class="footer__social" aria-label="Instagram">
+          <svg width="33" height="33" viewBox="0 0 33 33" fill="none">
+            <rect x="2" y="2" width="29" height="29" rx="8" stroke="#636363" stroke-width="2.2"/>
+            <circle cx="16.5" cy="16.5" r="5.5" stroke="#636363" stroke-width="2.2"/>
+            <circle cx="25" cy="8" r="2" fill="#636363"/>
+          </svg>
+        </a>
+        <a href="#" class="footer__social" aria-label="LinkedIn">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="2" y="2" width="28" height="28" rx="6" stroke="#636363" stroke-width="2.2"/>
+            <circle cx="10" cy="10" r="1.5" fill="#636363"/>
+            <path d="M10 14v9" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M15 23v-5c0-2.2 1.2-3.5 3.5-3.5S22 15.8 22 18v5" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M15 14v9" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <a href="#" class="footer__social" aria-label="Behance">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="2" y="2" width="28" height="28" rx="6" stroke="#636363" stroke-width="2.2"/>
+            <path d="M9 9h6c2.5 0 4 1.2 4 3.2s-1.5 3.3-3.5 3.3H9V9z" stroke="#636363" stroke-width="1.8"/>
+            <path d="M9 16h7c2.5 0 4 1.2 4 3.4S18.5 23 16 23H9V16z" stroke="#636363" stroke-width="1.8"/>
+            <path d="M21 11h6" stroke="#636363" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="animations.js"></script>
+  <script>if(window.netlifyIdentity){window.netlifyIdentity.on("init",function(u){if(!u){window.netlifyIdentity.on("login",function(){document.location.href="/admin/";});}})}</script>
+</body>
+</html>

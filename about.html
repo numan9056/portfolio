@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Numan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,500&family=Roboto+Condensed:ital,wght@1,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+
+    /* ── ABOUT HERO PHOTO ──────────────────────────────────── */
+    .a-hero {
+      padding: 32px 48px 0;
+    }
+
+    .a-hero__img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .a-hero__caption {
+      font-family: 'Roboto', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: #888;
+      line-height: 1.5;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    /* ── BIO ────────────────────────────────────────────────── */
+    .a-bio {
+      padding: 48px 48px 0;
+    }
+
+    .a-bio__statement {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 700;
+      font-size: 44px;
+      line-height: 58px;
+      color: #111;
+      margin-bottom: 32px;
+    }
+
+    .a-bio__body {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 28px;
+      color: #636363;
+    }
+
+    .a-bio__body p + p {
+      margin-top: 20px;
+    }
+
+    /* ── EXPERIENCE + EDUCATION ─────────────────────────────── */
+    .a-work {
+      padding: 56px 48px 0;
+    }
+
+    /* Tab headings */
+    .a-work__heads {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 0;
+    }
+
+    .a-work__head {
+      flex: 1;
+      cursor: pointer;
+      user-select: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .a-work__label {
+      font-family: 'Roboto', sans-serif;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 1.1;
+      transition: color 0.25s ease;
+    }
+
+    /* Inactive tab — both label and sublabel muted */
+    .a-work__head.tab-inactive .a-work__label   { color: #ccc !important; }
+    .a-work__head.tab-inactive .a-work__sublabel { color: #ddd !important; }
+
+    .a-work__label--exp  { color: #007891; }
+    .a-work__label--edu  { color: #007891; }
+
+    .a-work__sublabel {
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #aaa;
+      line-height: 1.4;
+      margin-top: 6px;
+      display: block;
+    }
+
+    /* Indicator line — switches based on active tab */
+    .a-work__rule {
+      height: 2px;
+      margin-top: 16px;
+      margin-bottom: 0;
+      transition: background 0.3s ease;
+    }
+    /* Experience active (default): gray left, muted right */
+    .a-work__rule.rule--exp {
+      background: linear-gradient(to right, #007891 50%, #e0ddd8 50%);
+    }
+    .a-work__rule.rule--edu {
+      background: linear-gradient(to right, #e0ddd8 50%, #007891 50%);
+    }
+
+    /* Education logo (same style as experience logo) */
+    .edu-row__logo {
+      height: 56px;
+      display: flex;
+      align-items: center;
+    }
+
+    .edu-row__logo img {
+      max-height: 56px;
+      max-width: 130px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* ── EXPERIENCE ENTRIES ─────────────────────────────────── */
+    .exp-list {
+      margin-top: 0;
+    }
+
+    .exp-row {
+      display: grid;
+      grid-template-columns: 160px 40px 1fr auto;
+      gap: 0 0;
+      align-items: start;
+      padding: 28px 0;
+      border-bottom: 1px solid #e8e5e0;
+    }
+
+    .exp-row__left {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-right: 20px;
+    }
+
+    .exp-row__logo {
+      height: 36px;
+      display: flex;
+      align-items: center;
+    }
+
+    .exp-row__logo img {
+      max-height: 36px;
+      max-width: 130px;
+      width: auto;
+      object-fit: contain;
+      opacity: 1;
+    }
+
+    .exp-row__dates {
+      font-family: 'Roboto', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: #636363;
+      line-height: 1.4;
+    }
+
+    /* spacer column for visual breathing room */
+    .exp-row__gap {}
+
+    .exp-row__main {}
+
+    .exp-row__role {
+      font-family: 'Roboto', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #000;
+      line-height: 1.3;
+    }
+
+    .exp-row__company {
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #636363;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .exp-row__desc {
+      font-family: 'Roboto', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: #636363;
+      line-height: 20px;
+    }
+
+    .exp-row__loc {
+      font-family: 'Roboto', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: #000;
+      white-space: nowrap;
+      padding-left: 20px;
+      padding-top: 4px;
+    }
+
+    /* ── EDUCATION ENTRIES ──────────────────────────────────── */
+    .edu-list {
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    .edu-row {
+      display: grid;
+      grid-template-columns: 160px 40px 1fr auto;
+      gap: 0 0;
+      align-items: start;
+      padding: 28px 0;
+      border-bottom: 1px solid #e8e5e0;
+    }
+
+    .edu-row__left {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-right: 20px;
+    }
+
+    .edu-row__dates {
+      font-family: 'Roboto', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: #636363;
+    }
+
+    .edu-row__degree {
+      font-family: 'Roboto', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #000;
+      line-height: 1.3;
+    }
+
+    .edu-row__school {
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #636363;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .edu-row__thesis {
+      font-family: 'Roboto', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: #636363;
+      line-height: 20px;
+      font-style: italic;
+    }
+
+    .edu-row__loc {
+      font-family: 'Roboto', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: #000;
+      white-space: nowrap;
+      padding-left: 20px;
+      padding-top: 4px;
+    }
+
+    /* ── BEYOND DESIGN ──────────────────────────────────────── */
+    .a-beyond {
+      padding: 56px 48px 0;
+    }
+
+    .a-beyond__eyebrow {
+      font-family: 'Roboto', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: #007891;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-align: center;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .a-beyond__heading {
+      font-family: 'Roboto', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #000;
+      text-align: center;
+      line-height: 1.2;
+      margin-bottom: 28px;
+    }
+
+    .a-beyond__combined {
+      width: 60%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+      margin: 0 auto;
+    }
+
+
+  </style>
+  <script>var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t);</script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav__logo">
+      <img src="assets/logo.svg" alt="nümnʊ" height="34" />
+    </a>
+    <ul class="nav__links">
+      <li><a href="index.html" class="nav__link">Home</a></li>
+      <li><a href="about.html" class="nav__link nav__link--active">About</a></li>
+      <li><a href="portfolio.html" class="nav__link">Portfolio</a></li>
+      <li><a href="contact.html" class="nav__link">Contact</a></li>
+    </ul>
+    <button class="nav__toggle" id="theme-toggle" aria-label="Toggle theme">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <circle cx="11" cy="11" r="10" class="toggle-light" fill="#e0ddd8"/>
+        <path d="M11 1a10 10 0 0 1 0 20V1z" class="toggle-dark" fill="#444"/>
+        <circle cx="11" cy="11" r="10" class="toggle-ring" stroke="#ccc" stroke-width="1" fill="none"/>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- HERO PHOTO -->
+  <section class="a-hero">
+    <img src="assets/about-hero.png" alt="Finishing My painting — Crazy Astronaut, 2026" class="a-hero__img" />
+    <p class="a-hero__caption">Photo : Finishing My painting ( crazy Astronaut 2026 )</p>
+  </section>
+
+  <!-- BIO -->
+  <section class="a-bio">
+    <p class="a-bio__statement reveal">I'm Numan — a product designer who grew up in Dhaka&nbsp;🇧🇩 and now lives in Oslo&nbsp;🇳🇴.</p>
+    <div class="a-bio__body reveal" data-delay="1">
+      <p>I work end-to-end — research, UX, UI, and the business thinking behind them.</p>
+      <p>Right now I'm building MistetFunnet, Norway's first AI-assisted lost-and-found infrastructure. I founded it after losing something in Ålesund and realising the country still runs on Facebook groups for this. Pre-seed funded, first B2B partner signed, kommune pipeline next.</p>
+      <p>Before that I designed campaigns for Daraz (Alibaba Group), built UI systems for Norwegian and EU clients, and spent two years animating explainers in Dhaka. I'm finishing a Master's at Høgskulen i Volda in 2026. My thesis applies human-centered design to rights-advocacy work in Bangladesh.</p>
+      <p>I work best in small teams that ship.</p>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE + EDUCATION -->
+  <section class="a-work">
+
+    <!-- Side-by-side headings exactly as in Figma -->
+    <div class="a-work__heads reveal">
+      <div class="a-work__head" data-tab="exp-list" id="tab-exp">
+        <h2 class="a-work__label a-work__label--exp">Experience</h2>
+        <span class="a-work__sublabel">2020 — Present</span>
+      </div>
+      <div class="a-work__head tab-inactive" data-tab="edu-list" id="tab-edu">
+        <h2 class="a-work__label a-work__label--edu">Education</h2>
+        <span class="a-work__sublabel">2016 — 2026</span>
+      </div>
+    </div>
+
+    <div class="a-work__rule rule--exp" id="work-rule"></div>
+
+    <!-- ── EXPERIENCE ENTRIES ── -->
+    <div class="exp-list" id="exp-list">
+
+      <div class="exp-row reveal">
+        <div class="exp-row__left">
+          <div class="exp-row__logo"><img src="assets/logo-big.svg" alt="MistetFunnet" /></div>
+          <div class="exp-row__dates">2025 — Present</div>
+        </div>
+        <div class="exp-row__gap"></div>
+        <div class="exp-row__main">
+          <p class="exp-row__role">Founder &amp; Product Designer</p>
+          <p class="exp-row__company">MistetFunnet</p>
+          <p class="exp-row__desc">Originated the concept and led research through stakeholder interviews and surveys, shaping the information architecture and core task flows. Designed the full product across SaaS dashboard, mobile, and web — including a Figma design system — and shipped the working build in React Native and Supabase. Secured Rebel (Oslo) as first design partner and prepared the platform for commercial launch with GDPR and DPIA documentation.</p>
+        </div>
+        <div class="exp-row__loc">Oslo, Norway</div>
+      </div>
+
+      <div class="exp-row reveal">
+        <div class="exp-row__left">
+          <div class="exp-row__logo"><img src="assets/front.svg" alt="Relentlessly AS" /></div>
+          <div class="exp-row__dates">Jan 2025 — Present</div>
+        </div>
+        <div class="exp-row__gap"></div>
+        <div class="exp-row__main">
+          <p class="exp-row__role">UX Designer</p>
+          <p class="exp-row__company">Relentlessly AS</p>
+          <p class="exp-row__desc">Provided ongoing freelance design support to a Norwegian early-stage venture studio across visual identity, presentation design, and concept-stage product UI.</p>
+        </div>
+        <div class="exp-row__loc">Remote, Norway</div>
+      </div>
+
+      <div class="exp-row reveal">
+        <div class="exp-row__left">
+          <div class="exp-row__logo"><img src="assets/brand4.svg" alt="Jets Vacuum AS" /></div>
+          <div class="exp-row__dates">Apr 2024 – May 2024</div>
+        </div>
+        <div class="exp-row__gap"></div>
+        <div class="exp-row__main">
+          <p class="exp-row__role">Masters Internship</p>
+          <p class="exp-row__company">Jets Vacuum AS</p>
+          <p class="exp-row__desc">Contributed to reusable UI component systems supporting internal production workflows; produced marketing animation content for internal and client-facing channels.</p>
+        </div>
+        <div class="exp-row__loc">Hareid, Norway</div>
+      </div>
+
+      <div class="exp-row reveal">
+        <div class="exp-row__left">
+          <div class="exp-row__logo"><img src="assets/brand3.svg" alt="Reviner" /></div>
+          <div class="exp-row__dates">Mar 2023 – Aug 2023</div>
+        </div>
+        <div class="exp-row__gap"></div>
+        <div class="exp-row__main">
+          <p class="exp-row__role">UI/UX Designer</p>
+          <p class="exp-row__company">Reviner</p>
+          <p class="exp-row__desc">Delivered UI/UX work across five client projects including WordPress marketing sites and SaaS dashboard interfaces; produced Figma prototypes and developer-ready handoff specifications.</p>
+        </div>
+        <div class="exp-row__loc">Dhaka, BD</div>
+      </div>
+
+      <div class="exp-row reveal">
+        <div class="exp-row__left">
+          <div class="exp-row__logo"><img src="assets/brand2.svg" alt="Daraz" /></div>
+          <div class="exp-row__dates">Oct 2022 – Feb 2023</div>
+        </div>
+        <div class="exp-row__gap"></div>
+        <div class="exp-row__main">
+          <p class="exp-row__role">Digital Designer</p>
+          <p class="exp-row__company">Daraz (Alibaba Group)</p>
+          <p class="exp-row__desc">Owned visual hierarchy, responsive layout, and interaction patterns across high-traffic e-commerce surfaces on weekly release cycles.</p>
+        </div>
+        <div class="exp-row__loc">Dhaka, BD</div>
+      </div>
+
+      <div class="exp-row reveal">
+        <div class="exp-row__left">
+          <div class="exp-row__logo"><img src="assets/brand1.svg" alt="Immersion Studio" /></div>
+          <div class="exp-row__dates">Jan 2020 – Sep 2022</div>
+        </div>
+        <div class="exp-row__gap"></div>
+        <div class="exp-row__main">
+          <p class="exp-row__role">Motion Animator</p>
+          <p class="exp-row__company">Immersion Studio</p>
+          <p class="exp-row__desc">Produced 2D motion content for education, fintech, and e-commerce clients; managed full production from storyboard through delivery.</p>
+        </div>
+        <div class="exp-row__loc">Dhaka, BD</div>
+      </div>
+
+    </div>
+
+    <!-- ── EDUCATION ENTRIES ── -->
+    <div class="edu-list" id="edu-list" style="display:none">
+
+      <div class="edu-row reveal">
+        <div class="edu-row__left">
+          <div class="edu-row__logo">
+            <img src="assets/edu-hvo.png" alt="Høgskulen i Volda" />
+          </div>
+          <div class="edu-row__dates">2024 — 2026</div>
+        </div>
+        <div class="exp-row__gap"></div>
+        <div class="exp-row__main">
+          <p class="edu-row__degree">Master of Arts, Media Practice (2023–2026)</p>
+          <p class="edu-row__school">Høgskulen i Volda (HVO), Norway</p>
+          <p class="edu-row__thesis">Thesis: InclusiveLearnBD — designing a bilingual digital platform for inclusive-education rights advocacy in Bangladesh. Grounded in human-centred design: 13 stakeholder interviews, analysis of 25 policy documents, usability evaluation (SUS 72.3), and a WCAG 2.1 AA accessibility audit.</p>
+        </div>
+        <div class="edu-row__loc">Volda, Norway</div>
+      </div>
+
+      <div class="edu-row reveal" data-delay="1">
+        <div class="edu-row__left">
+          <div class="edu-row__logo">
+            <img src="assets/edu-uct.png" alt="Shanto-Marium University of Creative Technology" />
+          </div>
+          <div class="edu-row__dates">2016 — 2021</div>
+        </div>
+        <div class="exp-row__gap"></div>
+        <div class="exp-row__main">
+          <p class="edu-row__degree">Bachelor of Arts, Graphic Design &amp; Multimedia (2016–2021)</p>
+          <p class="edu-row__school">Shanto-Marium University of Creative Technology, Dhaka</p>
+          <p class="edu-row__thesis">Foundation in visual design across branding, typography, illustration, and motion — the craft base I still draw on in product work today.</p>
+        </div>
+        <div class="edu-row__loc">Dhaka, BD</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BEYOND DESIGN -->
+  <section class="a-beyond">
+    <span class="a-beyond__eyebrow reveal">MY Activity</span>
+    <h2 class="a-beyond__heading reveal" data-delay="1">Beyond Design</h2>
+
+    <img src="assets/beyond-design.png" alt="Beyond Design — artworks by Numan" class="a-beyond__combined reveal" data-delay="2" />
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="footer-divider"></div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner reveal">
+      <p class="footer__heading">Let's Connect</p>
+      <p class="footer__sub">Feel free to reach out for collaborations or just a friendly hello</p>
+      <a href="mailto:numan@hellonuman.com" class="footer__email">numan@hellonuman.com</a>
+      <div class="footer__socials">
+        <a href="#" class="footer__social" aria-label="Facebook">
+          <svg width="33" height="33" viewBox="0 0 33 33" fill="none">
+            <path d="M18 33V18h5l1-6h-6v-3.3C18 7 18.5 6 21 6h3V0s-1.5-.2-3.8-.2C13.5.8 11 4 11 9.5V12H6v6h5v15h7z" fill="#636363"/>
+          </svg>
+        </a>
+        <a href="#" class="footer__social" aria-label="Instagram">
+          <svg width="33" height="33" viewBox="0 0 33 33" fill="none">
+            <rect x="2" y="2" width="29" height="29" rx="8" stroke="#636363" stroke-width="2.2"/>
+            <circle cx="16.5" cy="16.5" r="5.5" stroke="#636363" stroke-width="2.2"/>
+            <circle cx="25" cy="8" r="2" fill="#636363"/>
+          </svg>
+        </a>
+        <a href="#" class="footer__social" aria-label="LinkedIn">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="2" y="2" width="28" height="28" rx="6" stroke="#636363" stroke-width="2.2"/>
+            <circle cx="10" cy="10" r="1.5" fill="#636363"/>
+            <path d="M10 14v9" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M15 23v-5c0-2.2 1.2-3.5 3.5-3.5S22 15.8 22 18v5" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M15 14v9" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <a href="#" class="footer__social" aria-label="Behance">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="2" y="2" width="28" height="28" rx="6" stroke="#636363" stroke-width="2.2"/>
+            <path d="M9 9h6c2.5 0 4 1.2 4 3.2s-1.5 3.3-3.5 3.3H9V9z" stroke="#636363" stroke-width="1.8"/>
+            <path d="M9 16h7c2.5 0 4 1.2 4 3.4S18.5 23 16 23H9V16z" stroke="#636363" stroke-width="1.8"/>
+            <path d="M21 11h6" stroke="#636363" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="animations.js"></script>
+  <script>
+    (function () {
+      var tabs   = document.querySelectorAll('.a-work__head[data-tab]');
+      var rule   = document.getElementById('work-rule');
+      var expTab = document.getElementById('tab-exp');
+      var eduTab = document.getElementById('tab-edu');
+      var expList = document.getElementById('exp-list');
+      var eduList = document.getElementById('edu-list');
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          var target = tab.dataset.tab;
+          var isEdu  = target === 'edu-list';
+
+          expList.style.display = isEdu ? 'none' : '';
+          eduList.style.display = isEdu ? '' : 'none';
+
+          expTab.classList.toggle('tab-inactive',  isEdu);
+          eduTab.classList.toggle('tab-inactive', !isEdu);
+
+          rule.className = 'a-work__rule ' + (isEdu ? 'rule--edu' : 'rule--exp');
+        });
+      });
+    })();
+  </script>
+  <script>if(window.netlifyIdentity){window.netlifyIdentity.on("init",function(u){if(!u){window.netlifyIdentity.on("login",function(){document.location.href="/admin/";});}})}</script>
+</body>
+</html>

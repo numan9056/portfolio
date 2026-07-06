@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Numan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,500&family=Roboto+Condensed:ital,wght@1,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+
+    /* ── PAGE HEADER ─────────────────────────────────────────── */
+    .pg-header {
+      padding: 72px 48px 48px;
+      border-bottom: 1px solid #e4e2de;
+    }
+
+    .pg-header__eyebrow {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #007891;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .pg-header__title {
+      font-size: 46px;
+      font-weight: 700;
+      color: #111;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .pg-header__sub {
+      font-size: 16px;
+      color: #636363;
+      max-width: 480px;
+      line-height: 1.6;
+    }
+
+    /* ── FILTER TABS ─────────────────────────────────────────── */
+    .pg-filter {
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid #e4e2de;
+      flex-wrap: wrap;
+    }
+
+    .pg-filter__btn {
+      font-family: 'Roboto', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: #636363;
+      background: transparent;
+      border: 1.5px solid #e0ddd8;
+      border-radius: 100px;
+      padding: 7px 18px;
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+    }
+
+    .pg-filter__btn:hover {
+      border-color: #007891;
+      color: #007891;
+    }
+
+    .pg-filter__btn.active {
+      background: #007891;
+      border-color: #007891;
+      color: #fff;
+    }
+
+    .pg-filter__count {
+      font-size: 11px;
+      margin-left: 5px;
+      opacity: 0.7;
+    }
+
+    /* ── MASONRY GRID ────────────────────────────────────────── */
+    .pg-grid {
+      padding: 32px 48px 64px;
+      columns: 3;
+      column-gap: 14px;
+    }
+
+    /* ── PORTFOLIO ITEM ──────────────────────────────────────── */
+    .pg-item {
+      break-inside: avoid;
+      margin-bottom: 14px;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      display: block;
+      text-decoration: none;
+      background: #f2f1ee;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1),
+                  box-shadow 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .pg-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.12);
+    }
+
+    /* Image / placeholder area */
+    .pg-item__img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* Placeholder — used when no image uploaded yet */
+    .pg-item__placeholder {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pg-item__placeholder svg {
+      opacity: 0.18;
+      width: 48px;
+      height: 48px;
+    }
+
+    /* Aspect ratios */
+    .pg-item--landscape .pg-item__placeholder { aspect-ratio: 4/3; }
+    .pg-item--portrait  .pg-item__placeholder { aspect-ratio: 3/4; }
+    .pg-item--square    .pg-item__placeholder { aspect-ratio: 1/1; }
+    .pg-item--wide      .pg-item__placeholder { aspect-ratio: 16/9; }
+    .pg-item--tall      .pg-item__placeholder { aspect-ratio: 2/3; }
+
+    /* Same ratios for real <img> tags */
+    .pg-item--landscape .pg-item__img { aspect-ratio: 4/3; }
+    .pg-item--portrait  .pg-item__img { aspect-ratio: 3/4; }
+    .pg-item--square    .pg-item__img { aspect-ratio: 1/1; }
+    .pg-item--wide      .pg-item__img { aspect-ratio: 16/9; }
+    .pg-item--tall      .pg-item__img { aspect-ratio: 2/3; }
+
+    /* Category colour themes */
+    .pg-item--ui       .pg-item__placeholder { background: linear-gradient(135deg, #d6edf3 0%, #b8d8e4 100%); }
+    .pg-item--graphic  .pg-item__placeholder { background: linear-gradient(135deg, #fce8df 0%, #f5cfc0 100%); }
+    .pg-item--branding .pg-item__placeholder { background: linear-gradient(135deg, #e8e4f5 0%, #d4cde8 100%); }
+    .pg-item--campaign .pg-item__placeholder { background: linear-gradient(135deg, #dff0e5 0%, #c5e0cf 100%); }
+
+    /* Hover overlay */
+    .pg-item__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,10,0.72);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .pg-item:hover .pg-item__overlay { opacity: 1; }
+
+    .pg-item__overlay-title {
+      font-family: 'Roboto', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .pg-item__overlay-tag {
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .pg-item__overlay-cta {
+      margin-top: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.5);
+      border-radius: 100px;
+      padding: 5px 14px;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .pg-item:hover .pg-item__overlay-cta {
+      background: #007891;
+      border-color: #007891;
+    }
+
+    /* Info bar below image (always visible) */
+    .pg-item__info {
+      padding: 14px 16px;
+      background: #fff;
+    }
+
+    .pg-item__title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pg-item__cat {
+      font-size: 11px;
+      font-weight: 500;
+      color: #007891;
+      letter-spacing: 0.5px;
+    }
+
+    /* Filter hidden state */
+    .pg-item.is-hidden {
+      display: none;
+    }
+
+    /* Empty state */
+    .pg-empty {
+      display: none;
+      padding: 80px 48px;
+      text-align: center;
+      color: #aaa;
+      font-size: 15px;
+    }
+
+  </style>
+  <script>var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t);</script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav__logo">
+      <img src="assets/logo.svg" alt="nümnʊ" height="34" />
+    </a>
+    <ul class="nav__links">
+      <li><a href="index.html" class="nav__link">Home</a></li>
+      <li><a href="about.html" class="nav__link">About</a></li>
+      <li><a href="portfolio.html" class="nav__link nav__link--active">Portfolio</a></li>
+      <li><a href="contact.html" class="nav__link">Contact</a></li>
+    </ul>
+    <button class="nav__toggle" id="theme-toggle" aria-label="Toggle theme">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <circle cx="11" cy="11" r="10" class="toggle-light" fill="#e0ddd8"/>
+        <path d="M11 1a10 10 0 0 1 0 20V1z" class="toggle-dark" fill="#444"/>
+        <circle cx="11" cy="11" r="10" class="toggle-ring" stroke="#ccc" stroke-width="1" fill="none"/>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="pg-header">
+    <span class="pg-header__eyebrow reveal">Gallery</span>
+    <h1 class="pg-header__title reveal" data-delay="1">My Work</h1>
+    <p class="pg-header__sub reveal" data-delay="2">A curated collection of UI design, branding, graphic design and digital campaigns.</p>
+  </header>
+
+  <!-- CATEGORY FILTER -->
+  <div class="pg-filter">
+    <button class="pg-filter__btn active" data-filter="all">All <span class="pg-filter__count"></span></button>
+    <button class="pg-filter__btn" data-filter="ui">UI Design</button>
+    <button class="pg-filter__btn" data-filter="graphic">Graphic Design</button>
+    <button class="pg-filter__btn" data-filter="branding">Branding</button>
+    <button class="pg-filter__btn" data-filter="campaign">Campaign Design</button>
+  </div>
+
+  <!-- GALLERY GRID -->
+  <main class="pg-grid" id="gallery">
+    <!-- cards injected by JS -->
+
+  </main>
+
+  <!-- DIVIDER -->
+  <div class="footer-divider"></div>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="contact">
+    <div class="footer__inner reveal">
+      <p class="footer__heading">Let's Connect</p>
+      <p class="footer__sub">Feel free to reach out for collaborations or just a friendly hello</p>
+      <a href="mailto:numan@hellonuman.com" class="footer__email">numan@hellonuman.com</a>
+      <div class="footer__socials">
+        <a href="#" class="footer__social" aria-label="Facebook">
+          <svg width="33" height="33" viewBox="0 0 33 33" fill="none">
+            <path d="M18 33V18h5l1-6h-6v-3.3C18 7 18.5 6 21 6h3V0s-1.5-.2-3.8-.2C13.5.8 11 4 11 9.5V12H6v6h5v15h7z" fill="#636363"/>
+          </svg>
+        </a>
+        <a href="#" class="footer__social" aria-label="Instagram">
+          <svg width="33" height="33" viewBox="0 0 33 33" fill="none">
+            <rect x="2" y="2" width="29" height="29" rx="8" stroke="#636363" stroke-width="2.2"/>
+            <circle cx="16.5" cy="16.5" r="5.5" stroke="#636363" stroke-width="2.2"/>
+            <circle cx="25" cy="8" r="2" fill="#636363"/>
+          </svg>
+        </a>
+        <a href="#" class="footer__social" aria-label="LinkedIn">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="2" y="2" width="28" height="28" rx="6" stroke="#636363" stroke-width="2.2"/>
+            <circle cx="10" cy="10" r="1.5" fill="#636363"/>
+            <path d="M10 14v9" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M15 23v-5c0-2.2 1.2-3.5 3.5-3.5S22 15.8 22 18v5" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M15 14v9" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <a href="#" class="footer__social" aria-label="Behance">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="2" y="2" width="28" height="28" rx="6" stroke="#636363" stroke-width="2.2"/>
+            <path d="M9 9h6c2.5 0 4 1.2 4 3.2s-1.5 3.3-3.5 3.3H9V9z" stroke="#636363" stroke-width="1.8"/>
+            <path d="M9 16h7c2.5 0 4 1.2 4 3.4S18.5 23 16 23H9V16z" stroke="#636363" stroke-width="1.8"/>
+            <path d="M21 11h6" stroke="#636363" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="animations.js"></script>
+  <script>
+    var CAT_LABEL = { ui: 'UI Design', graphic: 'Graphic Design', branding: 'Branding', campaign: 'Campaign Design' };
+    var currentFilter = 'all';
+    var allItems = [];
+
+    function escHtml(str) {
+      return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function renderCard(p) {
+      var a = document.createElement('a');
+      a.className = 'pg-item';
+      a.dataset.category = p.category || 'ui';
+      var inner = '';
+      if (p.image) {
+        inner += '<img src="' + p.image + '" alt="' + escHtml(p.title) + '" class="pg-item__img" loading="lazy" />';
+      } else {
+        inner += '<div class="pg-item__placeholder" style="aspect-ratio:4/3;background:#f2f1ee;display:flex;align-items:center;justify-content:center;color:#bbb;font-size:13px;">No image</div>';
+      }
+      inner += '<div class="pg-item__overlay">'
+             +   '<p class="pg-item__overlay-title">' + escHtml(p.title) + '</p>'
+             +   '<span class="pg-item__overlay-tag">' + escHtml(CAT_LABEL[p.category] || p.category) + '</span>'
+             +   (p.year ? '<span class="pg-item__overlay-year" style="font-size:11px;color:rgba(255,255,255,.5);margin-top:2px;display:block;">' + escHtml(p.year) + '</span>' : '')
+             +   '<span class="pg-item__overlay-cta">View Project</span>'
+             + '</div>'
+             + '<div class="pg-item__info">'
+             +   '<p class="pg-item__title">' + escHtml(p.title) + '</p>'
+             +   '<span class="pg-item__cat">' + escHtml(CAT_LABEL[p.category] || p.category) + '</span>'
+             + '</div>';
+      a.innerHTML = inner;
+      return a;
+    }
+
+    function applyFilter(cat) {
+      currentFilter = cat;
+      allItems.forEach(function(item) {
+        item.classList.toggle('is-hidden', cat !== 'all' && item.dataset.category !== cat);
+      });
+      document.querySelectorAll('.pg-filter__btn').forEach(function(b) {
+        b.classList.toggle('active', b.dataset.filter === cat);
+      });
+    }
+
+    document.querySelectorAll('.pg-filter__btn').forEach(function(btn) {
+      btn.addEventListener('click', function() { applyFilter(btn.dataset.filter); });
+    });
+
+    fetch('data/projects.json?v=' + Date.now())
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var projects = (data.projects || []).filter(function(p) { return p.published !== false; });
+        var grid = document.getElementById('gallery');
+        grid.innerHTML = '';
+        allItems = [];
+
+        if (!projects.length) {
+          grid.innerHTML = '<p style="padding:80px 0;text-align:center;color:#aaa;font-size:15px;grid-column:1/-1">No projects yet — add your first design in the admin panel.</p>';
+          return;
+        }
+
+        projects.forEach(function(p) {
+          var card = renderCard(p);
+          grid.appendChild(card);
+          allItems.push(card);
+        });
+
+        var countEl = document.querySelector('[data-filter="all"] .pg-filter__count');
+        if (countEl) countEl.textContent = '(' + projects.length + ')';
+        applyFilter(currentFilter);
+      })
+      .catch(function() {
+        document.getElementById('gallery').innerHTML = '<p style="padding:80px 0;text-align:center;color:#aaa;grid-column:1/-1">Could not load projects.</p>';
+      });
+  </script>
+
+  <script>if(window.netlifyIdentity){window.netlifyIdentity.on("init",function(u){if(!u){window.netlifyIdentity.on("login",function(){document.location.href="/admin/";});}})}</script>
+</body>
+</html>

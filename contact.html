@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Numan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,500&family=Roboto+Condensed:ital,wght@1,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+
+    /* ── CONTACT SECTION ─────────────────────────────────────── */
+    .ct-section {
+      padding: 72px 48px 96px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* ── BIG HEADING ─────────────────────────────────────────── */
+    .ct-heading {
+      font-size: clamp(72px, 10.5vw, 128px);
+      font-weight: 900;
+      color: #111;
+      line-height: 0.95;
+      letter-spacing: -2px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    /* ── SUBTITLE ────────────────────────────────────────────── */
+    .ct-sub {
+      font-size: 18px;
+      color: #888;
+      line-height: 1.65;
+      max-width: 540px;
+      margin-bottom: 48px;
+    }
+
+    /* ── CONTACT CARD ────────────────────────────────────────── */
+    .ct-card {
+      width: 100%;
+      max-width: 640px;
+      border: 1.5px solid #e4e2de;
+      border-radius: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr 1px 1fr;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .ct-card__divider {
+      align-self: stretch;
+      background: #e4e2de;
+    }
+
+    .ct-card__item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 32px 20px;
+      text-decoration: none;
+      color: #444;
+      font-size: 14px;
+      font-weight: 400;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .ct-card__item:hover {
+      background: #f7f5f1;
+      color: #111;
+    }
+
+    .ct-card__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+  </style>
+  <script>var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t);</script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav__logo">
+      <img src="assets/logo.svg" alt="nümnʊ" height="34" />
+    </a>
+    <ul class="nav__links">
+      <li><a href="index.html"     class="nav__link">Home</a></li>
+      <li><a href="about.html"     class="nav__link">About</a></li>
+      <li><a href="portfolio.html" class="nav__link">Portfolio</a></li>
+      <li><a href="contact.html"   class="nav__link nav__link--active">Contact</a></li>
+    </ul>
+    <button class="nav__toggle" id="theme-toggle" aria-label="Toggle theme">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <circle cx="11" cy="11" r="10" class="toggle-light" fill="#e0ddd8"/>
+        <path d="M11 1a10 10 0 0 1 0 20V1z" class="toggle-dark" fill="#444"/>
+        <circle cx="11" cy="11" r="10" class="toggle-ring" stroke="#ccc" stroke-width="1" fill="none"/>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- MAIN -->
+  <section class="ct-section">
+
+    <h1 class="ct-heading reveal">
+      Let's make<br/>something great
+    </h1>
+
+    <p class="ct-sub reveal" data-delay="1">
+      Have a project in mind or just want to say hello? I read every message
+      and get back to you within 24 hours — 2 business days at most.
+    </p>
+
+    <div class="ct-card reveal" data-delay="2">
+
+      <!-- Email -->
+      <a class="ct-card__item" href="mailto:Numan@hellonuman.com">
+        <span class="ct-card__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="4.5" width="20" height="15" rx="3" stroke="#444" stroke-width="1.6"/>
+            <path d="M2 8l10 6.5L22 8" stroke="#444" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        Numan@hellonuman.com
+      </a>
+
+      <div class="ct-card__divider"></div>
+
+      <!-- Phone -->
+      <a class="ct-card__item" href="tel:+4768481910">
+        <span class="ct-card__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" stroke="#444" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        +47 6848191
+      </a>
+
+      <div class="ct-card__divider"></div>
+
+      <!-- LinkedIn -->
+      <a class="ct-card__item" href="https://linkedin.com/in/imnuman" target="_blank" rel="noopener noreferrer">
+        <span class="ct-card__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="2" width="20" height="20" rx="5" stroke="#444" stroke-width="1.6"/>
+            <circle cx="7" cy="7" r="1.2" fill="#444"/>
+            <path d="M7 10.5v6" stroke="#444" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M11 16.5v-3.8c0-1.5.9-2.2 2.2-2.2 1.3 0 2.3.7 2.3 2.2v3.8" stroke="#444" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M11 10.5v6" stroke="#444" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </span>
+        in/imnuman/
+      </a>
+
+    </div>
+
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="footer-divider"></div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner reveal">
+      <p class="footer__heading">Let's Connect</p>
+      <p class="footer__sub">Feel free to reach out for collaborations or just a friendly hello</p>
+      <a href="mailto:Numan@hellonuman.com" class="footer__email">Numan@hellonuman.com</a>
+      <div class="footer__socials">
+        <a href="#" class="footer__social" aria-label="Facebook">
+          <svg width="33" height="33" viewBox="0 0 33 33" fill="none">
+            <path d="M18 33V18h5l1-6h-6v-3.3C18 7 18.5 6 21 6h3V0s-1.5-.2-3.8-.2C13.5.8 11 4 11 9.5V12H6v6h5v15h7z" fill="#636363"/>
+          </svg>
+        </a>
+        <a href="#" class="footer__social" aria-label="Instagram">
+          <svg width="33" height="33" viewBox="0 0 33 33" fill="none">
+            <rect x="2" y="2" width="29" height="29" rx="8" stroke="#636363" stroke-width="2.2"/>
+            <circle cx="16.5" cy="16.5" r="5.5" stroke="#636363" stroke-width="2.2"/>
+            <circle cx="25" cy="8" r="2" fill="#636363"/>
+          </svg>
+        </a>
+        <a href="#" class="footer__social" aria-label="LinkedIn">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="2" y="2" width="28" height="28" rx="6" stroke="#636363" stroke-width="2.2"/>
+            <circle cx="10" cy="10" r="1.5" fill="#636363"/>
+            <path d="M10 14v9" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M15 23v-5c0-2.2 1.2-3.5 3.5-3.5S22 15.8 22 18v5" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M15 14v9" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <a href="#" class="footer__social" aria-label="Behance">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="2" y="2" width="28" height="28" rx="6" stroke="#636363" stroke-width="2.2"/>
+            <path d="M9 9h6c2.5 0 4 1.2 4 3.2s-1.5 3.3-3.5 3.3H9V9z" stroke="#636363" stroke-width="1.8"/>
+            <path d="M9 16h7c2.5 0 4 1.2 4 3.4S18.5 23 16 23H9V16z" stroke="#636363" stroke-width="1.8"/>
+            <path d="M21 11h6" stroke="#636363" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="animations.js"></script>
+  <script>if(window.netlifyIdentity){window.netlifyIdentity.on("init",function(u){if(!u){window.netlifyIdentity.on("login",function(){document.location.href="/admin/";});}})}</script>
+</body>
+</html>
