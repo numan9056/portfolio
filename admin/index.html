@@ -1,12 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio Admin — Numan</title>
+  <title>Portfolio Admin</title>
+  <script>
+    // Redirect to login or dashboard based on session
+    const session = localStorage.getItem('adminSession');
+    if (session === 'authenticated') {
+      window.location.href = '/admin/dashboard.html';
+    } else {
+      window.location.href = '/admin/login.html';
+    }
+  </script>
 </head>
 <body>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <p>Redirecting...</p>
 </body>
 </html>
