@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MistetFunnet — Case Study</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,500&family=Roboto+Condensed:ital,wght@1,500&display=swap" rel="stylesheet">
+<script>var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t);</script>
+<style>
+:root{
+  --bg:#FCFBF7; --bg-2:#F4F1E8; --fg:#000000; --fg-2:#646464; --fg-3:#8E8A7E;
+  --rule:rgba(0,0,0,0.12); --rule-2:rgba(0,0,0,0.20);
+  --accent:#007891; --accent-2:#00566A; --accent-soft:#EAF5F6;
+  --teal:#007891; --blue:#007891; --red:#C0492F; --card:#FFFFFF;
+  --c-peach:#FCFBF7; --c-mint:#FCFBF7; --c-sky:#FCFBF7; --c-butter:#F8F0DB;
+  --dark1:#02181E; --dark2:#013E4B; --mustard:#D3AB09;
+  --sans:"Roboto",-apple-system,BlinkMacSystemFont,sans-serif;
+  --display:"Roboto",sans-serif;
+  --serif:"Roboto",sans-serif;
+  --mono:"Roboto",ui-monospace,"SF Mono",Menlo,monospace;
+  --maxw:1080px; --read:740px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg); color:var(--fg); font-family:var(--sans);
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+img,svg{display:block; max-width:100%; height:auto;}
+a{color:var(--teal); text-decoration:none;}
+a:hover{color:var(--dark2);}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important;}}
+
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+.read{max-width:var(--read);}
+
+body::after{
+  content:""; position:fixed; inset:0; z-index:999; pointer-events:none; opacity:0.022;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ===== nav (matches global site nav) ===== */
+.nav{position:sticky; top:0; z-index:100; background:#fcfbf7; transition:background 0.35s ease, box-shadow 0.35s ease;}
+.nav--scrolled{background:rgba(252,251,247,0.88); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); box-shadow:0 1px 0 rgba(0,0,0,0.08);}
+.nav__inner{max-width:var(--maxw); margin:0 auto; padding:0 32px; height:68px; display:flex; align-items:center;}
+.nav__logo{display:flex; align-items:center; text-decoration:none; flex-shrink:0;}
+.nav__logo img{height:34px; width:auto; display:block;}
+.nav__links{display:flex; list-style:none; gap:36px; margin-left:auto; margin-right:0; padding:0; align-items:center;}
+.nav__link{font-family:'Roboto',sans-serif; font-size:15px; font-weight:400; text-decoration:none; color:#000; line-height:1; white-space:nowrap; transition:color 0.2s ease;}
+.nav__link:hover{color:#007891;}
+.nav__link--active{color:#007891;}
+.nav__toggle{background:none; border:none; cursor:pointer; margin-left:32px; padding:0; display:flex; align-items:center; flex-shrink:0; transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);}
+.nav__toggle:hover{transform:rotate(20deg);}
+/* ===== footer (matches global site footer) ===== */
+.footer-divider{height:1px; background:#ccc; margin-top:60px;}
+.footer{padding:56px 48px;}
+.footer__inner{max-width:600px; margin:0 auto; display:flex; flex-direction:column; align-items:center; text-align:center; gap:0;}
+.footer__heading{font-family:'Roboto',sans-serif; font-size:20px; font-weight:700; color:#000; line-height:1.5;}
+.footer__sub{font-family:'Roboto',sans-serif; font-size:16px; font-weight:400; color:#000; line-height:1.5;}
+.footer__email{font-family:'Roboto',sans-serif; font-size:17px; font-weight:400; color:#007891; text-decoration:none; line-height:2.2; display:block;}
+.footer__email:hover{text-decoration:underline;}
+.footer__socials{display:flex; gap:20px; align-items:center; margin-top:28px;}
+.footer__social{display:flex; align-items:center; justify-content:center; width:32px; height:32px; text-decoration:none; transition:opacity 0.2s;}
+.footer__social:hover{opacity:0.55;}
+[data-theme="dark"] body{background-color:#141414; color:#e8e4dc;}
+[data-theme="dark"] .nav{background:#141414;}
+[data-theme="dark"] .nav--scrolled{background:rgba(20,20,20,0.9); box-shadow:0 1px 0 rgba(255,255,255,0.06);}
+[data-theme="dark"] .nav__link{color:#bbb;}
+[data-theme="dark"] .nav__link--active{color:#1ab8d8;}
+[data-theme="dark"] .nav__link:hover{color:#e8e4dc;}
+[data-theme="dark"] .nav__logo img{filter:invert(1);}
+[data-theme="dark"] .footer-divider{background:#2e2e2e;}
+[data-theme="dark"] .footer__heading{color:#e8e4dc;}
+[data-theme="dark"] .footer__sub{color:#888;}
+[data-theme="dark"] .footer__social svg *{stroke:#666; fill:none;}
+[data-theme="dark"] .footer__social:hover svg *{stroke:#aaa;}
+
+/* ===== generic section ===== */
+section{padding:76px 0; border-top:1px solid var(--rule);}
+section:first-of-type{border-top:0;}
+.eyebrow{display:inline-flex; align-items:center; gap:14px; font-family:var(--display); font-size:18px; font-weight:500; color:var(--teal); margin:0 0 16px;}
+.eyebrow .n{display:inline-grid; place-items:center; width:36px; height:36px; border-radius:50%; background:var(--teal); color:#fff; font-size:17px; font-weight:700; flex:none;}
+h2{font-family:var(--display); font-weight:500; font-size:clamp(28px,3.6vw,40px); line-height:1.12; letter-spacing:0; margin:0 0 18px; color:var(--teal);}
+.lead{font-family:var(--display); font-weight:500; font-size:clamp(18px,1.7vw,21px); line-height:1.5; letter-spacing:-0.01em; color:var(--fg-2); max-width:100%; margin:0 0 8px;}
+.body{font-size:17px; line-height:1.72; color:var(--fg-2); max-width:100%;}
+.body p{margin:0 0 18px; text-align:justify; text-justify:inter-word; hyphens:auto; -webkit-hyphens:auto;}
+.body p:last-child{margin-bottom:0;}
+.body strong{color:var(--fg); font-weight:600;}
+.body em{color:var(--fg); font-style:italic;}
+
+.figure{margin:28px 0 0; border-radius:14px; overflow:hidden; border:1px solid var(--rule);}
+.figure img{width:100%; display:block;}
+.figure.wide{max-width:var(--maxw);}
+.figure.dark{background:linear-gradient(165deg, var(--dark1) 45%, var(--dark2) 123%);}
+.ph{border:1px dashed var(--rule-2); background:var(--bg-2); display:grid; place-items:center; text-align:center; width:100%;}
+.ph .inner{padding:26px 18px;}
+.ph .pt{font-family:var(--mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--fg-2);}
+.ph .pd{font-size:12.5px; color:var(--fg-3); max-width:46ch; margin:7px auto 0; line-height:1.5;}
+.photo .ph{aspect-ratio:4/3; border-radius:8px;}
+.photo .ph .pt{font-size:9.5px;}
+.cap{font-size:13px; line-height:1.5; color:var(--fg-3); margin:12px 0 0; max-width:var(--read);}
+.cap b{color:var(--fg-2); font-weight:600;}
+.cap.center{text-align:center; max-width:none; font-style:italic;}
+
+/* ===== hero ===== */
+.hero{padding:56px 0 60px;}
+.hero .eyebrow{color:var(--fg-3);}
+.hero h1{font-family:var(--display); font-weight:500; font-size:clamp(44px,7vw,96px); line-height:0.94; letter-spacing:-0.01em; margin:0 0 20px; color:var(--teal); display:flex; align-items:flex-start; flex-wrap:wrap;}
+.hero h1 .drop{width:0.13em; height:0.13em; margin-left:0.06em; margin-top:0.18em; background:var(--teal); border-radius:0 60% 60% 60%; transform:rotate(45deg); display:inline-block;}
+.hero .sub{font-family:var(--display); font-weight:500; font-size:clamp(19px,2.2vw,26px); line-height:1.35; letter-spacing:0; color:var(--fg-2); max-width:100%; margin:0 0 28px;}
+.hero .sub b{color:var(--teal); font-weight:600;}
+.metarow{display:flex; flex-wrap:wrap; gap:0; border:1px solid var(--rule-2); border-radius:14px; overflow:hidden; background:var(--card); max-width:100%;}
+.metarow > div{flex:1 1 0; min-width:140px; padding:16px 20px; border-right:1px solid var(--rule);}
+.metarow > div:last-child{border-right:0;}
+.metarow .k{font-family:var(--mono); font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--fg-3); margin-bottom:6px;}
+.metarow .v{font-size:14px; font-weight:600; color:var(--fg); display:flex; align-items:center; gap:7px;}
+.metarow .dot{width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px color-mix(in oklab,var(--accent) 22%,transparent); flex:none;}
+
+/* ===== at a glance ===== */
+section[id], .glance-sec[id]{scroll-margin-top:70px;}
+.progress{position:fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg,var(--blue),var(--teal)); z-index:60;}
+.toc{position:fixed; top:50%; left:20px; transform:translateY(-50%); z-index:40; display:none; flex-direction:column; gap:1px;}
+@media (min-width:1340px){ .toc{display:flex;} }
+.toc a{display:flex; align-items:center; gap:11px; padding:4px 6px 4px 0; color:var(--fg-3);}
+.toc a .dot{width:9px; height:9px; border-radius:50%; border:1.5px solid var(--rule-2); background:var(--bg); flex:none; transition:transform 160ms ease, background 160ms ease, border-color 160ms ease;}
+.toc a .lbl{font-family:var(--mono); font-size:11px; letter-spacing:0.03em; white-space:nowrap; opacity:0; transform:translateX(-5px); transition:opacity 160ms ease, transform 160ms ease;}
+.toc:hover a .lbl{opacity:1; transform:none;}
+.toc a:hover{color:var(--fg);}
+.toc a:hover .dot{border-color:var(--teal);}
+.toc a.active{color:var(--fg);}
+.toc a.active .dot{background:var(--teal); border-color:var(--teal); transform:scale(1.25);}
+.toc a.active .lbl{opacity:1; transform:none;}
+
+.glance-sec{padding:8px 0 0; border-top:0;}
+.glance{border:1px solid var(--rule); border-radius:20px; background:var(--card); padding:32px 34px; box-shadow:0 30px 60px -44px rgba(0,0,0,0.4);}
+.glance-head{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:24px;}
+.glance-head .kicker{margin:0;}
+.readtime{font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--fg-3); display:inline-flex; align-items:center; gap:7px;}
+.readtime::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--teal);}
+.glance-grid{display:grid; grid-template-columns:1.25fr 1fr; gap:36px;}
+.g-rows{display:grid; gap:16px; align-content:start;}
+.grow{display:grid; grid-template-columns:118px 1fr; gap:16px; align-items:baseline;}
+.gk{font-family:var(--mono); font-size:11px; letter-spacing:0.07em; text-transform:uppercase; color:var(--teal);}
+.gv{font-size:15px; line-height:1.5; color:var(--fg);}
+.gv b{font-weight:600;}
+.g-stats{display:grid; grid-template-columns:1fr 1fr; gap:14px; align-content:start;}
+.gstat{border:1px solid var(--rule); border-radius:14px; padding:16px; background:var(--bg);}
+.gstat .gsv{font-family:var(--display); font-weight:700; font-size:28px; line-height:1; letter-spacing:-0.03em; color:var(--blue); margin-bottom:6px;}
+.gstat .gsl{font-size:12.5px; line-height:1.4; color:var(--fg-2);}
+.g-skills{margin-top:22px; padding-top:22px; border-top:1px solid var(--rule); display:flex; flex-wrap:wrap; gap:10px;}
+.g-skills span{font-size:14px; color:var(--fg); background:var(--card); border:1px solid #000; border-radius:8px; padding:8px 16px;}
+
+.takeaway{display:flex; gap:13px; align-items:baseline; margin-top:24px; max-width:100%; font-size:15px; line-height:1.55; color:var(--fg); padding:14px 18px; background:var(--accent-soft); border-radius:12px;}
+.takeaway .tk{font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent-2); background:var(--card); border-radius:6px; padding:5px 8px; flex:none; position:relative; top:-1px;}
+
+/* ===== research stats ===== */
+.findings{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:8px;}
+.finding{border:1px solid var(--rule); border-radius:16px; padding:20px 22px; display:flex; flex-direction:column; background:var(--card);}
+.finding h4{font-family:var(--display); font-weight:700; font-size:16px; letter-spacing:-0.01em; margin:0 0 6px; color:var(--teal);}
+.finding p{font-size:14px; line-height:1.5; color:var(--fg-2); margin:0; text-align:justify; text-justify:inter-word; hyphens:auto;}
+
+.stripstat{display:grid; grid-template-columns:repeat(3,1fr); border:1px solid var(--rule); border-radius:16px; overflow:hidden; background:var(--card); margin-top:32px;}
+.stripstat > div{padding:24px 24px; border-right:1px solid var(--rule);}
+.stripstat > div:last-child{border-right:0;}
+.stripstat .v{font-family:var(--display); font-weight:700; font-size:clamp(24px,3vw,32px); line-height:1; letter-spacing:-0.03em; color:var(--teal); margin-bottom:8px;}
+.stripstat .l{font-size:13.5px; line-height:1.45; color:var(--fg-2);}
+
+.kicker{font-family:var(--mono); font-size:12px; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:var(--fg-3);}
+
+/* team */
+.team{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:32px;}
+.member{border-radius:14px; padding:16px 16px 18px; background:var(--teal); color:#fff; overflow:hidden;}
+.member .photo{width:100%; aspect-ratio:4/3; border-radius:8px; overflow:hidden; margin-bottom:14px; background:rgba(255,255,255,0.15);}
+.member .photo img{width:100%; height:100%; object-fit:cover;}
+.member .nm{font-family:var(--display); font-weight:700; font-size:22px; letter-spacing:0; margin:0 0 6px; color:#fff;}
+.member .rl{font-size:15px; color:rgba(255,255,255,0.9); line-height:1.4;}
+
+/* tradeoff */
+.tradeoff{margin-top:24px; border-left:3px solid var(--teal); background:var(--accent-soft); border-radius:0 12px 12px 0; padding:20px 24px; max-width:100%;}
+.tradeoff .t{font-family:var(--mono); font-weight:600; letter-spacing:0.1em; text-transform:uppercase; font-size:11px; color:var(--accent-2); margin-bottom:10px;}
+.tradeoff p{font-size:15px; line-height:1.62; color:var(--fg); margin:0 0 12px; text-align:justify; text-justify:inter-word; hyphens:auto;}
+.tradeoff p:last-child{margin-bottom:0;}
+
+/* numbered list */
+.numlist{margin-top:28px; display:grid; gap:24px; max-width:100%;}
+.numitem{display:grid; grid-template-columns:auto 1fr; gap:18px; align-items:start;}
+.numitem .num{width:14px; height:14px; border-radius:50%; background:var(--teal); margin-top:8px;}
+.numitem h4{font-family:var(--display); font-weight:700; font-size:18px; letter-spacing:-0.01em; margin:0 0 7px; line-height:1.25; color:var(--fg);}
+.numitem p{font-size:15.5px; line-height:1.62; color:var(--fg-2); margin:0; text-align:justify; text-justify:inter-word; hyphens:auto;}
+.numitem code, .numitem a.code{font-family:var(--mono); font-size:0.86em; background:var(--bg-2); border:1px solid var(--rule); border-radius:5px; padding:1px 6px; color:var(--teal);}
+
+/* IA diagram */
+.iadiagram{border:1px solid var(--rule); border-radius:20px; background:var(--card); padding:32px 28px;}
+.ia-roles{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+.ia-role{border:1px solid var(--rule); border-radius:14px; padding:18px; background:var(--bg);}
+.ia-role .rh{display:flex; align-items:center; gap:9px; font-family:var(--display); font-weight:700; font-size:15px; margin-bottom:10px;}
+.ia-role .rh .ic{width:26px; height:26px; border-radius:8px; display:grid; place-items:center; background:var(--bg-2); color:var(--teal); flex:none;}
+.ia-role ul{list-style:none; margin:0; padding:0; display:grid; gap:6px;}
+.ia-role li{font-size:12.5px; color:var(--fg-2); display:flex; gap:7px; align-items:baseline;}
+.ia-role li::before{content:"+"; color:var(--teal); font-weight:700; flex:none;}
+.ia-flowdown{display:flex; justify-content:center; color:var(--rule-2); margin:14px 0;}
+.ia-post{border:1.5px solid var(--teal); border-radius:14px; background:var(--accent-soft); padding:20px 22px; text-align:center;}
+.ia-post .lbl{font-family:var(--mono); font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent-2); margin-bottom:6px;}
+.ia-post .title{font-family:var(--display); font-weight:700; font-size:22px; letter-spacing:-0.02em; margin-bottom:14px; color:var(--fg);}
+.ia-fields{display:flex; flex-wrap:wrap; justify-content:center; gap:8px;}
+.ia-fields span{font-size:12.5px; color:var(--fg); background:var(--card); border:1px solid var(--rule-2); border-radius:999px; padding:5px 13px;}
+.ia-engine{margin-top:18px; border:1px dashed var(--teal); border-radius:12px; padding:16px 20px; text-align:center; background:var(--bg);}
+.ia-engine .e1{font-family:var(--display); font-weight:700; font-size:15px; margin-bottom:4px; color:var(--fg);}
+.ia-engine .e2{font-size:13px; color:var(--fg-2);}
+.ia-engine .ways{display:flex; flex-wrap:wrap; justify-content:center; gap:7px; margin-top:12px;}
+.ia-engine .ways span{font-family:var(--mono); font-size:11px; color:var(--accent-2); background:var(--accent-soft); border-radius:999px; padding:4px 11px;}
+
+/* layers */
+.layers{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:8px;}
+.layer{border:1px solid var(--rule); border-radius:16px; padding:24px 22px; background:var(--card);}
+.layer .lk{font-family:var(--mono); font-size:13px; letter-spacing:0.38em; text-transform:uppercase; color:var(--teal); margin-bottom:12px;}
+.layer h4{font-family:var(--display); font-weight:700; font-size:17px; letter-spacing:-0.01em; margin:0 0 8px; color:var(--fg);}
+.layer p{font-size:14px; line-height:1.56; color:var(--fg-2); margin:0; text-align:justify; text-justify:inter-word; hyphens:auto;}
+
+/* flows */
+.flow{padding:36px 0; border-top:1px dashed var(--rule-2);}
+.flow:first-of-type{border-top:0; padding-top:8px;}
+.flow .fnum{font-family:var(--mono); font-size:14px; letter-spacing:0.38em; text-transform:uppercase; color:var(--teal); margin-bottom:10px;}
+.flow h3{font-family:var(--display); font-weight:700; font-size:clamp(22px,2.2vw,28px); letter-spacing:-0.02em; line-height:1.15; margin:0 0 14px; color:var(--fg);}
+.flow .goal, .flow .changed{font-size:15.5px; line-height:1.62; color:var(--fg-2); max-width:100%; margin:0 0 14px; text-align:justify; text-justify:inter-word; hyphens:auto;}
+.lessons{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:8px;}
+.lesson{border:1px solid var(--rule); border-radius:16px; padding:28px; background:var(--card);}
+.lesson .ln{font-family:var(--display); font-weight:700; font-size:26px; color:var(--teal); margin-bottom:12px;}
+.lesson h4{font-family:var(--display); font-weight:700; font-size:18px; letter-spacing:-0.01em; margin:0 0 10px; line-height:1.25; color:var(--fg);}
+.lesson p{font-size:14.5px; line-height:1.6; color:var(--fg-2); margin:0; text-align:justify; text-justify:inter-word; hyphens:auto;}
+@media (max-width:880px){ .lessons{grid-template-columns:1fr;} }
+.flow .goal b, .flow .changed b{color:var(--fg); font-weight:600;}
+
+/* footer */
+.foot{padding:44px 0 60px; border-top:1px solid var(--rule);}
+.foot-in{display:flex; align-items:center; justify-content:center; gap:26px; flex-wrap:wrap; font-size:14px;}
+.foot-in a{color:var(--fg-2); display:inline-flex; gap:7px; align-items:center;}
+.foot-in a:hover{color:var(--teal);}
+.foot-in .mid{color:var(--fg-3); font-weight:600;}
+.foot-in .sep{color:var(--rule-2);}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — tablet + mobile
+   ══════════════════════════════════════════ */
+
+/* prevent any element from causing horizontal scroll */
+html{overflow-x:hidden;}
+body{overflow-x:hidden;}
+*{min-width:0;}
+
+/* ── Tablet (≤ 880px) ── */
+@media (max-width:880px){
+  .wrap{padding:0 24px;}
+  section{padding:56px 0;}
+  h2{font-size:clamp(26px,4vw,36px);}
+
+  /* grids that are 3-col on desktop → 1-col */
+  .findings{grid-template-columns:1fr;}
+  .ia-roles{grid-template-columns:1fr;}
+  .layers{grid-template-columns:1fr;}
+  .stripstat{grid-template-columns:1fr;}
+  .stripstat > div{border-right:0; border-bottom:1px solid var(--rule);}
+  .stripstat > div:last-child{border-bottom:0;}
+
+  /* glance box */
+  .glance{padding:24px;}
+  .glance-grid{grid-template-columns:1fr; gap:24px;}
+  .grow{grid-template-columns:100px 1fr; gap:12px;}
+
+  /* team 4-col → 2-col */
+  .team{grid-template-columns:1fr 1fr;}
+
+  /* metarow: 4 cells → 2×2 */
+  .metarow > div{flex:1 1 45%;}
+
+  /* lessons: 2-col → 1-col */
+  .lessons{grid-template-columns:1fr;}
+
+  /* left-align prose (no justify on narrow) */
+  .body p{text-align:left; hyphens:none; -webkit-hyphens:none;}
+  .finding p{text-align:left; hyphens:none;}
+  .numitem p{text-align:left; hyphens:none;}
+  .lesson p{text-align:left; hyphens:none;}
+  .tradeoff p{text-align:left; hyphens:none;}
+  .flow .goal{text-align:left; hyphens:none;}
+  .flow .changed{text-align:left; hyphens:none;}
+}
+
+/* hamburger (hidden on desktop) */
+.nav__hamburger{display:none; background:none; border:none; cursor:pointer; margin-left:12px; padding:4px; align-items:center; justify-content:center; flex-shrink:0; color:#000; line-height:0; transition:opacity 0.2s;}
+.nav__hamburger:hover{opacity:0.55;}
+.nav__panel{display:none; position:absolute; top:60px; left:0; right:0; background:#fcfbf7; border-bottom:1px solid rgba(0,0,0,0.1); box-shadow:0 12px 32px rgba(0,0,0,0.1); z-index:99; padding:6px 20px 14px;}
+.nav__panel.is-open{display:block;}
+.nav__panel-link{display:flex; align-items:center; padding:15px 0; font-family:'Roboto',sans-serif; font-size:16px; font-weight:500; color:#000; text-decoration:none; border-bottom:1px solid rgba(0,0,0,0.07); transition:color 0.2s;}
+.nav__panel-link:last-child{border-bottom:none;}
+.nav__panel-link--active{color:#007891;}
+.nav__panel-link:hover{color:#007891;}
+[data-theme="dark"] .nav__panel{background:#141414; border-color:#2e2e2e; box-shadow:0 12px 32px rgba(0,0,0,0.4);}
+[data-theme="dark"] .nav__panel-link{color:#bbb; border-color:#2e2e2e;}
+[data-theme="dark"] .nav__panel-link--active{color:#1ab8d8;}
+[data-theme="dark"] .nav__hamburger{color:#bbb;}
+
+/* ── Mobile (≤ 640px) ── */
+@media (max-width:640px){
+  /* NAV */
+  .nav__links{display:none !important;}
+  .nav__inner{padding:0 18px; height:60px; position:relative;}
+  .nav__toggle{margin-left:auto;}
+  .nav__logo img{height:30px;}
+  .nav__hamburger{display:flex;}
+
+  /* spacing */
+  .wrap{padding:0 18px;}
+  section{padding:40px 0;}
+  .hero{padding:24px 0 32px;}
+
+  /* hero */
+  .hero h1{font-size:clamp(38px,9vw,60px);}
+  .hero .sub{font-size:17px; line-height:1.45; margin-bottom:20px;}
+
+  /* metarow: 4 items → clean 2×2 grid */
+  .metarow{display:grid; grid-template-columns:1fr 1fr; flex-wrap:unset;}
+  .metarow > div{flex:none; border-right:0 !important; border-bottom:1px solid var(--rule) !important; padding:14px 16px;}
+  .metarow > div:nth-child(odd){border-right:1px solid var(--rule) !important;}
+  .metarow > div:nth-child(3),.metarow > div:nth-child(4){border-bottom:0 !important;}
+
+  /* glance */
+  .glance{padding:18px;}
+  .glance-grid{gap:20px;}
+  .grow{grid-template-columns:80px 1fr; gap:10px;}
+  .gv{font-size:14px;}
+  .gstat .gsv{font-size:24px;}
+  .g-skills{gap:8px;}
+  .g-skills span{font-size:13px; padding:6px 12px;}
+
+  /* body */
+  .body{font-size:16px;}
+  .lead{font-size:17px;}
+
+  /* eyebrow */
+  .eyebrow{font-size:16px; gap:10px;}
+  .eyebrow .n{width:30px; height:30px; font-size:15px;}
+
+  /* flows */
+  .flow .goal,.flow .changed{font-size:14.5px;}
+  .flow h3{font-size:clamp(20px,5vw,26px);}
+
+  /* tradeoff / takeaway */
+  .tradeoff{padding:16px 18px;}
+  .takeaway{font-size:14px; padding:12px 14px;}
+
+  /* ia diagram */
+  .iadiagram{padding:18px 14px;}
+  .ia-fields span{font-size:12px;}
+
+  /* footer */
+  .footer{padding:40px 24px;}
+  .footer-divider{margin-top:40px;}
+
+  /* team: stay 2-col on larger phones */
+  .team{grid-template-columns:1fr 1fr; gap:10px;}
+}
+
+/* ── Small phone (≤ 420px) ── */
+@media (max-width:420px){
+  .wrap{padding:0 14px;}
+  section{padding:32px 0;}
+  .hero{padding:20px 0 28px;}
+  .hero h1{font-size:clamp(32px,8.5vw,48px);}
+  .hero .sub{font-size:16px;}
+
+  h2{font-size:clamp(22px,6vw,30px);}
+
+  .metarow > div{padding:11px 12px;}
+  .metarow .k{font-size:9.5px;}
+  .metarow .v{font-size:12.5px; gap:5px;}
+
+  .glance{padding:14px 12px;}
+  .grow{grid-template-columns:60px 1fr; gap:8px;}
+  .gk{font-size:9px; letter-spacing:0.05em;}
+  .gv{font-size:13px;}
+  .gstat{padding:12px;}
+  .gstat .gsv{font-size:20px;}
+  .gstat .gsl{font-size:11px;}
+  .g-skills span{font-size:12px; padding:5px 10px;}
+
+  /* team: 1 column */
+  .team{grid-template-columns:1fr;}
+  .member .nm{font-size:18px;}
+  .member .rl{font-size:14px;}
+
+  .flow{padding:20px 0;}
+  .flow .fnum{font-size:12px;}
+  .flow h3{font-size:clamp(18px,5vw,24px);}
+  .flow .goal,.flow .changed{font-size:13.5px;}
+
+  .body{font-size:15px;}
+  .body p{margin:0 0 14px;}
+  .lead{font-size:16px;}
+
+  .numitem{gap:10px;}
+  .numitem h4{font-size:15px;}
+  .numitem p{font-size:13px;}
+
+  .lesson{padding:16px;}
+  .lesson .ln{font-size:22px; margin-bottom:8px;}
+  .lesson h4{font-size:15px;}
+  .lesson p{font-size:13px;}
+
+  .iadiagram{padding:14px 10px;}
+  .ia-role{padding:11px 12px;}
+  .ia-role .rh{font-size:13.5px; gap:7px;}
+  .ia-role .rh .ic{width:22px; height:22px;}
+  .ia-role li{font-size:11.5px;}
+  .ia-post .title{font-size:18px;}
+  .ia-fields span{font-size:11px; padding:4px 9px;}
+  .ia-engine{padding:11px 12px;}
+  .ia-engine .e1{font-size:13px;}
+  .ia-engine .e2{font-size:11.5px;}
+  .ia-engine .ways span{font-size:9.5px; padding:3px 7px;}
+
+  .finding{padding:14px;}
+  .finding h4{font-size:14px;}
+  .finding p{font-size:12.5px;}
+
+  .stripstat .v{font-size:clamp(20px,5vw,26px);}
+  .stripstat > div{padding:16px 14px;}
+  .stripstat .l{font-size:13px;}
+
+  .layer{padding:16px 14px;}
+  .layer h4{font-size:15px;}
+  .layer p{font-size:13px;}
+
+  .takeaway{padding:11px 12px; font-size:13px; gap:8px;}
+  .takeaway .tk{font-size:9px; padding:4px 7px;}
+  .tradeoff{padding:12px 14px;}
+  .tradeoff p{font-size:13.5px;}
+
+  .cap{font-size:12px;}
+  .eyebrow{font-size:15px; gap:8px; margin-bottom:12px;}
+  .eyebrow .n{width:28px; height:28px; font-size:13px;}
+
+  .footer{padding:32px 16px;}
+  .footer__heading{font-size:18px;}
+  .footer__sub{font-size:15px;}
+  .footer__email{font-size:16px;}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" aria-hidden="true"></div>
+
+<nav class="toc" aria-label="Jump to section">
+  <a href="#glance"><span class="dot"></span><span class="lbl">At a glance</span></a>
+  <a href="#problem"><span class="dot"></span><span class="lbl">Problem</span></a>
+  <a href="#role"><span class="dot"></span><span class="lbl">My role</span></a>
+  <a href="#research"><span class="dot"></span><span class="lbl">Research</span></a>
+  <a href="#decision"><span class="dot"></span><span class="lbl">The decision</span></a>
+  <a href="#ia"><span class="dot"></span><span class="lbl">Architecture</span></a>
+  <a href="#brand"><span class="dot"></span><span class="lbl">Brand</span></a>
+  <a href="#system"><span class="dot"></span><span class="lbl">Design system</span></a>
+  <a href="#flows"><span class="dot"></span><span class="lbl">Flows</span></a>
+  <a href="#venue"><span class="dot"></span><span class="lbl">Venue side</span></a>
+  <a href="#howitworks"><span class="dot"></span><span class="lbl">How it works</span></a>
+  <a href="#reflection"><span class="dot"></span><span class="lbl">Reflection</span></a>
+</nav>
+
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">
+      <img src="assets/logo.svg" alt="nümnʊ" height="34" />
+    </a>
+    <ul class="nav__links">
+      <li><a href="index.html" class="nav__link">Home</a></li>
+      <li><a href="about.html" class="nav__link">About</a></li>
+      <li><a href="portfolio.html" class="nav__link nav__link--active">Portfolio</a></li>
+      <li><a href="contact.html" class="nav__link">Contact</a></li>
+    </ul>
+    <button class="nav__toggle" id="theme-toggle" aria-label="Toggle theme">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <circle cx="11" cy="11" r="10" class="toggle-light" fill="#e0ddd8"/>
+        <path d="M11 1a10 10 0 0 1 0 20V1z" class="toggle-dark" fill="#444"/>
+        <circle cx="11" cy="11" r="10" class="toggle-ring" stroke="#ccc" stroke-width="1" fill="none"/>
+      </svg>
+    </button>
+    <button class="nav__hamburger" id="nav-hamburger" aria-label="Open menu">
+      <svg class="icon-menu" width="20" height="14" viewBox="0 0 20 14" fill="none" aria-hidden="true"><rect width="20" height="2" rx="1" fill="currentColor"/><rect y="6" width="20" height="2" rx="1" fill="currentColor"/><rect y="12" width="20" height="2" rx="1" fill="currentColor"/></svg>
+      <svg class="icon-close" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="display:none"><line x1="1" y1="1" x2="15" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="15" y1="1" x2="1" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="nav__panel" id="nav-panel">
+    <a href="index.html" class="nav__panel-link">Home</a>
+    <a href="about.html" class="nav__panel-link">About</a>
+    <a href="portfolio.html" class="nav__panel-link nav__panel-link--active">Portfolio</a>
+    <a href="contact.html" class="nav__panel-link">Contact</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ========== HERO ========== -->
+<section id="top" class="hero" data-screen-label="Hero">
+  <div class="wrap">
+    <div class="kicker">7 min read</div>
+    <h1>MistetFunnet</h1>
+    <p class="sub">Norway's first <b>AI-assisted lost-and-found infrastructure</b>. Built hands-on with AI-assisted tooling. Live on the App&nbsp;Store.</p>
+    <div class="metarow">
+      <div><div class="k">Role</div><div class="v">Founder &amp; Product Designer</div></div>
+      <div><div class="k">Duration</div><div class="v">2024–2026</div></div>
+      <div><div class="k">Status</div><div class="v"><span class="dot"></span> Live · Beta · First design partner (LOI) — Rebel AS</div></div>
+      <div><div class="k">Market</div><div class="v">Norway</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== AT A GLANCE ========== -->
+<section id="glance" class="glance-sec" data-screen-label="At a glance">
+  <div class="wrap">
+    <div class="glance">
+      <div class="glance-head">
+        <span class="kicker">The 30-second version</span>
+        <span class="readtime">~7 min read</span>
+      </div>
+      <div class="glance-grid">
+        <div class="g-rows">
+          <div class="grow"><div class="gk">What it is</div><div class="gv">Norway's first <b>AI-assisted lost-and-found infrastructure</b> — one shared feed for citizens, venues and finders. Built hands-on with AI-assisted tooling — live on the App&nbsp;Store.</div></div>
+          <div class="grow"><div class="gk">The problem</div><div class="gv">Norway has no central lost-and-found. <b>88% lose</b> something valuable; only <b>12% get it back</b> (survey, n=75).</div></div>
+          <div class="grow"><div class="gk">My role</div><div class="gv">Founder &amp; Product Designer — research, UX/UI, design system, and AI-assisted build (React&nbsp;Native + Supabase) — <b>end-to-end</b>.</div></div>
+          <div class="grow"><div class="gk">Where it is now</div><div class="gv">Live on App&nbsp;Store &amp; Google&nbsp;Play, web in beta. First design-partner LOI signed — <b>Rebel AS, Feb 2026</b>.</div></div>
+        </div>
+        <div class="g-stats">
+          <div class="gstat"><div class="gsv">39%</div><div class="gsl">Confirmed willingness to pay (survey, n=75)</div></div>
+          <div class="gstat"><div class="gsv">&lt;30s</div><div class="gsl">Every tested user posted in under 30 seconds, app and dashboard</div></div>
+          <div class="gstat"><div class="gsv">1 feed</div><div class="gsl">Unified across 3 user roles &amp; surfaces</div></div>
+          <div class="gstat"><div class="gsv">Live</div><div class="gsl">On App Store &amp; Google Play</div></div>
+        </div>
+      </div>
+      <div class="g-skills">
+        <span>UX Research</span><span>Information Architecture</span><span>Design Systems</span><span>Accessibility</span><span>AI / UX</span><span>Product Strategy</span><span>React Native</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 1 · PROBLEM ========== -->
+<section id="problem" data-screen-label="The problem">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">1</span> The Problem</div>
+    <h2>Every venue keeps its own list. None of them connect.</h2>
+    <div class="body">
+      <p>Norway has no central system for lost-and-found. Every venue runs its own internal log — hotels, trains, airports, cafés, police stations. None of them connect.</p>
+      <p>A citizen who loses something has to contact each one alone. <strong>Most give up before their items are ever found.</strong></p>
+    </div>
+    <div class="figure wide">
+      <img src="assets/The_Problem_Photo.png" alt="A stressed commuter at a train station surrounded by Vy, Ruter, Facebook and hotel lost-and-found logos" />
+    </div>
+    <p class="cap">Illustration: the current "system."</p>
+    <div class="stripstat">
+      <div><div class="v">88%</div><div class="l">had lost something valuable</div></div>
+      <div><div class="v">12%</div><div class="l">recovered it</div></div>
+      <div><div class="v">150–200M</div><div class="l">NOK unrecovered each year <span style="color:var(--fg-3)">(internal estimate)</span></div></div>
+    </div>
+    <p class="cap">Field survey of 75 Norwegian residents, Oslo and Ålesund, 2025. The 150–200M NOK figure is an internal estimate.</p>
+  </div>
+</section>
+
+<!-- ========== 2 · MY ROLE ========== -->
+<section id="role" data-screen-label="My role & the team">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">2</span> My role &amp; the team</div>
+    <h2>I built the platform end-to-end.</h2>
+    <div class="body">
+      <p>I designed and built the product itself — research, UX, UI, the design system, and the AI-assisted build. Around the product: a CFO on the financial model, a commercial mentor, an academic mentor. The product is mine; the company is a team.</p>
+      <p>My role covered product strategy, user research, UX, UI, the design system, and the full build — developed hands-on with AI-assisted tooling (Claude Code) on React Native and Supabase. Every architecture decision, screen, and iteration is mine; AI accelerated the implementation. The platform's core was built without a single hired engineer.</p>
+    </div>
+    <p style="font-size:14px; color:var(--fg-3); margin:12px 0 24px;">First full-time engineer joins Q3 2026.</p>
+    <div class="team">
+      <div class="member me">
+        <div class="photo"><img src="assets/Abdullah_profile.png" alt="Abdullah Al Numan" /></div>
+        <p class="nm">Abdullah Al Numan</p>
+        <div class="rl">Founder &amp; Product Designer — product, research, UX/UI, AI-assisted build</div>
+      </div>
+      <div class="member">
+        <div class="photo"><img src="assets/Wasi_profile.png" alt="Dr. Wasi Ahmed" /></div>
+        <p class="nm">Dr. Wasi Ahmed</p>
+        <div class="rl">CFO — financial model. Asst. Professor, NTNU Ålesund</div>
+      </div>
+      <div class="member">
+        <div class="photo"><img src="assets/Karsten_profile.png" alt="Karsten D Wetteland" /></div>
+        <p class="nm">Karsten D Wetteland</p>
+        <div class="rl">Commercial mentor (advisor) — CEO, Relentlessly AS</div>
+      </div>
+      <div class="member">
+        <div class="photo"><img src="assets/Ivar_profile.png" alt="Ivar John Erdal" /></div>
+        <p class="nm">Ivar John Erdal</p>
+        <div class="rl">Academic mentor (advisor) — Dean, Høgskulen i Volda</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 3 · RESEARCH ========== -->
+<section id="research" data-screen-label="Research & validation">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">3</span> Research &amp; validation</div>
+    <h2>75 Norwegian residents. One consistent answer.</h2>
+    <p class="lead">I ran a field survey of 75 residents in Oslo and Ålesund through 2025. Three findings shaped everything that followed.</p>
+    <div class="findings" style="margin-top:28px;">
+      <div class="finding t-mint">
+        <h4>Support a national platform.</h4>
+        <p>Nine in ten respondents support a single national platform for lost-and-found.</p>
+      </div>
+      <div class="finding t-sky">
+        <h4>Would pay today.</h4>
+        <p>39% confirmed they would pay for it today. I treat this as the hard number in every external conversation.</p>
+      </div>
+      <div class="finding t-peach">
+        <h4>Might, under conditions.</h4>
+        <p>51% said they might. Expressed support is not willingness to pay — so the 39% is the number that counts.</p>
+      </div>
+    </div>
+    <div class="figure wide" style="margin-top:30px;">
+      <img src="assets/Rebel_LOI.png" alt="Abdullah Al Numan and Håkon Solheim at the Rebel AS LOI signing, 16 February 2026" />
+    </div>
+    <p class="cap center">The first design-partner LOI — Rebel AS, signed by CTO Håkon Solheim</p>
+  </div>
+</section>
+
+<!-- ========== 4 · THE DESIGN DECISION ========== -->
+<section id="decision" data-screen-label="The design decision">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">4</span> The design decision</div>
+    <h2>One nation, one feed. Every post, every source, one place.</h2>
+    <div class="body">
+      <p>The problem is fragmentation — fifty Facebook groups, hundreds of venue spreadsheets, the police <em>hittegods</em> office, all running in isolation. The obvious response is to build a better lost-and-found app. But a better app inside a fragmented system doesn't solve the problem. It adds another silo.</p>
+      <p><strong>So I removed the concept of source from the data layer.</strong></p>
+    </div>
+    <div class="figure wide" style="margin-top:24px;">
+      <img src="assets/The_design_decision.png" alt="Two phone screens showing AI match notifications and the unified lost-and-found feed" />
+    </div>
+    <div class="body" style="margin-top:24px;">
+      <p>Every post — whether from a hotel staffer logging a found laptop in the SaaS dashboard, a commuter reporting a lost wallet from the mobile app, or a private finder posting a jacket from the web — lands in the same feed. The AI matches across all of them.</p>
+      <p>A citizen searching for their wallet doesn't need to know whether it was handed in at the Radisson, photographed on a Vy train, or found by a stranger on Karl Johans gate. <strong>One search. One feed. One country.</strong></p>
+      <p>This is the architectural decision that makes everything else work. AI matching matters because it operates on a unified data layer. Hittegodsloven compliance matters because every post is held to the same legal framework. The network effect compounds because finders, venues, and citizens all see each other's posts in real time.</p>
+    </div>
+    <p class="takeaway"><span class="tk">In short</span> Removing "source" from the data layer is the one bet the whole product rests on — every post, every channel, one feed.</p>
+    <div class="tradeoff">
+      <div class="t">The trade-off</div>
+      <p>A unified feed across three user types meant one schema, one moderation system, one trust model — significantly harder than three separate apps. It also inverted the natural product order: I built the venue-side dashboard before there were venues paying to use it, because without venues posting, citizen searches return nothing.</p>
+      <p>But it's also the moat. A foreign competitor can build the AI, translate the interface, and price competitively. They cannot rebuild the network of venues, citizens, and finders that all post into the same database.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 5 · INFORMATION ARCHITECTURE ========== -->
+<section id="ia" data-screen-label="Information architecture">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">5</span> Information architecture</div>
+    <h2>One schema. Three roles. One feed.</h2>
+    <div class="body">
+      <p>The "one feed" decision had to survive a real data model. The schema had to handle three different user types posting the same content type — with different permissions, verification needs, and legal obligations — without splitting the database into three.</p>
+      <p>I built it as a single <strong>Post</strong> entity with a role attribute. Every post — <em>Mistet</em> (lost) or <em>Funnet</em> (found) — carries the same core fields. The role of the poster determines what additional fields are required and what actions are permitted, but the post itself sits in one shared table.</p>
+      <p>This is what makes four-way matching possible. Citizen-to-citizen, citizen-to-business, business-to-citizen, business-to-business — the AI doesn't need to know who posted. It just matches posts against posts.</p>
+    </div>
+    <div class="iadiagram figure">
+      <div class="ia-roles">
+        <div class="ia-role">
+          <div class="rh"><span class="ic">🧍</span> Citizen</div>
+          <ul><li>Report lost</li><li>Search &amp; claim</li><li>In-app messaging</li></ul>
+        </div>
+        <div class="ia-role">
+          <div class="rh"><span class="ic">🏨</span> Venue</div>
+          <ul><li>Bulk log found</li><li>Custody &amp; pickup codes</li><li>Legal 30-day workflow</li></ul>
+        </div>
+        <div class="ia-role">
+          <div class="rh"><span class="ic">🧤</span> Private finder</div>
+          <ul><li>Post a found item</li><li>Hand-off coordination</li></ul>
+        </div>
+      </div>
+      <div class="ia-flowdown">
+        <svg width="26" height="34" viewBox="0 0 26 34" aria-hidden="true"><path d="M13 0 V26 M5 19 L13 27 L21 19" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+      </div>
+      <div class="ia-post">
+        <div class="lbl">Single shared table</div>
+        <div class="title">Post</div>
+        <div class="ia-fields">
+          <span>Photo</span><span>Category</span><span>Location</span><span>Time</span><span>Description</span><span>Status</span><span>Role</span>
+        </div>
+      </div>
+      <div class="ia-engine">
+        <div class="e1">AI matching engine</div>
+        <div class="e2">Reads across every post — it just matches posts against posts.</div>
+        <div class="ways"><span>Citizen ↔ Citizen</span><span>Citizen ↔ Business</span><span>Business ↔ Citizen</span><span>Business ↔ Business</span></div>
+      </div>
+    </div>
+    <p class="takeaway"><span class="tk">In short</span> A single Post table with a role attribute is what makes four-way AI matching possible — the AI just matches posts against posts.</p>
+  </div>
+</section>
+
+<!-- ========== 6 · BRAND ========== -->
+<section id="brand" data-screen-label="Brand & identity">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">6</span> Brand &amp; identity</div>
+    <h2>Norwegian. Calm. Accessible.</h2>
+    <div class="body">
+      <p>Norwegian citizens already associate yellow and dark green with state services — Posten, NAV, Skatteetaten. MistetFunnet is not a government service. It needed to read as <strong>trustworthy private infrastructure that works alongside the state</strong>, not as another bureaucratic touchpoint.</p>
+    </div>
+    <div class="figure wide" style="margin-top:24px;">
+      <img src="assets/Brand_identity.png" alt="MistetFunnet brand identity — Rubik typeface sample, teal-and-mustard palette, and magnifying-glass mascot logo" />
+    </div>
+    <p class="cap">Identity system — Rubik typeface, teal-and-mustard palette, magnifying-glass mascot.</p>
+  </div>
+</section>
+
+<!-- ========== 7 · DESIGN SYSTEM ========== -->
+<section id="system" data-screen-label="Design system & components">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">7</span> Design system &amp; components</div>
+    <h2>One component library. Three surfaces.</h2>
+    <div class="body">
+      <p>The mobile app, SaaS dashboard, and public web search all share a single Figma component library. Building one library across three surfaces was non-negotiable for a solo designer — every component had to work in mobile, tablet, and desktop without forking.</p>
+    </div>
+    <div class="numlist">
+      <div class="numitem"><div class="num"></div><div><h4>State-driven components, not duplicate components.</h4><p>The post card exists once in the library. It accepts a state prop — <code>Mistet, Funnet, Matched, Claimed, Archived</code> — and renders differently in each, including different background colors, action buttons, and metadata visibility. One component, five visual states, used everywhere.</p></div></div>
+      <div class="numitem"><div class="num"></div><div><h4>Tokens before components.</h4><p>Color, spacing, typography, radii, and shadows are defined as semantic tokens before any component is built. The brand teal is <code>--color-brand-primary</code>, not <code>#0F4C4C</code>. This let me change the entire brand color in one place when we tested four palette variations.</p></div></div>
+      <div class="numitem"><div class="num"></div><div><h4>Norwegian-first content patterns.</h4><p>Every text component is built around Norwegian first, with English fallback. Long compound nouns like <code>hentegodkjenningsforespørsel</code> break standard 14px body grids — so the text component has built-in word-wrap and overflow handling that English-first design systems don't typically need.</p></div></div>
+    </div>
+    <div class="figure wide" style="margin-top:28px;">
+      <img src="assets/Design_system.png" alt="MistetFunnet Figma component library — color tokens, typography scale, spacing, radius, icons, and post card components" />
+    </div>
+    <p class="cap">Component library, MistetFunnet design system.</p>
+  </div>
+</section>
+
+<!-- ========== 8 · FLOWS ========== -->
+<section id="flows" data-screen-label="From wireframe to shipped">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">8</span> From wireframe to shipped</div>
+    <h2>Three flows, three real risks.</h2>
+    <div class="body">
+      <p>Three flows carried the highest design risk: the citizen <strong>report-lost</strong> flow (had to be under 30 seconds or people give up), the <strong>AI match-result</strong> screen (had to communicate confidence without overpromising), and the <strong>pickup request &amp; approval</strong> flow (had to prevent false claims without turning venue staff into detectives). Each went through wireframes, continuous testing throughout development, and refinement before shipping.</p>
+    </div>
+
+    <!-- Flow 1 -->
+    <div class="flow">
+      <div class="fnum">Flow 1</div>
+      <h3>Report a lost item</h3>
+      <p class="goal"><b>Wireframe goal —</b> get from app launch to submitted post in under 30 seconds, on a mobile screen, while the user is stressed.</p>
+      <p class="changed"><b>What I changed —</b> the wireframe had four screens: category, photo, details, confirm. Testing showed users skipped the category screen or chose wrong because they were panicking — and the AI didn't need it. I removed the category step and let the AI infer category from the photo. Final flow: photo, location, optional description, submit. Three screens. <b>Design target: under 30 seconds. Every tested user hit it — on both the app and the dashboard.</b></p>
+      <div class="figure wide">
+        <img src="assets/wireframe_flow1.png" alt="Wireframe screens versus the shipped 3-step report flow: photo, location, publish" />
+      </div>
+    </div>
+
+    <!-- Flow 2 -->
+    <div class="flow">
+      <div class="fnum">Flow 2</div>
+      <h3>Match found</h3>
+      <p class="goal"><b>Wireframe goal —</b> show confidence in a match without making the user click through five screens to see the original item.</p>
+      <p class="changed"><b>What I changed —</b> the wireframe showed the match as a notification leading to a separate details screen. Testing showed users wanted to see the found item's photo immediately, in the notification itself. The final design shows the photo, the confidence score, and the next action in the feed directly — no second screen. <b>No second screen — the decision happens in the feed.</b></p>
+      <div class="figure wide">
+        <img src="assets/wireframe_flow_2.png" alt="Wireframe versus shipped match notification — showing AI confidence percentages directly in the feed" />
+      </div>
+    </div>
+
+    <!-- Flow 3 -->
+    <div class="flow">
+      <div class="fnum">Flow 3</div>
+      <h3>Pickup request &amp; approval</h3>
+      <p class="goal"><b>Wireframe goal —</b> make sure the right person collects the right item, without turning venue staff into detectives.</p>
+      <p class="changed"><b>What I designed —</b> a three-step handover flow built around venue approval, not just a code. The owner sends a pickup request from the item page with their phone number and details (P1–P2). The request lands in the venue's dashboard, where staff see who's asking and approve or decline — the decision stays with the people holding the item. On approval, the owner receives a pickup code together with the venue's address and pickup time window (P3), and staff verify the code at handover.</p>
+      <p class="changed">Behind this visible flow sits a layered verification system — identity checks, ownership challenges, and documented handover receipts for the venue's records. I'm keeping the specifics out of a public case study deliberately: it's the anti-fraud layer, and describing it in detail would weaken it. Every step is logged — request, approval, verification, timestamp — creating the custody trail Norwegian lost-property law expects. Happy to walk through the full verification design in a conversation.</p>
+      <div class="figure wide">
+        <img src="assets/wireframe_flow_3.png" alt="Three screens: found item page, approved pickup code F4081 with venue address and hours, and the pickup request form" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 9 · THE VENUE SIDE ========== -->
+<section id="venue" data-screen-label="The venue side">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">9</span> The venue side</div>
+    <h2>The dashboard that pays for everything.</h2>
+    <div class="body">
+      <p>Citizens use the app free — venues are the customers. Reception staff aren't designers' dream users: they're busy, interrupted, and lost property is the least important part of their job. So every dashboard screen was designed around one question: how do I take work away from this person?</p>
+    </div>
+
+    <div class="flow" style="padding-top:28px;">
+      <div class="fnum">Screen 1</div>
+      <h3>Register anywhere</h3>
+      <p class="goal"><b>The problem —</b> Items are found on the floor, at the counter, in a corridor — never at the back-office laptop. Every step between finding an item and logging it ("I'll photograph it and enter it later") is where logging dies. Unlogged items can never be matched.</p>
+      <p class="changed"><b>The design —</b> Venue staff log in as Bedrift in the same mobile app citizens use. Find an item, open the app, photograph it where it lies — the AI fills category, brand, and description from the photo; staff confirm and post. Under 30 seconds, standing up. The item's full lifecycle — pickup requests, custody, the 30-day legal timer — is then managed from the dashboard. The phone captures; the dashboard manages.</p>
+      <div class="figure wide">
+        <img src="assets/Portfolio Screen 1.png" alt="Venue mobile registration — photograph where the item lies, AI fills the rest" />
+      </div>
+      <p class="cap">Venue mobile registration — photograph where the item lies, AI fills the rest · Demo venue account</p>
+    </div>
+
+    <div class="flow">
+      <div class="fnum">Screen 2</div>
+      <h3>Pickup requests</h3>
+      <p class="goal"><b>The problem —</b> Staff at the counter deciding whether a stranger owns a wallet — with a queue behind them.</p>
+      <p class="changed"><b>The design —</b> The decision moves off the counter. Requests arrive in a queue with the claimant's details; staff approve or decline between tasks, on their own time. By the time someone walks in, they're already expected — the counter moment is just a code check.</p>
+      <div class="figure wide">
+        <img src="assets/Portfolio Screen 2.png" alt="Pickup requests — approve or decline before anyone arrives at the counter" />
+      </div>
+      <p class="cap">Pickup requests — approve or decline before anyone arrives at the counter · Demo venue account</p>
+    </div>
+
+    <div class="flow">
+      <div class="fnum">Screen 3</div>
+      <h3>Compliance view</h3>
+      <p class="goal"><b>The problem —</b> Norwegian law gives venues real duties — 30-day holding, police handover documents, finder's fee — and most venues quietly fail them because the paperwork is manual.</p>
+      <p class="changed"><b>The design —</b> The law runs itself. The 30-day timer starts when the item is logged. The handover document and fee calculation generate automatically when it expires. Staff never operate compliance — the system does it while they work.</p>
+      <div class="figure wide">
+        <img src="assets/Portfolio Screen 3.png" alt="Compliance view — 30-day timers, Lost and Found Act export, DPIA status" />
+      </div>
+      <p class="cap">Compliance view — 30-day timers, Lost and Found Act export, DPIA status · Demo venue account</p>
+    </div>
+
+    <div class="body">
+      <p>Mobile captures, dashboard manages — same account, same feed, no transfer step in between.</p>
+    </div>
+    <p class="takeaway"><span class="tk">In short</span> Three screens, one principle: the dashboard doesn't ask staff to do lost-and-found work — it does the work, and asks them to confirm.</p>
+  </div>
+</section>
+
+<!-- ========== 10 · HOW IT WORKS ========== -->
+<section id="howitworks" data-screen-label="How it works">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">10</span> How it works</div>
+    <h2>Three engineering layers run under one feed.</h2>
+    <div class="layers">
+      <div class="layer">
+        <div class="lk">Layer 01</div>
+        <h4>Unified posting</h4>
+        <p>Citizens post from the mobile app in about 30 seconds. Venues post from the SaaS dashboard. Same data model, same feed.</p>
+      </div>
+      <div class="layer">
+        <div class="lk">Layer 02</div>
+        <h4>Four-way AI matching</h4>
+        <p>Built on Google Gemini. Reads photos; extracts brand, type, colour, and distinguishing features. Confidence-scored, typically 65–90% in Norwegian. Recognizes Nordic brands — Norrøna, Bergans, Helly Hansen, Fjällräven.</p>
+      </div>
+      <div class="layer">
+        <div class="lk">Layer 03</div>
+        <h4>Messaging &amp; pickup codes</h4>
+        <p>Owner and finder coordinate inside the app. A pickup code gates every handover so no false claim completes. Full custody log for the venue.</p>
+      </div>
+    </div>
+    <p class="cap">Built with WCAG 2.1 AA accessibility from the first sprint.</p>
+  </div>
+</section>
+
+<!-- ========== 11 · REFLECTION ========== -->
+<section id="reflection" data-screen-label="Reflection">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">11</span> What I'd do differently</div>
+    <h2>Two honest lessons.</h2>
+    <div class="lessons">
+      <div class="lesson">
+        <div class="ln">01</div>
+        <h4>Validate the venue sales process before building the venue dashboard.</h4>
+        <p>I built the dashboard from my own model of what venues needed, then went out to find venues. The right order was the opposite — talk to twenty venues first, listen to what reception staff actually struggle with, then build. The Rebel AS LOI came late enough that I'd already over-engineered parts of the dashboard. We have since simplified.</p>
+      </div>
+      <div class="lesson">
+        <div class="ln">02</div>
+        <h4>Name the engineering gap publicly, not just internally.</h4>
+        <p>As a sole designer-builder, I underestimated how much investor and partner conversations would slow down when the engineering depth wasn't visible. We now name the gap in every external conversation — first full-time engineer joining Q3 2026, senior hire alongside the 2027 seed. Honesty about gaps removes more friction than any polished pitch deck does.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="footer-divider"></div>
+<footer class="footer">
+  <div class="footer__inner">
+    <p class="footer__heading">Let's Connect</p>
+    <p class="footer__sub">Feel free to reach out for collaborations or just a friendly hello</p>
+    <a href="mailto:numan@hellonuman.com" class="footer__email">numan@hellonuman.com</a>
+  </div>
+</footer>
+
+<script src="animations.js"></script>
+<script>
+(function(){
+  var bar = document.querySelector('.progress');
+  var links = [].slice.call(document.querySelectorAll('.toc a'));
+  var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  function onScroll(){
+    var st = window.scrollY || document.documentElement.scrollTop;
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    if (bar) bar.style.width = (h > 0 ? (st / h * 100) : 0) + '%';
+    var idx = 0, mark = st + window.innerHeight * 0.33;
+    for (var i = 0; i < sections.length; i++){
+      if (sections[i] && sections[i].offsetTop <= mark) idx = i;
+    }
+    links.forEach(function(a, i){ a.classList.toggle('active', i === idx); });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+})();
+</script>
+
+</body>
+</html>
