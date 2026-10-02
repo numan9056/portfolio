@@ -1,3 +1,44 @@
 {
-  "projects": []
+  "projects": [
+    {
+      "title": "MistetFunnet App Design",
+      "category": "ui",
+      "year": "2024",
+      "image": "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=600&fit=crop",
+      "description": "Complete redesign of MistetFunnet mobile app with focus on user experience and accessibility. The new design simplifies the lost-and-found process and improves user engagement.",
+      "images": [
+        "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=900&fit=crop",
+        "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1200&h=900&fit=crop",
+        "https://images.unsplash.com/photo-1554774853-b3a961f7b9de?w=1200&h=900&fit=crop"
+      ],
+      "videos": [],
+      "published": true
+    },
+    {
+      "title": "Branding Guidelines",
+      "category": "branding",
+      "year": "2023",
+      "image": "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=600&fit=crop",
+      "description": "Comprehensive branding system including logo guidelines, color palettes, typography standards, and brand voice documentation.",
+      "images": [
+        "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=900&fit=crop",
+        "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=900&fit=crop"
+      ],
+      "videos": [],
+      "published": true
+    },
+    {
+      "title": "Digital Campaign",
+      "category": "campaign",
+      "year": "2024",
+      "image": "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=600&fit=crop",
+      "description": "Multi-channel marketing campaign for product launch across social media, email, and digital advertising.",
+      "images": [
+        "https://images.unsplash.com/photo-1460925895917-adf4e7f5b51f?w=1200&h=900&fit=crop",
+        "https://images.unsplash.com/photo-1557821552-17105176677c?w=1200&h=900&fit=crop"
+      ],
+      "videos": [],
+      "published": true
+    }
+  ]
 }

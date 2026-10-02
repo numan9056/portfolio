@@ -338,9 +338,10 @@
       return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
-    function renderCard(p) {
+    function renderCard(p, index) {
       var a = document.createElement('a');
       a.className = 'pg-item';
+      a.href = 'project-detail.html?id=' + index;
       a.dataset.category = p.category || 'ui';
       var inner = '';
       if (p.image) {
@@ -389,8 +390,8 @@
           return;
         }
 
-        projects.forEach(function(p) {
-          var card = renderCard(p);
+        projects.forEach(function(p, i) {
+          var card = renderCard(p, i);
           grid.appendChild(card);
           allItems.push(card);
         });

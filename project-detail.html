@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project — Numan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,500&family=Roboto+Condensed:ital,wght@1,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── PROJECT DETAIL PAGE ─────────────────────────────── */
+    .detail-header {
+      padding: 72px 48px;
+      border-bottom: 1px solid #e4e2de;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .detail-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #007891;
+      text-decoration: none;
+      margin-bottom: 24px;
+      transition: gap 0.2s ease;
+    }
+
+    .detail-back:hover {
+      gap: 12px;
+    }
+
+    .detail-title {
+      font-size: 48px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .detail-meta {
+      display: flex;
+      gap: 32px;
+      font-size: 14px;
+      color: #636363;
+    }
+
+    .detail-meta-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .detail-meta-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 4px;
+    }
+
+    .detail-meta-value {
+      font-size: 14px;
+      color: #111;
+    }
+
+    /* ── GALLERY SECTION ─────────────────────────────────── */
+    .detail-gallery {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 64px 48px;
+    }
+
+    .gallery-container {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    /* Thumbnail section */
+    .gallery-thumbnail {
+      border-radius: 12px;
+      overflow: hidden;
+      background: #f2f1ee;
+      aspect-ratio: 16/9;
+    }
+
+    .gallery-thumbnail img,
+    .gallery-thumbnail video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-thumbnail video {
+      background: #000;
+    }
+
+    /* Video player overlay */
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.3);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      cursor: pointer;
+    }
+
+    .gallery-thumbnail:hover .video-overlay {
+      opacity: 1;
+    }
+
+    .play-btn {
+      width: 56px;
+      height: 56px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    .play-btn svg {
+      width: 24px;
+      height: 24px;
+      margin-left: 2px;
+    }
+
+    /* Additional images section */
+    .gallery-images {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .gallery-image {
+      border-radius: 12px;
+      overflow: hidden;
+      background: #f2f1ee;
+      aspect-ratio: 16/9;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .gallery-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Description section */
+    .detail-description {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 64px 48px;
+      border-top: 1px solid #e4e2de;
+    }
+
+    .detail-description h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #111;
+    }
+
+    .detail-description p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #636363;
+      margin-bottom: 16px;
+    }
+
+    /* Footer */
+    .detail-footer {
+      padding: 64px 48px;
+      background: #f9f8f6;
+      text-align: center;
+      border-top: 1px solid #e4e2de;
+    }
+
+    .detail-footer-text {
+      font-size: 16px;
+      color: #636363;
+      margin-bottom: 20px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      padding: 12px 28px;
+      background: #007891;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: #005f75;
+      transform: translateY(-2px);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .detail-header {
+        padding: 48px 24px;
+      }
+
+      .detail-title {
+        font-size: 32px;
+      }
+
+      .detail-meta {
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .detail-gallery {
+        padding: 40px 24px;
+      }
+
+      .gallery-container {
+        gap: 32px;
+      }
+
+      .gallery-images {
+        gap: 32px;
+      }
+
+      .detail-description {
+        padding: 40px 24px;
+      }
+
+      .detail-footer {
+        padding: 40px 24px;
+      }
+    }
+
+    /* Loading state */
+    .loading {
+      text-align: center;
+      padding: 100px 48px;
+      color: #999;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 100px 48px;
+      color: #aaa;
+    }
+  </style>
+  <script>var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t);</script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav__logo">
+      <img src="assets/logo.svg" alt="nümnʊ" height="34" />
+    </a>
+    <ul class="nav__links">
+      <li><a href="index.html" class="nav__link">Home</a></li>
+      <li><a href="about.html" class="nav__link">About</a></li>
+      <li><a href="portfolio.html" class="nav__link nav__link--active">Portfolio</a></li>
+      <li><a href="contact.html" class="nav__link">Contact</a></li>
+    </ul>
+    <button class="nav__toggle" id="theme-toggle" aria-label="Toggle theme">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <circle cx="11" cy="11" r="10" class="toggle-light" fill="#e0ddd8"/>
+        <path d="M11 1a10 10 0 0 1 0 20V1z" class="toggle-dark" fill="#444"/>
+        <circle cx="11" cy="11" r="10" class="toggle-ring" stroke="#ccc" stroke-width="1" fill="none"/>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- PROJECT HEADER -->
+  <header class="detail-header">
+    <a href="portfolio.html" class="detail-back">
+      <span>←</span>
+      <span>Back to Portfolio</span>
+    </a>
+    <h1 class="detail-title" id="projectTitle">Project Title</h1>
+    <div class="detail-meta">
+      <div class="detail-meta-item">
+        <span class="detail-meta-label">Category</span>
+        <span class="detail-meta-value" id="projectCategory">UI Design</span>
+      </div>
+      <div class="detail-meta-item">
+        <span class="detail-meta-label">Year</span>
+        <span class="detail-meta-value" id="projectYear">2024</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- GALLERY -->
+  <section class="detail-gallery">
+    <div class="gallery-container" id="galleryContainer">
+      <!-- Thumbnail -->
+      <div class="gallery-thumbnail" id="thumbnailContainer">
+        <img id="thumbnailImg" src="" alt="Project thumbnail" />
+      </div>
+
+      <!-- Additional images -->
+      <div class="gallery-images" id="galleryImages">
+        <!-- Images injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- DESCRIPTION -->
+  <section class="detail-description" id="descriptionSection">
+    <h2>About this project</h2>
+    <p id="projectDescription">No description provided.</p>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer-divider"></div>
+  <footer class="footer" id="contact">
+    <div class="footer__inner">
+      <p class="footer__heading">Let's Connect</p>
+      <p class="footer__sub">Feel free to reach out for collaborations or just a friendly hello</p>
+      <a href="mailto:numan@hellonuman.com" class="footer__email">numan@hellonuman.com</a>
+      <div class="footer__socials">
+        <a href="#" class="footer__social" aria-label="Facebook">
+          <svg width="33" height="33" viewBox="0 0 33 33" fill="none">
+            <path d="M18 33V18h5l1-6h-6v-3.3C18 7 18.5 6 21 6h3V0s-1.5-.2-3.8-.2C13.5.8 11 4 11 9.5V12H6v6h5v15h7z" fill="#636363"/>
+          </svg>
+        </a>
+        <a href="#" class="footer__social" aria-label="Instagram">
+          <svg width="33" height="33" viewBox="0 0 33 33" fill="none">
+            <rect x="2" y="2" width="29" height="29" rx="8" stroke="#636363" stroke-width="2.2"/>
+            <circle cx="16.5" cy="16.5" r="5.5" stroke="#636363" stroke-width="2.2"/>
+            <circle cx="25" cy="8" r="2" fill="#636363"/>
+          </svg>
+        </a>
+        <a href="#" class="footer__social" aria-label="LinkedIn">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="2" y="2" width="28" height="28" rx="6" stroke="#636363" stroke-width="2.2"/>
+            <circle cx="10" cy="10" r="1.5" fill="#636363"/>
+            <path d="M10 14v9" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M15 23v-5c0-2.2 1.2-3.5 3.5-3.5S22 15.8 22 18v5" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M15 14v9" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <a href="#" class="footer__social" aria-label="Behance">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="2" y="2" width="28" height="28" rx="6" stroke="#636363" stroke-width="2.2"/>
+            <path d="M9 9h6c2.5 0 4 1.2 4 3.2s-1.5 3.3-3.5 3.3H9V9z" stroke="#636363" stroke-width="1.8"/>
+            <path d="M9 16h7c2.5 0 4 1.2 4 3.4S18.5 23 16 23H9V16z" stroke="#636363" stroke-width="1.8"/>
+            <path d="M21 11h6" stroke="#636363" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="animations.js"></script>
+  <script>
+    const CAT_LABEL = {
+      ui: 'UI Design',
+      graphic: 'Graphic Design',
+      branding: 'Branding',
+      campaign: 'Campaign Design'
+    };
+
+    // Get project ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const projectId = parseInt(urlParams.get('id'));
+
+    if (isNaN(projectId)) {
+      document.body.innerHTML = '<div class="empty-state">Project not found. <a href="portfolio.html">Back to portfolio</a></div>';
+    } else {
+      fetch('data/projects.json?v=' + Date.now())
+        .then(r => r.json())
+        .then(data => {
+          const projects = (data.projects || []).filter(p => p.published !== false);
+          const project = projects[projectId];
+
+          if (!project) {
+            document.body.innerHTML = '<div class="empty-state">Project not found. <a href="portfolio.html">Back to portfolio</a></div>';
+            return;
+          }
+
+          // Set page title
+          document.title = (project.title || 'Project') + ' — Numan';
+
+          // Populate header
+          document.getElementById('projectTitle').textContent = project.title || 'Untitled';
+          document.getElementById('projectCategory').textContent = CAT_LABEL[project.category] || project.category;
+          document.getElementById('projectYear').textContent = project.year || '—';
+
+          // Populate thumbnail
+          if (project.image) {
+            document.getElementById('thumbnailImg').src = project.image;
+            document.getElementById('thumbnailImg').alt = project.title || 'Thumbnail';
+          }
+
+          // Populate additional images/videos
+          const galleryImages = document.getElementById('galleryImages');
+          galleryImages.innerHTML = '';
+
+          const images = project.images || [];
+          const videos = project.videos || [];
+
+          // Add images
+          images.forEach(imgSrc => {
+            const div = document.createElement('div');
+            div.className = 'gallery-image';
+            div.innerHTML = `<img src="${imgSrc}" alt="${project.title}" />`;
+            galleryImages.appendChild(div);
+          });
+
+          // Add videos
+          videos.forEach(videoSrc => {
+            const div = document.createElement('div');
+            div.className = 'gallery-image';
+            div.style.background = '#000';
+            div.style.position = 'relative';
+            div.innerHTML = `
+              <video src="${videoSrc}" controls style="width:100%;height:100%;object-fit:cover;"></video>
+            `;
+            galleryImages.appendChild(div);
+          });
+
+          // Populate description
+          if (project.description) {
+            document.getElementById('projectDescription').textContent = project.description;
+          } else {
+            document.getElementById('descriptionSection').style.display = 'none';
+          }
+
+          // Show empty state if no images
+          if (images.length === 0 && videos.length === 0) {
+            galleryImages.innerHTML = '<div class="empty-state">No additional images or videos yet.</div>';
+          }
+        })
+        .catch(err => {
+          console.error('Error loading project:', err);
+          document.body.innerHTML = '<div class="empty-state">Error loading project. <a href="portfolio.html">Back to portfolio</a></div>';
+        });
+    }
+  </script>
+</body>
+</html>
