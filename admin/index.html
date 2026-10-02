@@ -106,7 +106,7 @@
     }
     .modal-backdrop.open { display: flex; }
     .modal {
-      background: #fff; border-radius: 20px; width: 100%; max-width: 560px;
+      background: #fff; border-radius: 20px; width: 100%; max-width: 640px;
       max-height: 90vh; overflow-y: auto; padding: 32px; position: relative;
     }
     .modal__title { font-size: 20px; font-weight: 700; margin-bottom: 24px; }
@@ -141,6 +141,35 @@
     .upload-preview { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; display: none; margin-bottom: 8px; }
     .upload-preview.show { display: block; }
     .upload-change { font-size: 12px; color: #007891; cursor: pointer; text-decoration: underline; }
+
+    /* ── PROJECT CONTENT (Behance-style blocks) ───── */
+    .media-hint { font-size: 12px; color: #aaa; margin: -2px 0 10px; }
+    .media-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+    .media-item {
+      display: flex; align-items: center; gap: 12px; padding: 8px;
+      border: 1.5px solid #e4e2de; border-radius: 10px; background: #fff;
+    }
+    .media-item__thumb {
+      width: 84px; height: 56px; border-radius: 6px; object-fit: cover; background: #111;
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px;
+    }
+    .media-item__info { flex: 1; min-width: 0; }
+    .media-item__type { font-size: 13px; font-weight: 500; }
+    .media-item__name { font-size: 12px; color: #aaa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .media-item__btns { display: flex; gap: 4px; }
+    .media-item__btn {
+      width: 30px; height: 30px; border-radius: 8px; border: 1.5px solid #e4e2de; background: #fff;
+      cursor: pointer; font-size: 13px; color: #636363; display: flex; align-items: center; justify-content: center;
+    }
+    .media-item__btn:hover { border-color: #007891; color: #007891; }
+    .media-item__btn:disabled { opacity: .35; cursor: not-allowed; }
+    .media-item__btn--del:hover { border-color: #e05a5a; color: #e05a5a; }
+    .media-empty { font-size: 13px; color: #bbb; padding: 18px; text-align: center; border: 2px dashed #e4e2de; border-radius: 10px; margin-bottom: 10px; }
+    .media-add { display: flex; gap: 8px; flex-wrap: wrap; }
+    .media-add input[type=file] { display: none; }
+    .media-progress { margin-top: 10px; font-size: 13px; color: #007891; font-weight: 500; display: none; }
+    .media-bar { height: 4px; background: #e4e2de; border-radius: 2px; margin-top: 6px; overflow: hidden; display: none; }
+    .media-bar__fill { height: 100%; width: 0; background: #007891; transition: width .2s; }
 
     .toggle-row { display: flex; align-items: center; justify-content: space-between; }
     .toggle-label { font-size: 14px; }
@@ -216,7 +245,7 @@
     <button class="modal__close" id="modal-close">✕</button>
 
     <div class="form-group">
-      <label class="form-label">Cover Image</label>
+      <label class="form-label">Thumbnail (shown in the gallery grid)</label>
       <img id="img-preview" class="upload-preview" />
       <div class="upload-zone" id="upload-zone">
         <input type="file" id="img-input" accept="image/*" />
@@ -255,6 +284,21 @@
     </div>
 
     <div class="form-group">
+      <label class="form-label">Project Content</label>
+      <p class="media-hint">Add images and videos. They appear on the project page top to bottom, in this order.</p>
+      <div id="media-list" class="media-list"></div>
+      <div class="media-add">
+        <button type="button" class="btn btn--outline" id="add-images-btn">+ Images</button>
+        <button type="button" class="btn btn--outline" id="add-video-btn">+ Video file</button>
+        <button type="button" class="btn btn--outline" id="add-embed-btn">+ YouTube / Vimeo link</button>
+        <input type="file" id="media-images-input" accept="image/*" multiple />
+        <input type="file" id="media-video-input" accept="video/mp4,video/webm,video/quicktime" />
+      </div>
+      <p class="media-progress" id="media-progress"></p>
+      <div class="media-bar" id="media-bar"><div class="media-bar__fill" id="media-bar-fill"></div></div>
+    </div>
+
+    <div class="form-group">
       <div class="toggle-row">
         <div>
           <div class="toggle-label">Published</div>
@@ -281,6 +325,9 @@
   var editingIndex = -1;
   var uploadedUrl  = null;
   var adminPass    = '';
+  var mediaItems   = [];
+  var PART_SIZE    = 3 * 1024 * 1024;   // must not exceed MAX_PART in the function
+  var MAX_VIDEO_MB = 200;
 
   // ── LOGIN ─────────────────────────────────────────────
   document.getElementById('login-btn').onclick = doLogin;
@@ -380,6 +427,9 @@
     }
     document.getElementById('img-input').value = '';
     document.getElementById('upload-progress').style.display = 'none';
+    mediaItems = (p.media || []).map(function(m) { return { type: m.type, url: m.url, name: m.name || '' }; });
+    renderMedia();
+    setMediaProgress('');
     document.getElementById('modal').classList.add('open');
   }
 
@@ -440,20 +490,190 @@
     saveBtn.disabled = false;
   }
 
+  // ── PROJECT CONTENT (images, videos, links) ────────────
+  function renderMedia() {
+    var list = document.getElementById('media-list');
+    if (!mediaItems.length) {
+      list.innerHTML = '<div class="media-empty">No content yet. Add images or a video below.</div>';
+      return;
+    }
+    var LABEL = { image: 'Image', video: 'Video', embed: 'Video link' };
+    list.innerHTML = mediaItems.map(function(m, i) {
+      var thumb = m.type === 'image'
+        ? '<img class="media-item__thumb" src="' + escHtml(m.url) + '" />'
+        : '<div class="media-item__thumb">▶</div>';
+      return '<div class="media-item">' + thumb
+        + '<div class="media-item__info">'
+        +   '<div class="media-item__type">' + (i + 1) + '. ' + LABEL[m.type] + '</div>'
+        +   '<div class="media-item__name">' + escHtml(m.name || m.url) + '</div>'
+        + '</div>'
+        + '<div class="media-item__btns">'
+        +   '<button type="button" class="media-item__btn" title="Move up" onclick="moveMedia(' + i + ',-1)"' + (i === 0 ? ' disabled' : '') + '>↑</button>'
+        +   '<button type="button" class="media-item__btn" title="Move down" onclick="moveMedia(' + i + ',1)"' + (i === mediaItems.length - 1 ? ' disabled' : '') + '>↓</button>'
+        +   '<button type="button" class="media-item__btn media-item__btn--del" title="Remove" onclick="removeMedia(' + i + ')">✕</button>'
+        + '</div></div>';
+    }).join('');
+  }
+
+  function moveMedia(i, dir) {
+    var j = i + dir;
+    if (j < 0 || j >= mediaItems.length) return;
+    var t = mediaItems[i]; mediaItems[i] = mediaItems[j]; mediaItems[j] = t;
+    renderMedia();
+  }
+
+  function removeMedia(i) { mediaItems.splice(i, 1); renderMedia(); }
+
+  function setMediaProgress(text, fraction) {
+    var el = document.getElementById('media-progress'), bar = document.getElementById('media-bar');
+    el.textContent = text; el.style.display = text ? 'block' : 'none';
+    bar.style.display = (text && fraction != null) ? 'block' : 'none';
+    if (fraction != null) document.getElementById('media-bar-fill').style.width = Math.round(fraction * 100) + '%';
+  }
+
+  function setBusy(busy) {
+    document.getElementById('modal-save').disabled = busy;
+    ['add-images-btn', 'add-video-btn', 'add-embed-btn'].forEach(function(id) { document.getElementById(id).disabled = busy; });
+  }
+
+  // Upload any file; big ones go up in parts (Netlify allows ~6 MB per request).
+  async function uploadBlob(blob, key, onProgress) {
+    var auth = { 'X-Admin-Password': adminPass };
+    if (blob.size <= PART_SIZE) {
+      var form = new FormData();
+      form.append('file', blob, key);
+      form.append('key', key);
+      var res  = await fetch(API + '?action=upload', { method: 'POST', headers: auth, body: form });
+      var data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Upload failed');
+      if (onProgress) onProgress(1);
+      return data.url;
+    }
+    var parts = Math.ceil(blob.size / PART_SIZE);
+    for (var i = 0; i < parts; i++) {
+      var piece = blob.slice(i * PART_SIZE, (i + 1) * PART_SIZE);
+      var ok = false, lastErr;
+      for (var attempt = 0; attempt < 3 && !ok; attempt++) {
+        try {
+          var f = new FormData();
+          f.append('file', piece, key + '.part' + i);
+          f.append('key', key);
+          f.append('index', String(i));
+          var r = await fetch(API + '?action=upload-part', { method: 'POST', headers: auth, body: f });
+          if (!r.ok) throw new Error('Part ' + (i + 1) + ' failed (' + r.status + ')');
+          ok = true;
+        } catch (e) { lastErr = e; }
+      }
+      if (!ok) throw lastErr;
+      if (onProgress) onProgress((i + 1) / parts);
+    }
+    var fin = await fetch(API + '?action=upload-finish', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Password': adminPass },
+      body: JSON.stringify({ key: key, parts: parts, size: blob.size, partSize: PART_SIZE, contentType: blob.type })
+    });
+    var done = await fin.json();
+    if (!fin.ok) throw new Error(done.error || 'Upload failed');
+    return done.url;
+  }
+
+  function mediaKey(ext) {
+    return slugify(document.getElementById('f-title').value || 'project') + '-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6) + '.' + ext;
+  }
+
+  document.getElementById('add-images-btn').onclick = function() { document.getElementById('media-images-input').click(); };
+  document.getElementById('add-video-btn').onclick  = function() { document.getElementById('media-video-input').click(); };
+
+  document.getElementById('media-images-input').onchange = async function(e) {
+    var files = Array.prototype.slice.call(e.target.files).filter(function(f) { return f.type.indexOf('image/') === 0; });
+    e.target.value = '';
+    if (!files.length) return;
+    setBusy(true);
+    var added = 0;
+    for (var i = 0; i < files.length; i++) {
+      var label = 'Uploading image ' + (i + 1) + ' of ' + files.length + '…';
+      setMediaProgress(label, i / files.length);
+      try {
+        // GIFs are kept as they are so they stay animated.
+        var isGif = files[i].type === 'image/gif';
+        var blob  = isGif ? files[i] : await compressImage(files[i], 1920, 0.9);
+        var url   = await uploadBlob(blob, mediaKey(isGif ? 'gif' : 'jpg'));
+        mediaItems.push({ type: 'image', url: url, name: files[i].name });
+        added++;
+        renderMedia();
+      } catch (err) {
+        toast('Could not upload ' + files[i].name + ': ' + err.message, 'error');
+      }
+    }
+    setMediaProgress('');
+    setBusy(false);
+    if (added) toast(added + (added === 1 ? ' image added' : ' images added'), 'success');
+  };
+
+  document.getElementById('media-video-input').onchange = async function(e) {
+    var file = e.target.files[0];
+    e.target.value = '';
+    if (!file) return;
+    if (file.size > MAX_VIDEO_MB * 1024 * 1024) {
+      toast('Video is larger than ' + MAX_VIDEO_MB + ' MB. Use a YouTube or Vimeo link instead.', 'error');
+      return;
+    }
+    setBusy(true);
+    try {
+      var ext = (file.name.split('.').pop() || 'mp4').toLowerCase();
+      var url = await uploadBlob(file, mediaKey(ext), function(f) {
+        setMediaProgress('Uploading video… ' + Math.round(f * 100) + '%', f);
+      });
+      mediaItems.push({ type: 'video', url: url, name: file.name });
+      renderMedia();
+      toast('Video added', 'success');
+    } catch (err) {
+      toast('Video upload failed: ' + err.message, 'error');
+    }
+    setMediaProgress('');
+    setBusy(false);
+  };
+
+  // Turn a YouTube or Vimeo page address into its player address.
+  function embedUrl(link) {
+    var m = /(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{6,})/.exec(link);
+    if (m) return 'https://www.youtube-nocookie.com/embed/' + m[1];
+    m = /vimeo\.com\/(?:video\/)?(\d+)/.exec(link);
+    if (m) return 'https://player.vimeo.com/video/' + m[1];
+    return null;
+  }
+
+  document.getElementById('add-embed-btn').onclick = function() {
+    var link = prompt('Paste a YouTube or Vimeo link');
+    if (!link) return;
+    var url = embedUrl(link.trim());
+    if (!url) { toast('That does not look like a YouTube or Vimeo link', 'error'); return; }
+    mediaItems.push({ type: 'embed', url: url, name: link.trim() });
+    renderMedia();
+  };
+
   // ── SAVE ───────────────────────────────────────────────
   document.getElementById('modal-save').onclick = async function() {
     var title = document.getElementById('f-title').value.trim();
     if (!title) { toast('Please enter a project title', 'error'); return; }
 
-    var existing = editingIndex >= 0 ? (projects[editingIndex].image || '') : '';
+    var previous = editingIndex >= 0 ? projects[editingIndex] : {};
+    var existing = previous.image || '';
     var project  = {
+      id:          previous.id || (slugify(title) || 'project') + '-' + Date.now().toString(36),
       title:       title,
       category:    document.getElementById('f-category').value,
       year:        document.getElementById('f-year').value.trim(),
       description: document.getElementById('f-desc').value.trim(),
       published:   document.getElementById('f-published').classList.contains('on'),
-      image:       uploadedUrl || existing
+      image:       uploadedUrl || existing,
+      media:       mediaItems.map(function(m) { return { type: m.type, url: m.url, name: m.name }; })
     };
+    // No thumbnail chosen: use the first image of the content.
+    if (!project.image) {
+      var firstImg = project.media.filter(function(m) { return m.type === 'image'; })[0];
+      if (firstImg) project.image = firstImg.url;
+    }
 
     var btn = document.getElementById('modal-save');
     btn.textContent = 'Saving…'; btn.disabled = true;
@@ -475,7 +695,7 @@
       renderGrid();
       closeModal();
     } catch(e) {
-      if (editingIndex >= 0) { /* already updated in array */ } else { projects.shift(); }
+      if (editingIndex >= 0) { projects[editingIndex] = previous; } else { projects.shift(); }
       toast('Could not save — ' + e.message, 'error');
     }
     btn.textContent = 'Save Project'; btn.disabled = false;
@@ -505,9 +725,12 @@
         var scale = Math.min(1, maxW / img.width);
         var w = Math.round(img.width * scale), h = Math.round(img.height * scale);
         var c = document.createElement('canvas'); c.width = w; c.height = h;
-        c.getContext('2d').drawImage(img, 0, 0, w, h);
-        c.toBlob(resolve, 'image/jpeg', quality);
+        var ctx = c.getContext('2d');
+        ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h);   // transparent PNGs get a white background
+        ctx.drawImage(img, 0, 0, w, h);
+        c.toBlob(function(out) { resolve(out || file); }, 'image/jpeg', quality);
       };
+      img.onerror = function() { URL.revokeObjectURL(url); resolve(file); };
       img.src = url;
     });
   }

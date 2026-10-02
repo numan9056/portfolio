@@ -559,11 +559,18 @@
       if (e.key === 'ArrowRight' && lbIndex < allProjects.length - 1) openLightbox(lbIndex + 1);
     });
 
+    // Stable address for a project. Older projects have no id, so use their image name.
+    function projectId(p, index) {
+      if (p.id) return p.id;
+      var m = /[?&]key=([^&]+)/.exec(p.image || '') || /([^\/]+)$/.exec(p.image || '');
+      return m ? decodeURIComponent(m[1]).replace(/\.\w+$/, '') : String(index);
+    }
+
     // ── CARD RENDER ───────────────────────────────────────
     function renderCard(p, index) {
       var a = document.createElement('a');
       a.className = 'pg-item';
-      a.href = '#';
+      a.href = 'project-detail.html?id=' + encodeURIComponent(projectId(p, index));
       a.dataset.category = p.category || 'ui';
       a.dataset.index = index;
       var inner = '';
@@ -583,10 +590,6 @@
              +   '<span class="pg-item__cat">' + escHtml(CAT_LABEL[p.category] || p.category) + '</span>'
              + '</div>';
       a.innerHTML = inner;
-      a.addEventListener('click', function(e) {
-        e.preventDefault();
-        openLightbox(index);
-      });
       return a;
     }
 
