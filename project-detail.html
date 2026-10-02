@@ -4,267 +4,82 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Project — Numan</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,500&family=Roboto+Condensed:ital,wght@1,500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ── PROJECT DETAIL PAGE ─────────────────────────────── */
-    .detail-header {
-      padding: 72px 48px;
-      border-bottom: 1px solid #e4e2de;
-      max-width: 1200px;
+    /* ── PROJECT PAGE (Behance-style long scroll) ─────────── */
+    .pd-header {
+      max-width: 1400px;
       margin: 0 auto;
+      padding: 56px 48px 36px;
+    }
+    .pd-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 14px; color: #007891; text-decoration: none;
+      margin-bottom: 28px; transition: gap 0.2s ease;
+    }
+    .pd-back:hover { gap: 12px; }
+    .pd-cat {
+      font-size: 12px; font-weight: 500; letter-spacing: 2.5px;
+      text-transform: uppercase; color: #007891; margin-bottom: 12px;
+    }
+    .pd-title {
+      font-size: 48px; font-weight: 700; line-height: 1.1; color: #111;
+      margin-bottom: 14px; max-width: 900px;
+    }
+    .pd-year { font-size: 14px; color: #aaa; margin-bottom: 18px; }
+    .pd-desc {
+      font-size: 17px; line-height: 1.65; color: #636363;
+      max-width: 720px; white-space: pre-line;
     }
 
-    .detail-back {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      color: #007891;
-      text-decoration: none;
-      margin-bottom: 24px;
-      transition: gap 0.2s ease;
-    }
-
-    .detail-back:hover {
-      gap: 12px;
-    }
-
-    .detail-title {
-      font-size: 48px;
-      font-weight: 700;
-      color: #111;
-      margin-bottom: 16px;
-      line-height: 1.1;
-    }
-
-    .detail-meta {
-      display: flex;
-      gap: 32px;
-      font-size: 14px;
-      color: #636363;
-    }
-
-    .detail-meta-item {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .detail-meta-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      color: #999;
-      margin-bottom: 4px;
-    }
-
-    .detail-meta-value {
-      font-size: 14px;
-      color: #111;
-    }
-
-    /* ── GALLERY SECTION ─────────────────────────────────── */
-    .detail-gallery {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 64px 48px;
-    }
-
-    .gallery-container {
-      display: flex;
-      flex-direction: column;
-      gap: 48px;
-    }
-
-    /* Thumbnail section */
-    .gallery-thumbnail {
-      border-radius: 12px;
-      overflow: hidden;
+    /* Content blocks stack with no gap, one after another */
+    .pd-stack {
+      max-width: 1400px;
+      margin: 0 auto 72px;
+      display: flex; flex-direction: column;
       background: #f2f1ee;
-      aspect-ratio: 16/9;
+      min-height: 200px;
     }
+    .pd-block { display: block; width: 100%; }
+    .pd-block img, .pd-block video { display: block; width: 100%; height: auto; }
+    .pd-block video { background: #000; max-height: 100vh; }
+    .pd-block--embed { position: relative; aspect-ratio: 16 / 9; background: #000; }
+    .pd-block--embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .pd-msg { padding: 100px 20px; text-align: center; color: #aaa; font-size: 15px; }
+    .pd-msg a { color: #007891; }
 
-    .gallery-thumbnail img,
-    .gallery-thumbnail video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    /* Previous / next project */
+    .pd-more {
+      max-width: 1400px; margin: 0 auto 80px; padding: 0 48px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
     }
-
-    .gallery-thumbnail video {
-      background: #000;
+    .pd-more__link {
+      display: flex; align-items: center; gap: 16px; padding: 14px;
+      border: 1px solid #e4e2de; border-radius: 14px;
+      text-decoration: none; color: #111; transition: border-color .2s, transform .2s;
     }
+    .pd-more__link:hover { border-color: #007891; transform: translateY(-2px); }
+    .pd-more__link--next { flex-direction: row-reverse; text-align: right; }
+    .pd-more__thumb { width: 96px; height: 64px; object-fit: cover; border-radius: 8px; background: #f2f1ee; flex-shrink: 0; }
+    .pd-more__label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #aaa; margin-bottom: 4px; }
+    .pd-more__title { font-size: 15px; font-weight: 500; line-height: 1.3; }
 
-    /* Video player overlay */
-    .video-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,0.3);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      cursor: pointer;
-    }
+    [data-theme="dark"] .pd-title { color: #e8e4dc; }
+    [data-theme="dark"] .pd-desc  { color: #bbb; }
+    [data-theme="dark"] .pd-cat, [data-theme="dark"] .pd-back { color: #1ab8d8; }
+    [data-theme="dark"] .pd-stack { background: #1c1c1c; }
+    [data-theme="dark"] .pd-more__link { border-color: #333; color: #e8e4dc; }
 
-    .gallery-thumbnail:hover .video-overlay {
-      opacity: 1;
-    }
-
-    .play-btn {
-      width: 56px;
-      height: 56px;
-      background: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-    }
-
-    .play-btn svg {
-      width: 24px;
-      height: 24px;
-      margin-left: 2px;
-    }
-
-    /* Additional images section */
-    .gallery-images {
-      display: flex;
-      flex-direction: column;
-      gap: 48px;
-    }
-
-    .gallery-image {
-      border-radius: 12px;
-      overflow: hidden;
-      background: #f2f1ee;
-      aspect-ratio: 16/9;
-      animation: fadeIn 0.6s ease-out;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .gallery-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* Description section */
-    .detail-description {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 64px 48px;
-      border-top: 1px solid #e4e2de;
-    }
-
-    .detail-description h2 {
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 16px;
-      color: #111;
-    }
-
-    .detail-description p {
-      font-size: 16px;
-      line-height: 1.8;
-      color: #636363;
-      margin-bottom: 16px;
-    }
-
-    /* Footer */
-    .detail-footer {
-      padding: 64px 48px;
-      background: #f9f8f6;
-      text-align: center;
-      border-top: 1px solid #e4e2de;
-    }
-
-    .detail-footer-text {
-      font-size: 16px;
-      color: #636363;
-      margin-bottom: 20px;
-    }
-
-    .back-btn {
-      display: inline-block;
-      padding: 12px 28px;
-      background: #007891;
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
-
-    .back-btn:hover {
-      background: #005f75;
-      transform: translateY(-2px);
-    }
-
-    /* Responsive */
     @media (max-width: 768px) {
-      .detail-header {
-        padding: 48px 24px;
-      }
-
-      .detail-title {
-        font-size: 32px;
-      }
-
-      .detail-meta {
-        gap: 20px;
-        flex-wrap: wrap;
-      }
-
-      .detail-gallery {
-        padding: 40px 24px;
-      }
-
-      .gallery-container {
-        gap: 32px;
-      }
-
-      .gallery-images {
-        gap: 32px;
-      }
-
-      .detail-description {
-        padding: 40px 24px;
-      }
-
-      .detail-footer {
-        padding: 40px 24px;
-      }
-    }
-
-    /* Loading state */
-    .loading {
-      text-align: center;
-      padding: 100px 48px;
-      color: #999;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 100px 48px;
-      color: #aaa;
+      .pd-header { padding: 32px 18px 24px; }
+      .pd-title  { font-size: 30px; }
+      .pd-desc   { font-size: 15px; }
+      .pd-stack  { margin-bottom: 40px; }
+      .pd-more   { grid-template-columns: 1fr; padding: 0 18px; margin-bottom: 48px; }
     }
   </style>
   <script>var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t);</script>
@@ -289,47 +104,34 @@
         <circle cx="11" cy="11" r="10" class="toggle-ring" stroke="#ccc" stroke-width="1" fill="none"/>
       </svg>
     </button>
+    <button class="nav__hamburger" id="nav-hamburger" aria-label="Open menu">
+      <svg class="icon-menu" width="20" height="14" viewBox="0 0 20 14" fill="none" aria-hidden="true"><rect width="20" height="2" rx="1" fill="currentColor"/><rect y="6" width="20" height="2" rx="1" fill="currentColor"/><rect y="12" width="20" height="2" rx="1" fill="currentColor"/></svg>
+      <svg class="icon-close" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="display:none"><line x1="1" y1="1" x2="15" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="15" y1="1" x2="1" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <div class="nav__panel" id="nav-panel">
+      <a href="index.html" class="nav__panel-link">Home</a>
+      <a href="about.html" class="nav__panel-link">About</a>
+      <a href="portfolio.html" class="nav__panel-link nav__panel-link--active">Portfolio</a>
+      <a href="contact.html" class="nav__panel-link">Contact</a>
+    </div>
   </nav>
 
   <!-- PROJECT HEADER -->
-  <header class="detail-header">
-    <a href="portfolio.html" class="detail-back">
-      <span>←</span>
-      <span>Back to Portfolio</span>
-    </a>
-    <h1 class="detail-title" id="projectTitle">Project Title</h1>
-    <div class="detail-meta">
-      <div class="detail-meta-item">
-        <span class="detail-meta-label">Category</span>
-        <span class="detail-meta-value" id="projectCategory">UI Design</span>
-      </div>
-      <div class="detail-meta-item">
-        <span class="detail-meta-label">Year</span>
-        <span class="detail-meta-value" id="projectYear">2024</span>
-      </div>
-    </div>
+  <header class="pd-header">
+    <a href="portfolio.html" class="pd-back"><span>←</span><span>Back to Portfolio</span></a>
+    <p class="pd-cat" id="pd-cat"></p>
+    <h1 class="pd-title" id="pd-title"></h1>
+    <p class="pd-year" id="pd-year"></p>
+    <p class="pd-desc" id="pd-desc"></p>
   </header>
 
-  <!-- GALLERY -->
-  <section class="detail-gallery">
-    <div class="gallery-container" id="galleryContainer">
-      <!-- Thumbnail -->
-      <div class="gallery-thumbnail" id="thumbnailContainer">
-        <img id="thumbnailImg" src="" alt="Project thumbnail" />
-      </div>
+  <!-- PROJECT CONTENT -->
+  <main class="pd-stack" id="pd-stack">
+    <p class="pd-msg">Loading…</p>
+  </main>
 
-      <!-- Additional images -->
-      <div class="gallery-images" id="galleryImages">
-        <!-- Images injected by JS -->
-      </div>
-    </div>
-  </section>
-
-  <!-- DESCRIPTION -->
-  <section class="detail-description" id="descriptionSection">
-    <h2>About this project</h2>
-    <p id="projectDescription">No description provided.</p>
-  </section>
+  <!-- PREVIOUS / NEXT -->
+  <nav class="pd-more" id="pd-more" aria-label="More projects"></nav>
 
   <!-- FOOTER -->
   <div class="footer-divider"></div>
@@ -374,87 +176,107 @@
 
   <script src="animations.js"></script>
   <script>
-    const CAT_LABEL = {
-      ui: 'UI Design',
-      graphic: 'Graphic Design',
-      branding: 'Branding',
-      campaign: 'Campaign Design'
-    };
+    var CAT_LABEL = { ui: 'UI Design', graphic: 'Graphic Design', branding: 'Branding', campaign: 'Campaign Design' };
 
-    // Get project ID from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const projectId = parseInt(urlParams.get('id'));
+    function escHtml(str) {
+      return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
 
-    if (isNaN(projectId)) {
-      document.body.innerHTML = '<div class="empty-state">Project not found. <a href="portfolio.html">Back to portfolio</a></div>';
+    // Stable address for a project. Older projects have no id, so use their image name.
+    function projectId(p, index) {
+      if (p.id) return p.id;
+      var m = /[?&]key=([^&]+)/.exec(p.image || '') || /([^\/]+)$/.exec(p.image || '');
+      return m ? decodeURIComponent(m[1]).replace(/\.\w+$/, '') : String(index);
+    }
+
+    function showMessage(html) {
+      document.getElementById('pd-stack').innerHTML = '<p class="pd-msg">' + html + '</p>';
+    }
+
+    // Content blocks of a project. Older projects only have a cover image.
+    function blocksOf(p) {
+      if (p.media && p.media.length) return p.media;
+      var blocks = [];
+      (p.images || []).forEach(function(u) { blocks.push({ type: 'image', url: u }); });
+      (p.videos || []).forEach(function(u) { blocks.push({ type: 'video', url: u }); });
+      if (!blocks.length && p.image) blocks.push({ type: 'image', url: p.image });
+      return blocks;
+    }
+
+    function renderBlock(b, title, eager) {
+      var el = document.createElement('div');
+      el.className = 'pd-block';
+      if (b.type === 'video') {
+        var v = document.createElement('video');
+        v.src = b.url; v.controls = true; v.playsInline = true; v.preload = 'metadata';
+        el.appendChild(v);
+      } else if (b.type === 'embed') {
+        // Only known players are embedded.
+        if (!/^https:\/\/(www\.youtube-nocookie\.com\/embed\/|player\.vimeo\.com\/video\/)[\w-]+$/.test(b.url)) return null;
+        el.className += ' pd-block--embed';
+        var f = document.createElement('iframe');
+        f.src = b.url; f.title = title; f.loading = 'lazy'; f.allowFullscreen = true;
+        f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        el.appendChild(f);
+      } else {
+        var img = document.createElement('img');
+        img.src = b.url; img.alt = title;
+        if (!eager) img.loading = 'lazy';
+        el.appendChild(img);
+      }
+      return el;
+    }
+
+    function moreLink(p, id, label, cls) {
+      return '<a class="pd-more__link ' + cls + '" href="project-detail.html?id=' + encodeURIComponent(id) + '">'
+        + (p.image ? '<img class="pd-more__thumb" src="' + escHtml(p.image) + '" alt="" loading="lazy" />' : '')
+        + '<span><span class="pd-more__label" style="display:block">' + label + '</span>'
+        + '<span class="pd-more__title">' + escHtml(p.title) + '</span></span></a>';
+    }
+
+    function show(projects, wanted) {
+      var index = -1;
+      projects.forEach(function(p, i) { if (index < 0 && projectId(p, i) === wanted) index = i; });
+      if (index < 0) { showMessage('Project not found. <a href="portfolio.html">Back to portfolio</a>'); return; }
+
+      var p = projects[index];
+      document.title = (p.title || 'Project') + ' — Numan';
+      document.getElementById('pd-cat').textContent   = CAT_LABEL[p.category] || p.category || '';
+      document.getElementById('pd-title').textContent = p.title || 'Untitled';
+      document.getElementById('pd-year').textContent  = p.year || '';
+      document.getElementById('pd-desc').textContent  = p.description || '';
+      if (!p.year) document.getElementById('pd-year').style.display = 'none';
+      if (!p.description) document.getElementById('pd-desc').style.display = 'none';
+
+      var stack = document.getElementById('pd-stack');
+      stack.innerHTML = '';
+      blocksOf(p).forEach(function(b, i) {
+        var el = renderBlock(b, p.title || 'Project', i === 0);
+        if (el) stack.appendChild(el);
+      });
+      if (!stack.children.length) showMessage('No content has been added to this project yet.');
+
+      var more = '';
+      var prev = projects[index - 1], next = projects[index + 1];
+      more += prev ? moreLink(prev, projectId(prev, index - 1), '← Previous', '') : '<span></span>';
+      more += next ? moreLink(next, projectId(next, index + 1), 'Next →', 'pd-more__link--next') : '';
+      document.getElementById('pd-more').innerHTML = more;
+    }
+
+    var wanted = new URLSearchParams(window.location.search).get('id');
+    if (wanted === null || wanted === '') {
+      showMessage('Project not found. <a href="portfolio.html">Back to portfolio</a>');
     } else {
-      fetch('data/projects.json?v=' + Date.now())
-        .then(r => r.json())
-        .then(data => {
-          const projects = (data.projects || []).filter(p => p.published !== false);
-          const project = projects[projectId];
-
-          if (!project) {
-            document.body.innerHTML = '<div class="empty-state">Project not found. <a href="portfolio.html">Back to portfolio</a></div>';
-            return;
-          }
-
-          // Set page title
-          document.title = (project.title || 'Project') + ' — Numan';
-
-          // Populate header
-          document.getElementById('projectTitle').textContent = project.title || 'Untitled';
-          document.getElementById('projectCategory').textContent = CAT_LABEL[project.category] || project.category;
-          document.getElementById('projectYear').textContent = project.year || '—';
-
-          // Populate thumbnail
-          if (project.image) {
-            document.getElementById('thumbnailImg').src = project.image;
-            document.getElementById('thumbnailImg').alt = project.title || 'Thumbnail';
-          }
-
-          // Populate additional images/videos
-          const galleryImages = document.getElementById('galleryImages');
-          galleryImages.innerHTML = '';
-
-          const images = project.images || [];
-          const videos = project.videos || [];
-
-          // Add images
-          images.forEach(imgSrc => {
-            const div = document.createElement('div');
-            div.className = 'gallery-image';
-            div.innerHTML = `<img src="${imgSrc}" alt="${project.title}" />`;
-            galleryImages.appendChild(div);
-          });
-
-          // Add videos
-          videos.forEach(videoSrc => {
-            const div = document.createElement('div');
-            div.className = 'gallery-image';
-            div.style.background = '#000';
-            div.style.position = 'relative';
-            div.innerHTML = `
-              <video src="${videoSrc}" controls style="width:100%;height:100%;object-fit:cover;"></video>
-            `;
-            galleryImages.appendChild(div);
-          });
-
-          // Populate description
-          if (project.description) {
-            document.getElementById('projectDescription').textContent = project.description;
-          } else {
-            document.getElementById('descriptionSection').style.display = 'none';
-          }
-
-          // Show empty state if no images
-          if (images.length === 0 && videos.length === 0) {
-            galleryImages.innerHTML = '<div class="empty-state">No additional images or videos yet.</div>';
-          }
+      // Same source as the gallery: live API first, static JSON as a fallback.
+      var jsonUrl = 'data/projects.json?v=' + Date.now();
+      fetch('/api/admin?action=projects')
+        .then(function(r) { return r.ok ? r.json() : fetch(jsonUrl).then(function(r2) { return r2.json(); }); })
+        .catch(function() { return fetch(jsonUrl).then(function(r) { return r.json(); }); })
+        .then(function(data) {
+          show((data.projects || []).filter(function(p) { return p.published !== false; }), wanted);
         })
-        .catch(err => {
-          console.error('Error loading project:', err);
-          document.body.innerHTML = '<div class="empty-state">Error loading project. <a href="portfolio.html">Back to portfolio</a></div>';
+        .catch(function() {
+          showMessage('Could not load this project. <a href="portfolio.html">Back to portfolio</a>');
         });
     }
   </script>

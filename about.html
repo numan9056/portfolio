@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About — Numan</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,500&family=Roboto+Condensed:ital,wght@1,500&display=swap" rel="stylesheet" />
@@ -314,6 +315,51 @@
       margin: 0 auto;
     }
 
+    /* ── Mobile (≤ 640px) ── */
+    @media (max-width: 640px) {
+      .a-hero    { padding: 16px 18px 0; }
+      .a-bio     { padding: 28px 18px 0; }
+      .a-bio__statement { font-size: 28px; line-height: 38px; margin-bottom: 18px; }
+      .a-bio__body { font-size: 15px; line-height: 26px; }
+      .a-work    { padding: 32px 18px 0; }
+      .a-work__label { font-size: 22px; }
+      .a-beyond  { padding: 32px 18px 0; }
+      .a-beyond__combined { width: 95%; }
+
+      /* Experience & Education: 4-col → 1-col */
+      .exp-row, .edu-row {
+        grid-template-columns: 1fr;
+        padding: 18px 0;
+        gap: 4px;
+      }
+      .exp-row__gap, .edu-row__gap { display: none; }
+      .exp-row__left {
+        padding-right: 0;
+        margin-bottom: 8px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px 16px;
+      }
+      .edu-row__left { padding-right: 0; margin-bottom: 8px; }
+      .exp-row__loc, .edu-row__loc {
+        padding-left: 0;
+        padding-top: 0;
+        white-space: normal;
+        color: #888;
+        font-size: 12px;
+      }
+    }
+
+    /* ── Small phone (≤ 400px) ── */
+    @media (max-width: 400px) {
+      .a-hero    { padding: 12px 14px 0; }
+      .a-bio     { padding: 22px 14px 0; }
+      .a-bio__statement { font-size: 24px; line-height: 33px; }
+      .a-work    { padding: 28px 14px 0; }
+      .a-beyond  { padding: 28px 14px 0; }
+    }
+
 
   </style>
   <script>var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t);</script>
@@ -338,6 +384,16 @@
         <circle cx="11" cy="11" r="10" class="toggle-ring" stroke="#ccc" stroke-width="1" fill="none"/>
       </svg>
     </button>
+    <button class="nav__hamburger" id="nav-hamburger" aria-label="Open menu">
+      <svg class="icon-menu" width="20" height="14" viewBox="0 0 20 14" fill="none" aria-hidden="true"><rect width="20" height="2" rx="1" fill="currentColor"/><rect y="6" width="20" height="2" rx="1" fill="currentColor"/><rect y="12" width="20" height="2" rx="1" fill="currentColor"/></svg>
+      <svg class="icon-close" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="display:none"><line x1="1" y1="1" x2="15" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="15" y1="1" x2="1" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <div class="nav__panel" id="nav-panel">
+      <a href="index.html" class="nav__panel-link">Home</a>
+      <a href="about.html" class="nav__panel-link nav__panel-link--active">About</a>
+      <a href="portfolio.html" class="nav__panel-link">Portfolio</a>
+      <a href="contact.html" class="nav__panel-link">Contact</a>
+    </div>
   </nav>
 
   <!-- HERO PHOTO -->
@@ -380,7 +436,7 @@
       <div class="exp-row reveal">
         <div class="exp-row__left">
           <div class="exp-row__logo"><img src="assets/logo-big.svg" alt="MistetFunnet" /></div>
-          <div class="exp-row__dates">2025 — Present</div>
+          <div class="exp-row__dates">Jun 2024 — Present</div>
         </div>
         <div class="exp-row__gap"></div>
         <div class="exp-row__main">
