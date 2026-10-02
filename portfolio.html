@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfolio — Numan</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,500&family=Roboto+Condensed:ital,wght@1,500&display=swap" rel="stylesheet" />
@@ -238,6 +239,150 @@
       font-size: 15px;
     }
 
+    /* ── LIGHTBOX ────────────────────────────────────────── */
+    .lb-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(10,10,10,0.92);
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 20px;
+    }
+    .lb-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .lb-panel {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      max-width: 900px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      transform: scale(0.94) translateY(16px);
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+      position: relative;
+    }
+    .lb-backdrop.open .lb-panel {
+      transform: scale(1) translateY(0);
+    }
+
+    .lb-img-wrap {
+      width: 100%;
+      background: #111;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-height: 58vh;
+      overflow: hidden;
+    }
+    .lb-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      max-height: 58vh;
+    }
+
+    .lb-body {
+      padding: 24px 28px 28px;
+      overflow-y: auto;
+    }
+    .lb-cat {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #007891;
+      margin-bottom: 8px;
+    }
+    .lb-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #111;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .lb-year {
+      font-size: 13px;
+      color: #aaa;
+      margin-bottom: 12px;
+    }
+    .lb-desc {
+      font-size: 14px;
+      color: #636363;
+      line-height: 1.65;
+    }
+
+    .lb-close {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(6px);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 17px;
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+    .lb-close:hover { background: rgba(255,255,255,0.3); }
+
+    .lb-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px; height: 40px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(6px);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+    .lb-nav:hover { background: rgba(255,255,255,0.28); }
+    .lb-prev { left: 14px; }
+    .lb-next { right: 14px; }
+    .lb-nav:disabled { opacity: 0.2; cursor: default; }
+
+    @media (max-width: 600px) {
+      .lb-panel { border-radius: 14px; }
+      .lb-body { padding: 18px 20px 24px; }
+      .lb-title { font-size: 18px; }
+    }
+
+    /* ── Mobile (≤ 640px) ── */
+    @media (max-width: 640px) {
+      .pg-header { padding: 40px 18px 24px; }
+      .pg-header__title { font-size: 32px; }
+      .pg-filter { padding: 16px 18px; }
+      .pg-grid { padding: 20px 18px 48px; columns: 2; column-gap: 10px; }
+      .pg-empty { padding: 40px 18px; }
+    }
+
+    /* ── Small phone (≤ 400px) ── */
+    @media (max-width: 400px) {
+      .pg-header { padding: 32px 14px 18px; }
+      .pg-header__title { font-size: 26px; }
+      .pg-filter { padding: 12px 14px; }
+      .pg-grid { padding: 16px 14px 40px; columns: 1; }
+    }
+
   </style>
   <script>var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t);</script>
 </head>
@@ -261,6 +406,16 @@
         <circle cx="11" cy="11" r="10" class="toggle-ring" stroke="#ccc" stroke-width="1" fill="none"/>
       </svg>
     </button>
+    <button class="nav__hamburger" id="nav-hamburger" aria-label="Open menu">
+      <svg class="icon-menu" width="20" height="14" viewBox="0 0 20 14" fill="none" aria-hidden="true"><rect width="20" height="2" rx="1" fill="currentColor"/><rect y="6" width="20" height="2" rx="1" fill="currentColor"/><rect y="12" width="20" height="2" rx="1" fill="currentColor"/></svg>
+      <svg class="icon-close" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="display:none"><line x1="1" y1="1" x2="15" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="15" y1="1" x2="1" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <div class="nav__panel" id="nav-panel">
+      <a href="index.html" class="nav__panel-link">Home</a>
+      <a href="about.html" class="nav__panel-link">About</a>
+      <a href="portfolio.html" class="nav__panel-link nav__panel-link--active">Portfolio</a>
+      <a href="contact.html" class="nav__panel-link">Contact</a>
+    </div>
   </nav>
 
   <!-- PAGE HEADER -->
@@ -284,6 +439,24 @@
     <!-- cards injected by JS -->
 
   </main>
+
+  <!-- LIGHTBOX -->
+  <div class="lb-backdrop" id="lb">
+    <button class="lb-close" id="lb-close">✕</button>
+    <button class="lb-nav lb-prev" id="lb-prev">&#8592;</button>
+    <button class="lb-nav lb-next" id="lb-next">&#8594;</button>
+    <div class="lb-panel">
+      <div class="lb-img-wrap">
+        <img id="lb-img" src="" alt="" />
+      </div>
+      <div class="lb-body">
+        <p class="lb-cat" id="lb-cat"></p>
+        <h2 class="lb-title" id="lb-title"></h2>
+        <p class="lb-year" id="lb-year"></p>
+        <p class="lb-desc" id="lb-desc"></p>
+      </div>
+    </div>
+  </div>
 
   <!-- DIVIDER -->
   <div class="footer-divider"></div>
@@ -333,16 +506,66 @@
     var CAT_LABEL = { ui: 'UI Design', graphic: 'Graphic Design', branding: 'Branding', campaign: 'Campaign Design' };
     var currentFilter = 'all';
     var allItems = [];
+    var allProjects = [];
+    var lbIndex = 0;
 
     function escHtml(str) {
       return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
+    // ── LIGHTBOX ──────────────────────────────────────────
+    var lb        = document.getElementById('lb');
+    var lbImg     = document.getElementById('lb-img');
+    var lbCat     = document.getElementById('lb-cat');
+    var lbTitle   = document.getElementById('lb-title');
+    var lbYear    = document.getElementById('lb-year');
+    var lbDesc    = document.getElementById('lb-desc');
+    var lbPrev    = document.getElementById('lb-prev');
+    var lbNext    = document.getElementById('lb-next');
+
+    function openLightbox(index) {
+      lbIndex = index;
+      var p = allProjects[index];
+      lbImg.src   = p.image || '';
+      lbImg.alt   = p.title || '';
+      lbCat.textContent   = CAT_LABEL[p.category] || p.category || '';
+      lbTitle.textContent = p.title || '';
+      lbYear.textContent  = p.year  || '';
+      lbDesc.textContent  = p.description || '';
+      lbPrev.disabled = index === 0;
+      lbNext.disabled = index === allProjects.length - 1;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('lb-close').onclick = closeLightbox;
+
+    lb.addEventListener('click', function(e) {
+      if (e.target === lb) closeLightbox();
+    });
+
+    lbPrev.onclick = function() { if (lbIndex > 0) openLightbox(lbIndex - 1); };
+    lbNext.onclick = function() { if (lbIndex < allProjects.length - 1) openLightbox(lbIndex + 1); };
+
+    document.addEventListener('keydown', function(e) {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape')      closeLightbox();
+      if (e.key === 'ArrowLeft'  && lbIndex > 0)                      openLightbox(lbIndex - 1);
+      if (e.key === 'ArrowRight' && lbIndex < allProjects.length - 1) openLightbox(lbIndex + 1);
+    });
+
+    // ── CARD RENDER ───────────────────────────────────────
     function renderCard(p, index) {
       var a = document.createElement('a');
       a.className = 'pg-item';
-      a.href = 'project-detail.html?id=' + index;
+      a.href = '#';
       a.dataset.category = p.category || 'ui';
+      a.dataset.index = index;
       var inner = '';
       if (p.image) {
         inner += '<img src="' + p.image + '" alt="' + escHtml(p.title) + '" class="pg-item__img" loading="lazy" />';
@@ -360,9 +583,14 @@
              +   '<span class="pg-item__cat">' + escHtml(CAT_LABEL[p.category] || p.category) + '</span>'
              + '</div>';
       a.innerHTML = inner;
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        openLightbox(index);
+      });
       return a;
     }
 
+    // ── FILTER ────────────────────────────────────────────
     function applyFilter(cat) {
       currentFilter = cat;
       allItems.forEach(function(item) {
@@ -377,27 +605,32 @@
       btn.addEventListener('click', function() { applyFilter(btn.dataset.filter); });
     });
 
-    fetch('data/projects.json?v=' + Date.now())
-      .then(function(r) { return r.json(); })
+    // ── LOAD ──────────────────────────────────────────────
+    // Try live API first (Netlify Blobs), fall back to static JSON for local dev
+    var apiUrl = '/api/admin?action=projects';
+    var jsonUrl = 'data/projects.json?v=' + Date.now();
+    fetch(apiUrl)
+      .then(function(r) { return r.ok ? r.json() : fetch(jsonUrl).then(function(r2) { return r2.json(); }); })
+      .catch(function() { return fetch(jsonUrl).then(function(r) { return r.json(); }); })
       .then(function(data) {
-        var projects = (data.projects || []).filter(function(p) { return p.published !== false; });
+        allProjects = (data.projects || []).filter(function(p) { return p.published !== false; });
         var grid = document.getElementById('gallery');
         grid.innerHTML = '';
         allItems = [];
 
-        if (!projects.length) {
+        if (!allProjects.length) {
           grid.innerHTML = '<p style="padding:80px 0;text-align:center;color:#aaa;font-size:15px;grid-column:1/-1">No projects yet — add your first design in the admin panel.</p>';
           return;
         }
 
-        projects.forEach(function(p, i) {
+        allProjects.forEach(function(p, i) {
           var card = renderCard(p, i);
           grid.appendChild(card);
           allItems.push(card);
         });
 
         var countEl = document.querySelector('[data-filter="all"] .pg-filter__count');
-        if (countEl) countEl.textContent = '(' + projects.length + ')';
+        if (countEl) countEl.textContent = '(' + allProjects.length + ')';
         applyFilter(currentFilter);
       })
       .catch(function() {

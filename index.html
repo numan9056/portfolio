@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Numan — Product Designer</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,500&family=Roboto+Condensed:ital,wght@1,500&display=swap" rel="stylesheet" />
@@ -30,6 +31,16 @@
         <circle cx="11" cy="11" r="10" class="toggle-ring" stroke="#ccc" stroke-width="1" fill="none"/>
       </svg>
     </button>
+    <button class="nav__hamburger" id="nav-hamburger" aria-label="Open menu">
+      <svg class="icon-menu" width="20" height="14" viewBox="0 0 20 14" fill="none" aria-hidden="true"><rect width="20" height="2" rx="1" fill="currentColor"/><rect y="6" width="20" height="2" rx="1" fill="currentColor"/><rect y="12" width="20" height="2" rx="1" fill="currentColor"/></svg>
+      <svg class="icon-close" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="display:none"><line x1="1" y1="1" x2="15" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="15" y1="1" x2="1" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <div class="nav__panel" id="nav-panel">
+      <a href="index.html" class="nav__panel-link nav__panel-link--active">Home</a>
+      <a href="about.html" class="nav__panel-link">About</a>
+      <a href="portfolio.html" class="nav__panel-link">Portfolio</a>
+      <a href="contact.html" class="nav__panel-link">Contact</a>
+    </div>
   </nav>
 
   <!-- HERO -->
@@ -115,183 +126,21 @@
     </header>
 
     <!-- Featured: MistetFunnet -->
-    <article class="case case--featured case--peach reveal">
-      <div class="case__info">
-        <div class="case__tags">
-          <span class="case__tag">Product Strategy</span>
-          <span class="case__tag">UX Research</span>
-          <span class="case__tag">SaaS</span>
-        </div>
-        <h3 class="case__name">MistetFunnet.no</h3>
-        <p class="case__pitch">Norway's Lost &amp; Found Platform</p>
-        <p class="case__desc">Built from zero to launch — full product lifecycle from user research and service design to SaaS architecture, connecting transport, hospitality, and public services across Norway.</p>
-        <div class="case__meta">
-          <span class="case__year">2023 — Present</span>
-          <a href="https://mistetfunnet.no" class="case__cta" target="_blank" rel="noopener">Visit Live ↗</a>
-        </div>
-      </div>
-      <div class="case__mockup">
-        <div class="browser">
-          <div class="browser__bar">
-            <div class="browser__dots">
-              <span style="background:#ff5f57"></span>
-              <span style="background:#febc2e"></span>
-              <span style="background:#28c840"></span>
-            </div>
-            <div class="browser__url">mistetfunnet.no / dashboard</div>
-          </div>
-          <div class="browser__body">
-            <div class="ui__nav">
-              <div class="ui__logo-block"></div>
-              <div class="ui__nav-r">
-                <div class="ui__bar ui__bar--sm"></div>
-                <div class="ui__bar ui__bar--sm"></div>
-                <div class="ui__bar ui__bar--sm"></div>
-                <div class="ui__pill ui__pill--teal">Report Item</div>
-              </div>
-            </div>
-            <div class="ui__search-hero">
-              <div class="ui__bar ui__bar--xl"></div>
-              <div class="ui__bar ui__bar--lg"></div>
-              <div class="ui__search-row">
-                <div class="ui__search-input"></div>
-                <div class="ui__search-btn"></div>
-              </div>
-            </div>
-            <div class="ui__items">
-              <div class="ui__item">
-                <div class="ui__thumb" style="background:#d6e7e1"></div>
-                <div class="ui__item-text">
-                  <div class="ui__bar ui__bar--md"></div>
-                  <div class="ui__bar ui__bar--sm" style="opacity:.5"></div>
-                </div>
-                <div class="ui__badge" style="background:#d6e7e1;color:#007891">Found</div>
-              </div>
-              <div class="ui__item">
-                <div class="ui__thumb" style="background:#fbece5"></div>
-                <div class="ui__item-text">
-                  <div class="ui__bar ui__bar--lg"></div>
-                  <div class="ui__bar ui__bar--sm" style="opacity:.5"></div>
-                </div>
-                <div class="ui__badge" style="background:#f4f1ea;color:#636363">Looking</div>
-              </div>
-              <div class="ui__item">
-                <div class="ui__thumb" style="background:#ede9f7"></div>
-                <div class="ui__item-text">
-                  <div class="ui__bar ui__bar--md"></div>
-                  <div class="ui__bar ui__bar--sm" style="opacity:.5"></div>
-                </div>
-                <div class="ui__badge" style="background:#e5f2e9;color:#2a6e3f">Claimed</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
+    <a href="case-study-mistetfunnet.html" class="case reveal" style="display:block; margin-bottom:14px;">
+      <img src="assets/MistetFunnet.png" alt="MistetFunnet — Norway's lost-and-found platform" style="width:100%; display:block;" />
+    </a>
 
     <!-- Grid row -->
     <div class="cases__row">
 
-      <!-- Design System -->
-      <article class="case case--lavender reveal">
-        <div class="case__info">
-          <div class="case__tags">
-            <span class="case__tag">Design Systems</span>
-            <span class="case__tag">Figma</span>
-          </div>
-          <h3 class="case__name">UI Design System</h3>
-          <p class="case__pitch">Component Library &amp; Tokens</p>
-          <p class="case__desc">Scalable component architecture and design tokens enabling consistent product experience across all surfaces — built for teams, not just projects.</p>
-          <div class="case__meta">
-            <span class="case__year">2024</span>
-            <span class="case__cta case__cta--muted">Coming Soon</span>
-          </div>
-        </div>
-        <div class="dsv">
-          <div class="dsv__row">
-            <div class="dsv__btn dsv__btn--filled">Button</div>
-            <div class="dsv__btn dsv__btn--outline">Button</div>
-            <div class="dsv__chip">Tag</div>
-          </div>
-          <div class="dsv__input-row">
-            <div class="dsv__label-line"></div>
-            <div class="dsv__field"><div class="dsv__cursor"></div></div>
-          </div>
-          <div class="dsv__swatches">
-            <div class="dsv__swatch" style="background:#007891" title="Teal"></div>
-            <div class="dsv__swatch" style="background:#d6e7e1" title="Mint"></div>
-            <div class="dsv__swatch" style="background:#f4f1ea" title="Beige"></div>
-            <div class="dsv__swatch" style="background:#636363" title="Gray"></div>
-            <div class="dsv__swatch" style="background:#000" title="Black"></div>
-          </div>
-          <div class="dsv__card-row">
-            <div class="dsv__mini-card">
-              <div class="dsv__mini-img" style="background:#d6e7e1"></div>
-              <div class="dsv__mini-line"></div>
-              <div class="dsv__mini-line dsv__mini-line--sm"></div>
-            </div>
-            <div class="dsv__mini-card">
-              <div class="dsv__mini-img" style="background:#fbece5"></div>
-              <div class="dsv__mini-line"></div>
-              <div class="dsv__mini-line dsv__mini-line--sm"></div>
-            </div>
-            <div class="dsv__mini-card">
-              <div class="dsv__mini-img" style="background:#f4f1ea"></div>
-              <div class="dsv__mini-line"></div>
-              <div class="dsv__mini-line dsv__mini-line--sm"></div>
-            </div>
-          </div>
-        </div>
+      <!-- Inclusive Learn BD -->
+      <article class="case reveal" style="padding:0;">
+        <img src="assets/InclusiveLearn_BD.png" alt="Inclusive Learn BD — bilingual rights-advocacy platform" style="width:100%; display:block;" />
       </article>
 
-      <!-- Master Thesis -->
-      <article class="case case--mint reveal" data-delay="1">
-        <div class="case__info">
-          <div class="case__tags">
-            <span class="case__tag">UX Research</span>
-            <span class="case__tag">Service Design</span>
-          </div>
-          <h3 class="case__name">Digital Service Design</h3>
-          <p class="case__pitch">Master's Thesis — HVO 2026</p>
-          <p class="case__desc">Human-centred research exploring how digital services bridge gaps in public infrastructure — combining interviews, service blueprinting, and iterative usability testing.</p>
-          <div class="case__meta">
-            <span class="case__year">2025 — 2026</span>
-            <span class="case__cta case__cta--muted">Coming Soon</span>
-          </div>
-        </div>
-        <div class="rsv">
-          <div class="rsv__track">
-            <div class="rsv__step">
-              <div class="rsv__dot"></div>
-              <div class="rsv__num">01</div>
-              <div class="rsv__label">Discover</div>
-            </div>
-            <div class="rsv__line"></div>
-            <div class="rsv__step">
-              <div class="rsv__dot"></div>
-              <div class="rsv__num">02</div>
-              <div class="rsv__label">Define</div>
-            </div>
-            <div class="rsv__line"></div>
-            <div class="rsv__step">
-              <div class="rsv__dot"></div>
-              <div class="rsv__num">03</div>
-              <div class="rsv__label">Design</div>
-            </div>
-            <div class="rsv__line"></div>
-            <div class="rsv__step">
-              <div class="rsv__dot"></div>
-              <div class="rsv__num">04</div>
-              <div class="rsv__label">Validate</div>
-            </div>
-          </div>
-          <div class="rsv__methods">
-            <span class="rsv__method">User Interviews</span>
-            <span class="rsv__method">Service Blueprint</span>
-            <span class="rsv__method">Usability Testing</span>
-            <span class="rsv__method">Journey Mapping</span>
-          </div>
-        </div>
+      <!-- Teardown Trivia -->
+      <article class="case reveal" data-delay="1" style="padding:0;">
+        <img src="assets/Teardown_Trivia.png" alt="Teardown Trivia — mobile quiz game" style="width:100%; display:block;" />
       </article>
 
     </div>

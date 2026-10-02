@@ -1,20 +1,528 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio Admin</title>
-  <script>
-    // Redirect to login or dashboard based on session
-    const session = localStorage.getItem('adminSession');
-    if (session === 'authenticated') {
-      window.location.href = '/admin/dashboard.html';
-    } else {
-      window.location.href = '/admin/login.html';
+  <title>Admin — Numan Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Roboto', sans-serif; background: #f4f3ef; color: #111; min-height: 100vh; }
+
+    /* ── LOGIN ─────────────────────────────────────── */
+    #login-screen {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      background: #fcfbf7;
     }
-  </script>
+    .login-card {
+      width: 380px; background: #fff;
+      border: 1px solid #e4e2de; border-radius: 20px;
+      padding: 48px 40px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .login-logo  { font-size: 22px; font-weight: 700; color: #007891; margin-bottom: 6px; }
+    .login-sub   { font-size: 13px; color: #aaa; margin-bottom: 36px; }
+    .login-label { width: 100%; font-size: 11px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: #aaa; margin-bottom: 8px; }
+    .login-input {
+      width: 100%; height: 44px; border: 1.5px solid #e4e2de; border-radius: 10px;
+      padding: 0 14px; font-family: inherit; font-size: 14px; color: #111;
+      outline: none; transition: border-color 0.2s; margin-bottom: 16px;
+    }
+    .login-input:focus { border-color: #007891; }
+    .login-btn {
+      width: 100%; height: 44px; background: #007891; color: #fff; border: none;
+      border-radius: 10px; font-family: inherit; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .login-btn:hover { background: #005f71; }
+    .login-btn:disabled { background: #aaa; cursor: not-allowed; }
+    .login-error { font-size: 13px; color: #e05a5a; margin-top: 12px; display: none; }
+
+    /* ── DASHBOARD ─────────────────────────────────── */
+    #dashboard { display: none; min-height: 100vh; }
+    .topbar {
+      background: #fff; border-bottom: 1px solid #e4e2de;
+      height: 60px; display: flex; align-items: center; padding: 0 32px; gap: 16px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .topbar__logo { font-size: 16px; font-weight: 700; color: #007891; flex: 1; }
+    .topbar__site { font-size: 13px; color: #aaa; text-decoration: none; }
+    .topbar__site:hover { color: #007891; }
+
+    .btn {
+      height: 36px; padding: 0 18px; border-radius: 8px; font-family: inherit;
+      font-size: 13px; font-weight: 500; cursor: pointer; border: none;
+      transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn--primary { background: #007891; color: #fff; }
+    .btn--primary:hover { background: #005f71; }
+    .btn--outline { background: transparent; border: 1.5px solid #e4e2de; color: #636363; }
+    .btn--outline:hover { border-color: #007891; color: #007891; }
+    .btn--danger  { background: #fef2f2; color: #e05a5a; border: 1.5px solid #fecaca; }
+    .btn--danger:hover  { background: #fee2e2; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .content { padding: 32px; }
+
+    .stats-bar { display: flex; gap: 16px; margin-bottom: 28px; }
+    .stat { background: #fff; border: 1px solid #e4e2de; border-radius: 12px; padding: 16px 22px; }
+    .stat__num   { font-size: 26px; font-weight: 700; color: #111; }
+    .stat__label { font-size: 12px; color: #aaa; margin-top: 3px; }
+
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .section-title  { font-size: 17px; font-weight: 700; }
+
+    /* ── GRID ──────────────────────────────────────── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .proj-card { background: #fff; border: 1px solid #e4e2de; border-radius: 14px; overflow: hidden; transition: box-shadow .25s, transform .25s; }
+    .proj-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,.08); transform: translateY(-2px); }
+    .proj-card__thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: #f4f3ef; }
+    .proj-card__thumb-empty { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg,#e8f4f6,#d0e8ed); display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 28px; }
+    .proj-card__body { padding: 14px 16px; }
+    .proj-card__title { font-size: 14px; font-weight: 600; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .proj-card__meta  { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .proj-card__cat   { font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 100px; text-transform: uppercase; }
+    .cat--ui       { background: #e0f0f4; color: #007891; }
+    .cat--graphic  { background: #fce8df; color: #c0562a; }
+    .cat--branding { background: #ede8f5; color: #6b5ab0; }
+    .cat--campaign { background: #dff0e5; color: #2a7a50; }
+    .proj-card__year  { font-size: 11px; color: #bbb; }
+    .proj-card__draft { font-size: 10px; background: #fef3c7; color: #b45309; padding: 2px 8px; border-radius: 100px; }
+    .proj-card__actions { display: flex; gap: 8px; }
+    .proj-card__actions .btn { flex: 1; justify-content: center; height: 32px; font-size: 12px; }
+
+    .empty-state { grid-column: 1/-1; text-align: center; padding: 80px 20px; color: #bbb; }
+    .empty-state__icon { font-size: 48px; margin-bottom: 12px; }
+
+    /* ── MODAL ─────────────────────────────────────── */
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,.4); backdrop-filter: blur(4px);
+      z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      background: #fff; border-radius: 20px; width: 100%; max-width: 560px;
+      max-height: 90vh; overflow-y: auto; padding: 32px; position: relative;
+    }
+    .modal__title { font-size: 20px; font-weight: 700; margin-bottom: 24px; }
+    .modal__close {
+      position: absolute; top: 20px; right: 20px; width: 32px; height: 32px;
+      background: #f4f3ef; border: none; border-radius: 50%; cursor: pointer;
+      font-size: 16px; display: flex; align-items: center; justify-content: center; color: #636363;
+    }
+    .modal__close:hover { background: #e8e6e0; }
+
+    .form-group    { margin-bottom: 18px; }
+    .form-label    { font-size: 12px; font-weight: 500; color: #636363; display: block; margin-bottom: 6px; }
+    .form-input, .form-select, .form-textarea {
+      width: 100%; border: 1.5px solid #e4e2de; border-radius: 10px; padding: 10px 13px;
+      font-family: inherit; font-size: 14px; color: #111; outline: none; transition: border-color .2s; background: #fff;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: #007891; }
+    .form-textarea { resize: vertical; min-height: 80px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .upload-zone {
+      border: 2px dashed #e4e2de; border-radius: 12px; padding: 32px 20px;
+      text-align: center; cursor: pointer; transition: border-color .2s, background .2s; position: relative;
+    }
+    .upload-zone:hover, .upload-zone.drag-over { border-color: #007891; background: #f0fafb; }
+    .upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .upload-zone__icon { font-size: 36px; margin-bottom: 8px; }
+    .upload-zone__text { font-size: 14px; color: #636363; }
+    .upload-zone__sub  { font-size: 12px; color: #bbb; margin-top: 4px; }
+    .upload-progress { margin-top: 10px; font-size: 13px; color: #007891; font-weight: 500; display: none; }
+
+    .upload-preview { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; display: none; margin-bottom: 8px; }
+    .upload-preview.show { display: block; }
+    .upload-change { font-size: 12px; color: #007891; cursor: pointer; text-decoration: underline; }
+
+    .toggle-row { display: flex; align-items: center; justify-content: space-between; }
+    .toggle-label { font-size: 14px; }
+    .toggle-sub   { font-size: 12px; color: #aaa; margin-top: 2px; }
+    .toggle {
+      width: 44px; height: 24px; background: #e4e2de; border-radius: 100px;
+      cursor: pointer; position: relative; transition: background .2s; flex-shrink: 0; border: none;
+    }
+    .toggle::after {
+      content: ''; position: absolute; width: 18px; height: 18px; border-radius: 50%;
+      background: #fff; top: 3px; left: 3px; transition: transform .2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,.15);
+    }
+    .toggle.on { background: #007891; }
+    .toggle.on::after { transform: translateX(20px); }
+
+    .modal__footer { display: flex; gap: 10px; margin-top: 24px; justify-content: flex-end; }
+
+    /* ── TOAST ─────────────────────────────────────── */
+    .toast {
+      position: fixed; bottom: 28px; right: 28px;
+      background: #111; color: #fff; padding: 12px 20px;
+      border-radius: 10px; font-size: 13px; font-weight: 500;
+      z-index: 999; transform: translateY(80px); opacity: 0;
+      transition: all .3s cubic-bezier(0.16,1,0.3,1); pointer-events: none;
+    }
+    .toast.show     { transform: translateY(0); opacity: 1; }
+    .toast.success  { background: #007891; }
+    .toast.error    { background: #e05a5a; }
+  </style>
 </head>
 <body>
-  <p>Redirecting...</p>
+
+<!-- ── LOGIN ──────────────────────────────────── -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">nümnʊ</div>
+    <p class="login-sub">Portfolio Admin</p>
+    <p class="login-label">Password</p>
+    <input class="login-input" id="pw-input" type="password" placeholder="Enter password" />
+    <button class="login-btn" id="login-btn">Login</button>
+    <p class="login-error" id="login-error">Wrong password. Try again.</p>
+  </div>
+</div>
+
+<!-- ── DASHBOARD ──────────────────────────────── -->
+<div id="dashboard">
+  <div class="topbar">
+    <div class="topbar__logo">Portfolio Admin</div>
+    <a href="../portfolio.html" class="topbar__site" target="_blank">View Gallery ↗</a>
+    <button class="btn btn--outline" id="logout-btn">Logout</button>
+  </div>
+
+  <div class="content">
+    <div class="stats-bar">
+      <div class="stat"><div class="stat__num" id="stat-total">0</div><div class="stat__label">Total Projects</div></div>
+      <div class="stat"><div class="stat__num" id="stat-published">0</div><div class="stat__label">Published</div></div>
+      <div class="stat"><div class="stat__num" id="stat-draft">0</div><div class="stat__label">Drafts</div></div>
+    </div>
+
+    <div class="section-header">
+      <h2 class="section-title">Projects</h2>
+      <button class="btn btn--primary" id="add-btn">+ Add Project</button>
+    </div>
+    <div class="projects-grid" id="projects-grid"></div>
+  </div>
+</div>
+
+<!-- ── MODAL ──────────────────────────────────── -->
+<div class="modal-backdrop" id="modal">
+  <div class="modal">
+    <h2 class="modal__title" id="modal-title">Add Project</h2>
+    <button class="modal__close" id="modal-close">✕</button>
+
+    <div class="form-group">
+      <label class="form-label">Cover Image</label>
+      <img id="img-preview" class="upload-preview" />
+      <div class="upload-zone" id="upload-zone">
+        <input type="file" id="img-input" accept="image/*" />
+        <div class="upload-zone__icon">🖼️</div>
+        <div class="upload-zone__text">Click or drag & drop your image</div>
+        <div class="upload-zone__sub">JPG, PNG, WebP</div>
+        <p class="upload-progress" id="upload-progress">Uploading…</p>
+      </div>
+      <span class="upload-change" id="img-change" style="display:none">Change image</span>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Project Title</label>
+      <input class="form-input" id="f-title" type="text" placeholder="e.g. MistetFunnet Dashboard" />
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <select class="form-select" id="f-category">
+          <option value="ui">UI Design</option>
+          <option value="graphic">Graphic Design</option>
+          <option value="branding">Branding</option>
+          <option value="campaign">Campaign Design</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Year</label>
+        <input class="form-input" id="f-year" type="text" placeholder="2024" maxlength="4" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Short Description (optional)</label>
+      <textarea class="form-textarea" id="f-desc" placeholder="One or two sentences about this project"></textarea>
+    </div>
+
+    <div class="form-group">
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Published</div>
+          <div class="toggle-sub">Show in gallery</div>
+        </div>
+        <button class="toggle on" id="f-published"></button>
+      </div>
+    </div>
+
+    <div class="modal__footer">
+      <button class="btn btn--outline" id="modal-cancel">Cancel</button>
+      <button class="btn btn--primary" id="modal-save">Save Project</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  var API        = '/api/admin';
+  var CAT_LABELS = { ui: 'UI Design', graphic: 'Graphic Design', branding: 'Branding', campaign: 'Campaign Design' };
+
+  var projects     = [];
+  var editingIndex = -1;
+  var uploadedUrl  = null;
+  var adminPass    = '';
+
+  // ── LOGIN ─────────────────────────────────────────────
+  document.getElementById('login-btn').onclick = doLogin;
+  document.getElementById('pw-input').addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
+
+  async function doLogin() {
+    var pw = document.getElementById('pw-input').value;
+    if (!pw) return;
+    var btn = document.getElementById('login-btn');
+    btn.textContent = 'Checking…'; btn.disabled = true;
+    try {
+      var res = await fetch(API + '?action=admin-projects', { headers: { 'X-Admin-Password': pw } });
+      if (res.status === 401) {
+        document.getElementById('login-error').style.display = 'block';
+        document.getElementById('pw-input').value = '';
+      } else if (res.ok) {
+        adminPass = pw;
+        var data = await res.json();
+        projects = data.projects || [];
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        renderGrid();
+      } else {
+        toast('Could not connect to server', 'error');
+      }
+    } catch (e) {
+      toast('Connection error — check network', 'error');
+    }
+    btn.textContent = 'Login'; btn.disabled = false;
+  }
+
+  document.getElementById('logout-btn').onclick = function() {
+    adminPass = ''; projects = [];
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('login-error').style.display = 'none';
+  };
+
+  // ── RENDER GRID ────────────────────────────────────────
+  function renderGrid() {
+    var pub = projects.filter(function(p) { return p.published !== false; }).length;
+    document.getElementById('stat-total').textContent     = projects.length;
+    document.getElementById('stat-published').textContent = pub;
+    document.getElementById('stat-draft').textContent     = projects.length - pub;
+
+    var grid = document.getElementById('projects-grid');
+    if (!projects.length) {
+      grid.innerHTML = '<div class="empty-state"><div class="empty-state__icon">🎨</div><p>No projects yet — click "Add Project" to get started</p></div>';
+      return;
+    }
+    grid.innerHTML = projects.map(function(p, i) {
+      return '<div class="proj-card">'
+        + (p.image ? '<img class="proj-card__thumb" src="' + escHtml(p.image) + '" />' : '<div class="proj-card__thumb-empty">🖼️</div>')
+        + '<div class="proj-card__body">'
+        +   '<div class="proj-card__title">' + escHtml(p.title) + '</div>'
+        +   '<div class="proj-card__meta">'
+        +     '<span class="proj-card__cat cat--' + (p.category||'ui') + '">' + escHtml(CAT_LABELS[p.category] || p.category) + '</span>'
+        +     (p.year ? '<span class="proj-card__year">' + escHtml(p.year) + '</span>' : '')
+        +     (p.published === false ? '<span class="proj-card__draft">Draft</span>' : '')
+        +   '</div>'
+        +   '<div class="proj-card__actions">'
+        +     '<button class="btn btn--outline" onclick="openModal(' + i + ')">✏️ Edit</button>'
+        +     '<button class="btn btn--danger"  onclick="deleteProject(' + i + ')">🗑️ Delete</button>'
+        +   '</div>'
+        + '</div></div>';
+    }).join('');
+  }
+
+  // ── MODAL ──────────────────────────────────────────────
+  document.getElementById('add-btn').onclick      = function() { openModal(-1); };
+  document.getElementById('modal-close').onclick  = closeModal;
+  document.getElementById('modal-cancel').onclick = closeModal;
+  document.getElementById('modal').onclick = function(e) { if (e.target === this) closeModal(); };
+
+  function openModal(index) {
+    editingIndex = index;
+    uploadedUrl  = null;
+    var isEdit = index >= 0;
+    var p = isEdit ? projects[index] : {};
+    document.getElementById('modal-title').textContent    = isEdit ? 'Edit Project' : 'Add Project';
+    document.getElementById('f-title').value    = p.title       || '';
+    document.getElementById('f-category').value = p.category    || 'ui';
+    document.getElementById('f-year').value     = p.year        || '';
+    document.getElementById('f-desc').value     = p.description || '';
+    var pub = document.getElementById('f-published');
+    pub.className = 'toggle' + (p.published === false ? '' : ' on');
+    var preview = document.getElementById('img-preview');
+    var zone    = document.getElementById('upload-zone');
+    var change  = document.getElementById('img-change');
+    if (p.image) {
+      preview.src = p.image; preview.classList.add('show');
+      zone.style.display = 'none'; change.style.display = 'inline';
+    } else {
+      preview.classList.remove('show');
+      zone.style.display = ''; change.style.display = 'none';
+    }
+    document.getElementById('img-input').value = '';
+    document.getElementById('upload-progress').style.display = 'none';
+    document.getElementById('modal').classList.add('open');
+  }
+
+  function closeModal() { document.getElementById('modal').classList.remove('open'); }
+
+  document.getElementById('f-published').onclick = function() { this.classList.toggle('on'); };
+
+  // ── IMAGE UPLOAD ───────────────────────────────────────
+  document.getElementById('img-input').onchange = function(e) { handleFile(e.target.files[0]); };
+  document.getElementById('img-change').onclick = function() {
+    document.getElementById('img-preview').classList.remove('show');
+    document.getElementById('upload-zone').style.display = '';
+    document.getElementById('img-change').style.display = 'none';
+    uploadedUrl = null;
+  };
+
+  var zone = document.getElementById('upload-zone');
+  zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', function() { zone.classList.remove('drag-over'); });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault(); zone.classList.remove('drag-over');
+    handleFile(e.dataTransfer.files[0]);
+  });
+
+  async function handleFile(file) {
+    if (!file || !file.type.startsWith('image/')) return;
+    var progress = document.getElementById('upload-progress');
+    var saveBtn  = document.getElementById('modal-save');
+    progress.style.display = 'block';
+    progress.textContent = 'Uploading image…';
+    saveBtn.disabled = true;
+
+    try {
+      var compressed = await compressImage(file, 1400, 0.85);
+      var ext  = (file.name.split('.').pop() || 'jpg').toLowerCase().replace('jpeg','jpg');
+      var slug = slugify(document.getElementById('f-title').value || 'project') + '-' + Date.now() + '.' + ext;
+      var form = new FormData();
+      form.append('file', compressed, slug);
+      form.append('key', slug);
+      var res  = await fetch(API + '?action=upload', {
+        method: 'POST',
+        headers: { 'X-Admin-Password': adminPass },
+        body: form
+      });
+      var data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Upload failed');
+      uploadedUrl = data.url;
+      var preview = document.getElementById('img-preview');
+      preview.src = data.url; preview.classList.add('show');
+      document.getElementById('upload-zone').style.display = 'none';
+      document.getElementById('img-change').style.display = 'inline';
+      progress.style.display = 'none';
+      toast('Image uploaded!', 'success');
+    } catch(e) {
+      progress.textContent = 'Upload failed — try again';
+      toast('Upload failed: ' + e.message, 'error');
+    }
+    saveBtn.disabled = false;
+  }
+
+  // ── SAVE ───────────────────────────────────────────────
+  document.getElementById('modal-save').onclick = async function() {
+    var title = document.getElementById('f-title').value.trim();
+    if (!title) { toast('Please enter a project title', 'error'); return; }
+
+    var existing = editingIndex >= 0 ? (projects[editingIndex].image || '') : '';
+    var project  = {
+      title:       title,
+      category:    document.getElementById('f-category').value,
+      year:        document.getElementById('f-year').value.trim(),
+      description: document.getElementById('f-desc').value.trim(),
+      published:   document.getElementById('f-published').classList.contains('on'),
+      image:       uploadedUrl || existing
+    };
+
+    var btn = document.getElementById('modal-save');
+    btn.textContent = 'Saving…'; btn.disabled = true;
+
+    if (editingIndex >= 0) {
+      projects[editingIndex] = project;
+    } else {
+      projects.unshift(project);
+    }
+
+    try {
+      var res = await fetch(API + '?action=save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Admin-Password': adminPass },
+        body: JSON.stringify({ projects: projects })
+      });
+      if (!res.ok) throw new Error('Save failed');
+      toast(editingIndex >= 0 ? 'Project updated!' : 'Project added! Gallery updated live.', 'success');
+      renderGrid();
+      closeModal();
+    } catch(e) {
+      if (editingIndex >= 0) { /* already updated in array */ } else { projects.shift(); }
+      toast('Could not save — ' + e.message, 'error');
+    }
+    btn.textContent = 'Save Project'; btn.disabled = false;
+  };
+
+  // ── DELETE ─────────────────────────────────────────────
+  async function deleteProject(i) {
+    if (!confirm('Delete "' + projects[i].title + '"?')) return;
+    projects.splice(i, 1);
+    try {
+      await fetch(API + '?action=save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Admin-Password': adminPass },
+        body: JSON.stringify({ projects: projects })
+      });
+      toast('Project deleted', '');
+    } catch(e) { toast('Delete failed', 'error'); }
+    renderGrid();
+  }
+
+  // ── HELPERS ────────────────────────────────────────────
+  function compressImage(file, maxW, quality) {
+    return new Promise(function(resolve) {
+      var img = new Image(), url = URL.createObjectURL(file);
+      img.onload = function() {
+        URL.revokeObjectURL(url);
+        var scale = Math.min(1, maxW / img.width);
+        var w = Math.round(img.width * scale), h = Math.round(img.height * scale);
+        var c = document.createElement('canvas'); c.width = w; c.height = h;
+        c.getContext('2d').drawImage(img, 0, 0, w, h);
+        c.toBlob(resolve, 'image/jpeg', quality);
+      };
+      img.src = url;
+    });
+  }
+
+  function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function slugify(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40); }
+
+  var toastTimer;
+  function toast(msg, type) {
+    var el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = 'toast show' + (type ? ' ' + type : '');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { el.className = 'toast'; }, 3500);
+  }
+</script>
 </body>
 </html>
