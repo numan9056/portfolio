@@ -82,47 +82,28 @@
   </div>
 
   <!-- SKILLS CARDS -->
-  <section class="skills">
-    <div class="skill-card reveal">
-      <div class="skill-card__header">
-        <div class="skill-card__icon">
-          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-            <circle cx="18" cy="18" r="16" stroke="#007891" stroke-width="2"/>
-            <circle cx="18" cy="18" r="9" stroke="#007891" stroke-width="2"/>
-            <circle cx="18" cy="18" r="3" fill="#007891"/>
-            <line x1="26" y1="10" x2="30" y2="6" stroke="#007891" stroke-width="2" stroke-linecap="round"/>
-            <line x1="28" y1="8" x2="22" y2="14" stroke="#007891" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <h3 class="skill-card__title">Startup Leadership</h3>
+  <section class="skills" aria-label="What I bring">
+    <article class="skill-card skill-card--teal reveal">
+      <div class="skill-card__icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
       </div>
+      <h3 class="skill-card__title">Startup Leadership</h3>
       <p class="skill-card__desc">Focused on solving real world problems, Founder of MistetFunnet, building Norway's lost-and-found infrastructure connecting transport, hospitality, and public services.</p>
-    </div>
-    <div class="skill-card reveal" data-delay="1">
-      <div class="skill-card__header">
-        <div class="skill-card__icon">
-          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-            <rect x="2" y="2" width="13" height="13" rx="2" stroke="#007891" stroke-width="2"/>
-            <rect x="21" y="2" width="13" height="13" rx="2" stroke="#007891" stroke-width="2"/>
-            <rect x="2" y="21" width="13" height="13" rx="2" stroke="#007891" stroke-width="2"/>
-            <rect x="21" y="21" width="13" height="13" rx="2" stroke="#007891" stroke-width="2"/>
-          </svg>
-        </div>
-        <h3 class="skill-card__title">Design Systems</h3>
+    </article>
+    <article class="skill-card skill-card--violet reveal" data-delay="1">
+      <div class="skill-card__icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>
       </div>
+      <h3 class="skill-card__title">Design Systems</h3>
       <p class="skill-card__desc">Reusable patterns, standards, and decision frameworks that scale across products and teams.</p>
-    </div>
-    <div class="skill-card reveal" data-delay="2">
-      <div class="skill-card__header">
-        <div class="skill-card__icon">
-          <svg width="40" height="28" viewBox="0 0 40 28" fill="none">
-            <path d="M1 20 L7 8 L11 15 L15 10 L19 22 L24 4 L29 14 L33 7 L39 12" stroke="#007891" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <h3 class="skill-card__title">AI-Assisted Code</h3>
+    </article>
+    <article class="skill-card skill-card--coral reveal" data-delay="2">
+      <div class="skill-card__icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
       </div>
+      <h3 class="skill-card__title">AI-Assisted Code</h3>
       <p class="skill-card__desc">Leveraging AI to accelerate early stage products into real world testing to gather essential human feedback.</p>
-    </div>
+    </article>
   </section>
 
   <!-- CASE STUDIES -->
@@ -234,7 +215,7 @@
         var outcome = ((p.caseStudy || {}).outcomes || [])[0];
         var text = p.summary || (p.caseStudy || {}).problem || p.description || '';
         if (text.length > 160) text = text.slice(0, 157).replace(/\s+\S*$/, '') + '…';
-        return '<a class="fcase' + (wide ? ' fcase--wide' : '') + '" href="' + esc(Projects.projectUrl(p, x.i)) + '">'
+        return '<a class="fcase fcase--tone' + (n % 6) + (wide ? ' fcase--wide' : '') + '" href="' + esc(Projects.projectUrl(p, x.i)) + '">'
           + '<div class="fcase__media">' + (p.image ? '<img src="' + esc(p.image) + '" alt="" loading="lazy" />' : '') + '</div>'
           + '<div class="fcase__body">'
           +   '<div class="case__tags"><span class="case__tag">' + esc(Projects.CAT_LABEL[p.category] || p.category) + '</span>'

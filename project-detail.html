@@ -83,7 +83,7 @@
     }
 
     /* Chapter heading between blocks */
-    .pd-chapter { padding: 64px 48px 32px; background: #fcfbf7; scroll-margin-top: 140px; }
+    .pd-chapter { padding: 64px 48px 32px; background: #fcfbf7; scroll-margin-top: 90px; }
     .pd-chapter__num { font-size: 12px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: #007891; margin-bottom: 10px; }
     .pd-chapter__title { font-size: 32px; font-weight: 700; line-height: 1.15; color: #111; margin-bottom: 12px; }
     .pd-chapter__text { font-size: 17px; line-height: 1.65; color: #444; max-width: 720px; white-space: pre-line; }
@@ -93,8 +93,9 @@
     .pd-meta-line .pd-year { margin: 0; }
 
     .pd-glance {
-      max-width: 1400px; margin: 0 auto 40px; padding: 0 48px;
+      max-width: 1400px; margin: 0 auto 40px; padding: 0 48px; scroll-margin-top: 90px;
     }
+    .pd-glance:focus { outline: none; }
     .pd-glance__card {
       border: 1px solid #e4e2de; border-radius: 18px; background: #fff; padding: 32px;
       display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px;
@@ -110,19 +111,30 @@
 
     /* Chapter menu with reading progress */
     .pd-body { max-width: 1400px; margin: 0 auto 72px; }
-    .pd-body--toc { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 32px; padding-left: 48px; }
-    .pd-body--toc .pd-stack { margin: 0; }
-    .pd-toc { position: sticky; top: 92px; align-self: start; padding-top: 8px; }
-    .pd-toc__label { font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: #767676; margin-bottom: 12px; }
-    .pd-toc__bar { height: 3px; background: #e4e2de; border-radius: 2px; margin-bottom: 16px; overflow: hidden; }
-    .pd-toc__fill { height: 100%; width: 0; background: #007891; transition: width .1s linear; }
-    .pd-toc__list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
-    .pd-toc__link {
-      display: block; padding: 7px 12px; border-left: 2px solid transparent; border-radius: 0 6px 6px 0;
-      font-size: 14px; line-height: 1.35; color: #636363; text-decoration: none; transition: color .2s, border-color .2s, background .2s;
+
+    /* Reading progress along the top of the window */
+    .pd-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: #007891; z-index: 200; transition: width .1s linear; }
+
+    /* Chapter rail on wide screens, like the MistetFunnet case study:
+       dots at the left edge, titles appear on hover and for the current chapter */
+    .pd-toc { position: fixed; top: 50%; left: 20px; transform: translateY(-50%); z-index: 60; }
+    .pd-toc__list { list-style: none; display: flex; flex-direction: column; gap: 1px; }
+    .pd-toc__link { display: flex; align-items: center; gap: 11px; padding: 5px 6px 5px 0; color: #767676; text-decoration: none; }
+    .pd-toc__dot {
+      width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid #c9c6c0; background: #fcfbf7; flex: none;
+      transition: transform .16s ease, background .16s ease, border-color .16s ease;
     }
-    .pd-toc__link:hover { color: #007891; }
-    .pd-toc__link.is-active { color: #007891; border-left-color: #007891; background: #f0fafb; font-weight: 500; }
+    .pd-toc__lbl {
+      font-size: 12px; letter-spacing: .02em; white-space: nowrap; max-width: 220px; overflow: hidden; text-overflow: ellipsis;
+      opacity: 0; transform: translateX(-5px); transition: opacity .16s ease, transform .16s ease;
+      background: rgba(252, 251, 247, .92); border-radius: 4px; padding: 1px 4px;
+    }
+    .pd-toc:hover .pd-toc__lbl, .pd-toc:focus-within .pd-toc__lbl { opacity: 1; transform: none; }
+    .pd-toc__link:hover { color: #111; }
+    .pd-toc__link:hover .pd-toc__dot { border-color: #007891; }
+    .pd-toc__link.is-active { color: #111; }
+    .pd-toc__link.is-active .pd-toc__dot { background: #007891; border-color: #007891; transform: scale(1.25); }
+    .pd-toc__link.is-active .pd-toc__lbl { opacity: 1; transform: none; }
 
     /* Closing call to action */
     .pd-cta {
@@ -153,28 +165,37 @@
     [data-theme="dark"] .pd-outcome { background: #13262a; }
     [data-theme="dark"] .pd-outcome__value { color: #1ab8d8; }
     [data-theme="dark"] .pd-outcome__label { color: #bbb; }
-    [data-theme="dark"] .pd-toc__bar { background: #333; }
-    [data-theme="dark"] .pd-toc__link { color: #999; }
-    [data-theme="dark"] .pd-toc__link.is-active { background: #13262a; color: #1ab8d8; border-left-color: #1ab8d8; }
+    [data-theme="dark"] .pd-progress { background: #1ab8d8; }
+    [data-theme="dark"] .pd-toc__link { color: #888; }
+    [data-theme="dark"] .pd-toc__link:hover,
+    [data-theme="dark"] .pd-toc__link.is-active { color: #e8e4dc; }
+    [data-theme="dark"] .pd-toc__dot { background: #111; border-color: #444; }
+    [data-theme="dark"] .pd-toc__link.is-active .pd-toc__dot { background: #1ab8d8; border-color: #1ab8d8; }
+    [data-theme="dark"] .pd-toc__lbl { background: rgba(17, 17, 17, .9); }
     [data-theme="dark"] .pd-desc  { color: #bbb; }
     [data-theme="dark"] .pd-cat, [data-theme="dark"] .pd-back { color: #1ab8d8; }
     [data-theme="dark"] .pd-stack { background: #1c1c1c; }
     [data-theme="dark"] .pd-more__link { border-color: #333; color: #e8e4dc; }
 
-    @media (max-width: 960px) {
-      /* The chapter menu becomes a sticky strip under the nav */
-      .pd-body--toc { display: block; padding-left: 0; }
+    /* Narrower screens have no room for the rail: chapters become a sticky strip of chips under the nav */
+    @media (max-width: 1279px) {
       .pd-toc {
-        top: 68px; z-index: 50; padding: 10px 18px 0; background: #fcfbf7;
-        border-bottom: 1px solid #e4e2de;
+        position: sticky; top: 68px; left: auto; transform: none; z-index: 50;
+        padding: 10px 18px; background: #fcfbf7; border-bottom: 1px solid #e4e2de; margin-bottom: 0;
       }
-      .pd-toc__label { display: none; }
-      .pd-toc__list { flex-direction: row; overflow-x: auto; gap: 6px; padding-bottom: 10px; scrollbar-width: none; }
+      .pd-toc__list { flex-direction: row; overflow-x: auto; gap: 6px; scrollbar-width: none; }
       .pd-toc__list::-webkit-scrollbar { display: none; }
-      .pd-toc__link { white-space: nowrap; border-left: 0; border-radius: 100px; border: 1px solid #e4e2de; padding: 6px 14px; font-size: 13px; }
-      .pd-toc__link.is-active { border-color: #007891; }
-      .pd-toc__bar { position: absolute; left: 0; right: 0; bottom: -1px; margin: 0; height: 2px; border-radius: 0; }
+      .pd-toc__link { white-space: nowrap; border-radius: 100px; border: 1px solid #e4e2de; padding: 6px 14px; font-size: 13px; color: #636363; }
+      .pd-toc__link.is-active { border-color: #007891; color: #007891; background: #f0fafb; }
+      .pd-toc__dot { display: none; }
+      .pd-chapter, .pd-glance { scroll-margin-top: 140px; }
+      .pd-toc__lbl { opacity: 1; transform: none; background: none; padding: 0; max-width: none; font-size: 13px; }
       [data-theme="dark"] .pd-toc { background: #111; border-color: #2e2e2e; }
+      [data-theme="dark"] .pd-toc__link { border-color: #333; }
+      [data-theme="dark"] .pd-toc__link.is-active { border-color: #1ab8d8; color: #1ab8d8; background: #13262a; }
+    }
+
+    @media (max-width: 960px) {
       .pd-glance__card { grid-template-columns: 1fr; }
     }
 
@@ -250,11 +271,10 @@
 
   <!-- PROJECT CONTENT, with a chapter menu when the project has chapters -->
   <div class="pd-body" id="pd-body">
-    <aside class="pd-toc" id="pd-toc" hidden aria-label="Chapters">
-      <p class="pd-toc__label">Chapters</p>
-      <div class="pd-toc__bar"><div class="pd-toc__fill" id="pd-toc-fill"></div></div>
+    <div class="pd-progress" id="pd-progress" hidden></div>
+    <nav class="pd-toc" id="pd-toc" hidden aria-label="Jump to chapter">
       <ol class="pd-toc__list" id="pd-toc-list"></ol>
-    </aside>
+    </nav>
     <main class="pd-stack" id="pd-stack">
       <p class="pd-msg">Loading…</p>
     </main>
@@ -394,33 +414,35 @@
       box.hidden = false;
     }
 
-    // Sticky chapter menu: highlights the chapter on screen and shows reading progress.
+    // Chapter menu: highlights the chapter on screen and shows reading progress.
     function buildToc(chapters) {
       if (chapters.length < 2) return;
-      document.getElementById('pd-body').classList.add('pd-body--toc');
+      if (!document.getElementById('pd-glance').hidden) {
+        document.getElementById('pd-glance').setAttribute('tabindex', '-1');
+        chapters = [{ id: 'pd-glance', title: 'At a glance' }].concat(chapters);
+      }
       document.getElementById('pd-toc').hidden = false;
+      document.getElementById('pd-progress').hidden = false;
       var list = document.getElementById('pd-toc-list');
       list.innerHTML = chapters.map(function(c) {
-        return '<li><a class="pd-toc__link" href="#' + c.id + '">' + escHtml(c.title) + '</a></li>';
+        return '<li><a class="pd-toc__link" href="#' + c.id + '"><span class="pd-toc__dot" aria-hidden="true"></span>'
+          + '<span class="pd-toc__lbl">' + escHtml(c.title) + '</span></a></li>';
       }).join('');
       var links = list.querySelectorAll('.pd-toc__link');
-      var stack = document.getElementById('pd-stack');
-      var fill  = document.getElementById('pd-toc-fill');
+      var bar   = document.getElementById('pd-progress');
       var ticking = false;
       function update() {
         ticking = false;
-        var rect = stack.getBoundingClientRect();
-        var total = rect.height - window.innerHeight;
-        var done  = total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 1;
-        fill.style.width = Math.round(done * 100) + '%';
+        var total = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = (total > 0 ? Math.min(100, window.scrollY / total * 100) : 0) + '%';
         var current = 0;
         chapters.forEach(function(c, i) {
           if (document.getElementById(c.id).getBoundingClientRect().top < window.innerHeight * 0.35) current = i;
         });
         links.forEach(function(a, i) {
           var on = i === current;
-          if (on && !a.classList.contains('is-active') && window.innerWidth <= 960) {
-            a.parentNode.parentNode.scrollTo({ left: a.offsetLeft - 18, behavior: 'smooth' });
+          if (on && !a.classList.contains('is-active') && window.innerWidth < 1280) {
+            list.scrollTo({ left: a.parentNode.offsetLeft - 18, behavior: 'smooth' });
           }
           a.classList.toggle('is-active', on);
           if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');

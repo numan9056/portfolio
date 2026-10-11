@@ -172,39 +172,35 @@ body {
 }
 
 .skill-card {
-  background: #f2f1ee;
-  padding: 24px 22px;
+  background: #fff;
+  border: 1px solid #ebe8e2;
+  border-radius: 16px;
+  padding: 26px 26px 28px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-}
-
-.skill-card__header {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
 }
 
 .skill-card__icon {
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 20px;
+  flex-shrink: 0;
 }
-
-.skill-card__icon svg {
-  width: 28px;
-  height: 28px;
-}
+.skill-card--teal   .skill-card__icon { background: #e6f3f6; color: #007891; }
+.skill-card--violet .skill-card__icon { background: #ede9f7; color: #6b5ab0; }
+.skill-card--coral  .skill-card__icon { background: #fbece5; color: #c0562a; }
 
 .skill-card__title {
   font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  color: #007891;
-  line-height: 1.1;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+  line-height: 1.25;
+  margin-bottom: 8px;
 }
 
 .skill-card__desc {
@@ -212,7 +208,7 @@ body {
   font-size: 14px;
   font-weight: 400;
   color: #636363;
-  line-height: 22px;
+  line-height: 1.6;
 }
 
 /* ─── CASE STUDIES ────────────────────────────────────────────── */
@@ -550,6 +546,15 @@ body {
 .fcase:hover { transform: translateY(-7px); box-shadow: 0 28px 64px rgba(0,0,0,0.1); }
 .fcase:focus-visible { outline: 3px solid #007891; outline-offset: 3px; }
 
+/* A different soft pastel behind the text of each featured card */
+.fcase--tone0 { background: #e6f3f6; }  /* sky */
+.fcase--tone1 { background: #fbece5; }  /* peach */
+.fcase--tone2 { background: #ede9f7; }  /* lavender */
+.fcase--tone3 { background: #e5f2e9; }  /* mint */
+.fcase--tone4 { background: #faf3dc; }  /* butter */
+.fcase--tone5 { background: #f8e8ef; }  /* rose */
+.fcase .case__tag { background: rgba(255,255,255,0.65); }
+
 .fcase__media { aspect-ratio: 16 / 10; background: #e8e7e3; overflow: hidden; }
 .fcase__media img {
   width: 100%; height: 100%; object-fit: cover; display: block;
@@ -589,6 +594,13 @@ body {
 }
 
 [data-theme="dark"] .fcase          { background: #1c1c1c; }
+[data-theme="dark"] .fcase--tone0   { background: #16252a; }
+[data-theme="dark"] .fcase--tone1   { background: #271e1a; }
+[data-theme="dark"] .fcase--tone2   { background: #1e1a27; }
+[data-theme="dark"] .fcase--tone3   { background: #1a2720; }
+[data-theme="dark"] .fcase--tone4   { background: #27241a; }
+[data-theme="dark"] .fcase--tone5   { background: #271a20; }
+[data-theme="dark"] .fcase .case__tag { background: rgba(255,255,255,0.08); }
 [data-theme="dark"] .fcase__media   { background: #242424; }
 [data-theme="dark"] .fcase__text    { color: #bbb; }
 [data-theme="dark"] .fcase__outcome { color: #999; }
@@ -977,8 +989,8 @@ body {
 }
 .skill-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 48px rgba(0,0,0,0.09);
-  background: #e8e7e3;
+  box-shadow: 0 20px 48px rgba(0,0,0,0.07);
+  border-color: #d9d5cd;
 }
 
 /* Case cards — stronger spring hover */
@@ -1076,8 +1088,12 @@ a:focus-visible, button:focus-visible {
 [data-theme="dark"] .logos-section__line { background: #2e2e2e; }
 
 /* Skill cards */
-[data-theme="dark"] .skill-card             { background: #1e1e1e; }
-[data-theme="dark"] .skill-card:hover       { background: #272727; box-shadow: 0 20px 48px rgba(0,0,0,0.4); }
+[data-theme="dark"] .skill-card             { background: #1a1a1a; border-color: #2a2a2a; }
+[data-theme="dark"] .skill-card:hover       { border-color: #3a3a3a; box-shadow: 0 20px 48px rgba(0,0,0,0.4); }
+[data-theme="dark"] .skill-card__title      { color: #e8e4dc; }
+[data-theme="dark"] .skill-card--teal   .skill-card__icon { background: #16252a; color: #1ab8d8; }
+[data-theme="dark"] .skill-card--violet .skill-card__icon { background: #1e1a27; color: #a596e0; }
+[data-theme="dark"] .skill-card--coral  .skill-card__icon { background: #271e1a; color: #e98a5f; }
 [data-theme="dark"] .skill-card__desc       { color: #888; }
 
 /* Case studies */
