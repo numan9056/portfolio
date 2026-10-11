@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page not found — Numan</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,500&family=Roboto+Condensed:ital,wght@1,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+  <meta name="robots" content="noindex" />
+  <style>
+    .nf { max-width: 640px; margin: 0 auto; padding: 120px 24px 140px; text-align: center; }
+    .nf__code { font-size: 12px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: #007891; margin-bottom: 14px; }
+    .nf__title { font-size: 40px; font-weight: 700; line-height: 1.15; color: #111; margin-bottom: 14px; }
+    .nf__text { font-size: 17px; line-height: 1.6; color: #636363; margin-bottom: 32px; }
+    .nf__links { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .nf__btn { display: inline-flex; align-items: center; height: 44px; padding: 0 22px; border-radius: 100px; font-size: 14px; font-weight: 500; text-decoration: none; background: #007891; color: #fff; }
+    .nf__btn--ghost { background: transparent; color: #007891; border: 1.5px solid #007891; }
+    [data-theme="dark"] .nf__title { color: #e8e4dc; }
+    [data-theme="dark"] .nf__text { color: #bbb; }
+  </style>
+  <script>var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t);</script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="/index.html" class="nav__logo">
+      <img src="/assets/logo.svg" alt="nümnʊ" height="34" />
+    </a>
+    <ul class="nav__links">
+      <li><a href="/index.html" class="nav__link">Home</a></li>
+      <li><a href="/about.html" class="nav__link">About</a></li>
+      <li><a href="/portfolio.html" class="nav__link">Portfolio</a></li>
+      <li><a href="/contact.html" class="nav__link">Contact</a></li>
+    </ul>
+    <button class="nav__toggle" id="theme-toggle" aria-label="Toggle theme">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <circle cx="11" cy="11" r="10" class="toggle-light" fill="#e0ddd8"/>
+        <path d="M11 1a10 10 0 0 1 0 20V1z" class="toggle-dark" fill="#444"/>
+        <circle cx="11" cy="11" r="10" class="toggle-ring" stroke="#ccc" stroke-width="1" fill="none"/>
+      </svg>
+    </button>
+    <button class="nav__hamburger" id="nav-hamburger" aria-label="Open menu">
+      <svg class="icon-menu" width="20" height="14" viewBox="0 0 20 14" fill="none" aria-hidden="true"><rect width="20" height="2" rx="1" fill="currentColor"/><rect y="6" width="20" height="2" rx="1" fill="currentColor"/><rect y="12" width="20" height="2" rx="1" fill="currentColor"/></svg>
+      <svg class="icon-close" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="display:none"><line x1="1" y1="1" x2="15" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="15" y1="1" x2="1" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <div class="nav__panel" id="nav-panel">
+      <a href="/index.html" class="nav__panel-link">Home</a>
+      <a href="/about.html" class="nav__panel-link">About</a>
+      <a href="/portfolio.html" class="nav__panel-link">Portfolio</a>
+      <a href="/contact.html" class="nav__panel-link">Contact</a>
+    </div>
+  </nav>
+
+  <main class="nf">
+    <p class="nf__code">404</p>
+    <h1 class="nf__title">This page doesn't exist</h1>
+    <p class="nf__text">The link may be old or mistyped. My case studies and work are one click away.</p>
+    <div class="nf__links">
+      <a class="nf__btn" href="/portfolio.html#case">See case studies</a>
+      <a class="nf__btn nf__btn--ghost" href="/">Go to home page</a>
+    </div>
+  </main>
+
+  <script src="/animations.js"></script>
+</body>
+</html>
