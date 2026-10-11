@@ -576,22 +576,10 @@
     saveBtn.disabled = true;
 
     try {
-      var compressed = await compressImage(file, 1400, 0.85);
-      var ext  = (file.name.split('.').pop() || 'jpg').toLowerCase().replace('jpeg','jpg');
-      var slug = slugify(document.getElementById('f-title').value || 'project') + '-' + Date.now() + '.' + ext;
-      var form = new FormData();
-      form.append('file', compressed, slug);
-      form.append('key', slug);
-      var res  = await fetch(API + '?action=upload', {
-        method: 'POST',
-        headers: { 'X-Admin-Password': adminPass },
-        body: form
-      });
-      var data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Upload failed');
-      uploadedUrl = data.url;
+      var prepared = await prepareImage(file, THUMB_MAX_W);
+      uploadedUrl = await uploadBlob(prepared, mediaKey(extFor(prepared)));
       var preview = document.getElementById('img-preview');
-      preview.src = data.url; preview.classList.add('show');
+      preview.src = uploadedUrl; preview.classList.add('show');
       document.getElementById('upload-zone').style.display = 'none';
       document.getElementById('img-change').style.display = 'inline';
       progress.style.display = 'none';
@@ -728,10 +716,8 @@
       var label = 'Uploading image ' + (i + 1) + ' of ' + files.length + '…';
       setMediaProgress(label, i / files.length);
       try {
-        // GIFs are kept as they are so they stay animated.
-        var isGif = files[i].type === 'image/gif';
-        var blob  = isGif ? files[i] : await compressImage(files[i], 1920, 0.9);
-        var url   = await uploadBlob(blob, mediaKey(isGif ? 'gif' : 'jpg'));
+        var blob  = await prepareImage(files[i], CONTENT_MAX_W);
+        var url   = await uploadBlob(blob, mediaKey(extFor(blob)));
         mediaItems.push({ type: 'image', url: url, name: files[i].name });
         added++;
         renderMedia();
@@ -870,18 +856,37 @@
   }
 
   // ── HELPERS ────────────────────────────────────────────
-  function compressImage(file, maxW, quality) {
+  // Images are uploaded as they are whenever possible, so screens stay as sharp as on Behance.
+  // Only very wide or very heavy files are scaled down, to twice the page width (sharp on retina
+  // screens), and saved as high-quality WebP, or PNG where the browser can't write WebP.
+  var CONTENT_MAX_W = 2800;           // page content is up to 1400px wide
+  var THUMB_MAX_W   = 1800;           // cards are at most ~900px wide
+  var KEEP_MAX_BYTES = 8 * 1024 * 1024;
+
+  function extFor(blob) {
+    return ({ 'image/png': 'png', 'image/webp': 'webp', 'image/gif': 'gif', 'image/jpeg': 'jpg', 'image/avif': 'avif' })[blob.type] || 'jpg';
+  }
+
+  function prepareImage(file, maxW) {
+    // GIFs are kept as they are so they stay animated.
+    if (file.type === 'image/gif') return Promise.resolve(file);
     return new Promise(function(resolve) {
       var img = new Image(), url = URL.createObjectURL(file);
       img.onload = function() {
         URL.revokeObjectURL(url);
-        var scale = Math.min(1, maxW / img.width);
-        var w = Math.round(img.width * scale), h = Math.round(img.height * scale);
+        // SVGs are always turned into a picture: an uploaded SVG could carry script.
+        var keep = file.type !== 'image/svg+xml' && img.naturalWidth <= maxW && file.size <= KEEP_MAX_BYTES;
+        if (keep) { resolve(file); return; }
+        var scale = Math.min(1, maxW / img.naturalWidth);
+        var w = Math.round(img.naturalWidth * scale), h = Math.round(img.naturalHeight * scale);
         var c = document.createElement('canvas'); c.width = w; c.height = h;
         var ctx = c.getContext('2d');
-        ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h);   // transparent PNGs get a white background
+        ctx.imageSmoothingQuality = 'high';
         ctx.drawImage(img, 0, 0, w, h);
-        c.toBlob(function(out) { resolve(out || file); }, 'image/jpeg', quality);
+        c.toBlob(function(out) {
+          if (out && out.type === 'image/webp') return resolve(out);
+          c.toBlob(function(png) { resolve(png || file); }, 'image/png');
+        }, 'image/webp', 0.95);
       };
       img.onerror = function() { URL.revokeObjectURL(url); resolve(file); };
       img.src = url;
