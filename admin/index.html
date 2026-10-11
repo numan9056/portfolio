@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin — Numan Portfolio</title>
+  <meta name="robots" content="noindex, nofollow" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -87,12 +88,14 @@
     .proj-card__title { font-size: 14px; font-weight: 600; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .proj-card__meta  { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
     .proj-card__cat   { font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 100px; text-transform: uppercase; }
+    .cat--case     { background: #111; color: #fff; }
     .cat--ui       { background: #e0f0f4; color: #007891; }
     .cat--graphic  { background: #fce8df; color: #c0562a; }
     .cat--branding { background: #ede8f5; color: #6b5ab0; }
     .cat--campaign { background: #dff0e5; color: #2a7a50; }
     .proj-card__year  { font-size: 11px; color: #bbb; }
     .proj-card__draft { font-size: 10px; background: #fef3c7; color: #b45309; padding: 2px 8px; border-radius: 100px; }
+    .proj-card__home  { font-size: 10px; background: #e0f0f4; color: #007891; padding: 2px 8px; border-radius: 100px; }
     .proj-card__actions { display: flex; gap: 8px; }
     .proj-card__actions .btn { flex: 1; justify-content: center; height: 32px; font-size: 12px; }
 
@@ -186,6 +189,23 @@
     .toggle.on { background: #007891; }
     .toggle.on::after { transform: translateX(20px); }
 
+    /* ── CASE STUDY + HOME PAGE PANELS ────────────── */
+    .panel { border: 1.5px solid #e4e2de; border-radius: 12px; padding: 16px; margin-bottom: 18px; background: #fcfbf7; }
+    .panel__title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    .panel__hint  { font-size: 12px; color: #aaa; margin-bottom: 14px; line-height: 1.5; }
+    .panel .form-group:last-child { margin-bottom: 0; }
+    .outcome-row { display: grid; grid-template-columns: 110px 1fr; gap: 8px; margin-bottom: 8px; }
+    .media-item--chapter { background: #f0fafb; border-color: #b9dde4; align-items: flex-start; }
+    .media-item__chapter-mark {
+      width: 84px; height: 56px; border-radius: 6px; background: #007891; color: #fff; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .media-item__field {
+      width: 100%; border: 1px solid #e4e2de; border-radius: 6px; padding: 5px 8px; margin-top: 4px;
+      font-family: inherit; font-size: 12px; color: #111; background: #fff; outline: none; resize: vertical;
+    }
+    .media-item__field:focus { border-color: #007891; }
+
     .modal__footer { display: flex; gap: 10px; margin-top: 24px; justify-content: flex-end; }
 
     /* ── TOAST ─────────────────────────────────────── */
@@ -266,6 +286,7 @@
       <div class="form-group">
         <label class="form-label">Category</label>
         <select class="form-select" id="f-category">
+          <option value="case">Case Study</option>
           <option value="ui">UI Design</option>
           <option value="graphic">Graphic Design</option>
           <option value="branding">Branding</option>
@@ -283,11 +304,47 @@
       <textarea class="form-textarea" id="f-desc" placeholder="One or two sentences about this project"></textarea>
     </div>
 
+    <div class="panel" id="case-panel">
+      <div class="panel__title">Case study at a glance</div>
+      <p class="panel__hint">Shown at the top of the case study so a recruiter gets the story in 30 seconds. Leave a field empty to hide it.</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">My role</label>
+          <input class="form-input" id="f-role" type="text" placeholder="e.g. Lead UX/UI designer" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Timeline</label>
+          <input class="form-input" id="f-timeline" type="text" placeholder="e.g. 10 weeks, 2025" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Team</label>
+          <input class="form-input" id="f-team" type="text" placeholder="e.g. 1 PM, 2 developers" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tools</label>
+          <input class="form-input" id="f-tools" type="text" placeholder="e.g. Figma, Maze, FigJam" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">The problem (one or two sentences)</label>
+        <textarea class="form-textarea" id="f-problem" style="min-height:60px" placeholder="What was broken, and for whom?"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Outcomes (up to 3, numbers work best)</label>
+        <div class="outcome-row"><input class="form-input" id="f-out-v0" placeholder="e.g. 38%" /><input class="form-input" id="f-out-l0" placeholder="e.g. fewer drop-offs at checkout" /></div>
+        <div class="outcome-row"><input class="form-input" id="f-out-v1" placeholder="e.g. 4.6/5" /><input class="form-input" id="f-out-l1" placeholder="e.g. usability score in testing" /></div>
+        <div class="outcome-row"><input class="form-input" id="f-out-v2" placeholder="e.g. 12" /><input class="form-input" id="f-out-l2" placeholder="e.g. user interviews" /></div>
+      </div>
+    </div>
+
     <div class="form-group">
       <label class="form-label">Project Content</label>
-      <p class="media-hint">Add images and videos. They appear on the project page top to bottom, in this order.</p>
+      <p class="media-hint" id="media-hint">Add images and videos. They appear on the project page top to bottom, in this order.</p>
       <div id="media-list" class="media-list"></div>
       <div class="media-add">
+        <button type="button" class="btn btn--outline" id="add-chapter-btn">+ Chapter heading</button>
         <button type="button" class="btn btn--outline" id="add-images-btn">+ Images</button>
         <button type="button" class="btn btn--outline" id="add-video-btn">+ Video file</button>
         <button type="button" class="btn btn--outline" id="add-embed-btn">+ YouTube / Vimeo link</button>
@@ -298,13 +355,33 @@
       <div class="media-bar" id="media-bar"><div class="media-bar__fill" id="media-bar-fill"></div></div>
     </div>
 
+    <div class="panel">
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Feature on home page</div>
+          <div class="toggle-sub">Show this in "Case Studies" on the home page</div>
+        </div>
+        <button type="button" class="toggle" id="f-featured" aria-label="Feature on home page"></button>
+      </div>
+      <div id="featured-fields" style="display:none; margin-top:14px">
+        <div class="form-group">
+          <label class="form-label">One-line summary for the home page card</label>
+          <input class="form-input" id="f-summary" type="text" maxlength="140" placeholder="e.g. Cut rental admin time in half for small landlords in Norway" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Position on the home page (1 = first)</label>
+          <input class="form-input" id="f-order" type="number" min="1" step="1" style="width:110px" placeholder="1" />
+        </div>
+      </div>
+    </div>
+
     <div class="form-group">
       <div class="toggle-row">
         <div>
           <div class="toggle-label">Published</div>
           <div class="toggle-sub">Show in gallery</div>
         </div>
-        <button class="toggle on" id="f-published"></button>
+        <button type="button" class="toggle on" id="f-published" aria-label="Published"></button>
       </div>
     </div>
 
@@ -319,7 +396,7 @@
 
 <script>
   var API        = '/api/admin';
-  var CAT_LABELS = { ui: 'UI Design', graphic: 'Graphic Design', branding: 'Branding', campaign: 'Campaign Design' };
+  var CAT_LABELS = { 'case': 'Case Study', ui: 'UI Design', graphic: 'Graphic Design', branding: 'Branding', campaign: 'Campaign Design' };
 
   var projects     = [];
   var editingIndex = -1;
@@ -388,6 +465,7 @@
         +     '<span class="proj-card__cat cat--' + (p.category||'ui') + '">' + escHtml(CAT_LABELS[p.category] || p.category) + '</span>'
         +     (p.year ? '<span class="proj-card__year">' + escHtml(p.year) + '</span>' : '')
         +     (p.published === false ? '<span class="proj-card__draft">Draft</span>' : '')
+        +     (p.featured ? '<span class="proj-card__home">★ Home</span>' : '')
         +   '</div>'
         +   '<div class="proj-card__actions">'
         +     '<button class="btn btn--outline" onclick="openModal(' + i + ')">✏️ Edit</button>'
@@ -415,6 +493,21 @@
     document.getElementById('f-desc').value     = p.description || '';
     var pub = document.getElementById('f-published');
     pub.className = 'toggle' + (p.published === false ? '' : ' on');
+    var cs = p.caseStudy || {};
+    document.getElementById('f-role').value     = cs.role     || '';
+    document.getElementById('f-timeline').value = cs.timeline || '';
+    document.getElementById('f-team').value     = cs.team     || '';
+    document.getElementById('f-tools').value    = cs.tools    || '';
+    document.getElementById('f-problem').value  = cs.problem  || '';
+    for (var k = 0; k < 3; k++) {
+      var o = (cs.outcomes || [])[k] || {};
+      document.getElementById('f-out-v' + k).value = o.value || '';
+      document.getElementById('f-out-l' + k).value = o.label || '';
+    }
+    setFeatured(!!p.featured);
+    document.getElementById('f-summary').value = p.summary || '';
+    document.getElementById('f-order').value   = p.featuredOrder || '';
+    syncCategory();
     var preview = document.getElementById('img-preview');
     var zone    = document.getElementById('upload-zone');
     var change  = document.getElementById('img-change');
@@ -427,7 +520,11 @@
     }
     document.getElementById('img-input').value = '';
     document.getElementById('upload-progress').style.display = 'none';
-    mediaItems = (p.media || []).map(function(m) { return { type: m.type, url: m.url, name: m.name || '' }; });
+    mediaItems = (p.media || []).map(function(m) {
+      return m.type === 'chapter'
+        ? { type: 'chapter', title: m.title || '', text: m.text || '' }
+        : { type: m.type, url: m.url, name: m.name || '', caption: m.caption || '' };
+    });
     renderMedia();
     setMediaProgress('');
     document.getElementById('modal').classList.add('open');
@@ -436,6 +533,22 @@
   function closeModal() { document.getElementById('modal').classList.remove('open'); }
 
   document.getElementById('f-published').onclick = function() { this.classList.toggle('on'); };
+  document.getElementById('f-featured').onclick  = function() { setFeatured(!this.classList.contains('on')); };
+  document.getElementById('f-category').onchange = syncCategory;
+
+  function setFeatured(on) {
+    document.getElementById('f-featured').classList.toggle('on', on);
+    document.getElementById('featured-fields').style.display = on ? '' : 'none';
+  }
+
+  // Case study details and chapter tips only matter for case studies.
+  function syncCategory() {
+    var isCase = document.getElementById('f-category').value === 'case';
+    document.getElementById('case-panel').style.display = isCase ? '' : 'none';
+    document.getElementById('media-hint').textContent = isCase
+      ? 'Split the story into chapters (e.g. Problem, Research, Ideation, Design, Outcome): add a chapter heading, then its images. Add a one-line caption under key images to explain why.'
+      : 'Add images and videos. They appear on the project page top to bottom, in this order.';
+  }
 
   // ── IMAGE UPLOAD ───────────────────────────────────────
   document.getElementById('img-input').onchange = function(e) { handleFile(e.target.files[0]); };
@@ -499,6 +612,18 @@
     }
     var LABEL = { image: 'Image', video: 'Video', embed: 'Video link' };
     list.innerHTML = mediaItems.map(function(m, i) {
+      var btns = '<div class="media-item__btns">'
+        +   '<button type="button" class="media-item__btn" title="Move up" onclick="moveMedia(' + i + ',-1)"' + (i === 0 ? ' disabled' : '') + '>↑</button>'
+        +   '<button type="button" class="media-item__btn" title="Move down" onclick="moveMedia(' + i + ',1)"' + (i === mediaItems.length - 1 ? ' disabled' : '') + '>↓</button>'
+        +   '<button type="button" class="media-item__btn media-item__btn--del" title="Remove" onclick="removeMedia(' + i + ')">✕</button>'
+        + '</div>';
+      if (m.type === 'chapter') {
+        return '<div class="media-item media-item--chapter"><div class="media-item__chapter-mark">Chapter</div>'
+          + '<div class="media-item__info">'
+          +   '<input class="media-item__field" data-i="' + i + '" data-f="title" placeholder="Chapter heading, e.g. Research" value="' + escHtml(m.title) + '" />'
+          +   '<textarea class="media-item__field" data-i="' + i + '" data-f="text" rows="2" placeholder="2–3 lines: what you learned or decided here">' + escHtml(m.text) + '</textarea>'
+          + '</div>' + btns + '</div>';
+      }
       var thumb = m.type === 'image'
         ? '<img class="media-item__thumb" src="' + escHtml(m.url) + '" />'
         : '<div class="media-item__thumb">▶</div>';
@@ -506,14 +631,23 @@
         + '<div class="media-item__info">'
         +   '<div class="media-item__type">' + (i + 1) + '. ' + LABEL[m.type] + '</div>'
         +   '<div class="media-item__name">' + escHtml(m.name || m.url) + '</div>'
-        + '</div>'
-        + '<div class="media-item__btns">'
-        +   '<button type="button" class="media-item__btn" title="Move up" onclick="moveMedia(' + i + ',-1)"' + (i === 0 ? ' disabled' : '') + '>↑</button>'
-        +   '<button type="button" class="media-item__btn" title="Move down" onclick="moveMedia(' + i + ',1)"' + (i === mediaItems.length - 1 ? ' disabled' : '') + '>↓</button>'
-        +   '<button type="button" class="media-item__btn media-item__btn--del" title="Remove" onclick="removeMedia(' + i + ')">✕</button>'
-        + '</div></div>';
+        +   '<input class="media-item__field" data-i="' + i + '" data-f="caption" placeholder="Caption (optional): why this matters" value="' + escHtml(m.caption) + '" />'
+        + '</div>' + btns + '</div>';
     }).join('');
   }
+
+  // Typing in a chapter or caption field updates the item it belongs to.
+  document.getElementById('media-list').addEventListener('input', function(e) {
+    var i = e.target.getAttribute('data-i'), f = e.target.getAttribute('data-f');
+    if (i !== null && mediaItems[i]) mediaItems[i][f] = e.target.value;
+  });
+
+  document.getElementById('add-chapter-btn').onclick = function() {
+    mediaItems.push({ type: 'chapter', title: '', text: '' });
+    renderMedia();
+    var fields = document.querySelectorAll('#media-list [data-f="title"]');
+    if (fields.length) fields[fields.length - 1].focus();
+  };
 
   function moveMedia(i, dir) {
     var j = i + dir;
@@ -533,7 +667,7 @@
 
   function setBusy(busy) {
     document.getElementById('modal-save').disabled = busy;
-    ['add-images-btn', 'add-video-btn', 'add-embed-btn'].forEach(function(id) { document.getElementById(id).disabled = busy; });
+    ['add-chapter-btn', 'add-images-btn', 'add-video-btn', 'add-embed-btn'].forEach(function(id) { document.getElementById(id).disabled = busy; });
   }
 
   // Upload any file; big ones go up in parts (Netlify allows ~6 MB per request).
@@ -659,16 +793,35 @@
 
     var previous = editingIndex >= 0 ? projects[editingIndex] : {};
     var existing = previous.image || '';
-    var project  = {
-      id:          previous.id || (slugify(title) || 'project') + '-' + Date.now().toString(36),
+    var val = function(id) { return document.getElementById(id).value.trim(); };
+    var outcomes = [0, 1, 2].map(function(k) { return { value: val('f-out-v' + k), label: val('f-out-l' + k) }; })
+      .filter(function(o) { return o.value || o.label; });
+    var featured = document.getElementById('f-featured').classList.contains('on');
+    var order    = parseInt(val('f-order'), 10);
+    // Start from the saved project so fields this form doesn't show are kept.
+    var project  = Object.assign({}, previous, {
+      id:          previous.id || legacyId(previous) || (slugify(title) || 'project') + '-' + Date.now().toString(36),
       title:       title,
       category:    document.getElementById('f-category').value,
-      year:        document.getElementById('f-year').value.trim(),
-      description: document.getElementById('f-desc').value.trim(),
+      year:        val('f-year'),
+      description: val('f-desc'),
       published:   document.getElementById('f-published').classList.contains('on'),
+      featured:    featured,
+      summary:     val('f-summary'),
+      featuredOrder: order > 0 ? order : null,
+      caseStudy:   {
+        role: val('f-role'), timeline: val('f-timeline'), team: val('f-team'), tools: val('f-tools'),
+        problem: val('f-problem'), outcomes: outcomes
+      },
       image:       uploadedUrl || existing,
-      media:       mediaItems.map(function(m) { return { type: m.type, url: m.url, name: m.name }; })
-    };
+      media:       mediaItems
+        .filter(function(m) { return m.type !== 'chapter' || m.title.trim() || m.text.trim(); })
+        .map(function(m) {
+          return m.type === 'chapter'
+            ? { type: 'chapter', title: m.title.trim(), text: m.text.trim() }
+            : { type: m.type, url: m.url, name: m.name, caption: (m.caption || '').trim() };
+        })
+    });
     // No thumbnail chosen: use the first image of the content.
     if (!project.image) {
       var firstImg = project.media.filter(function(m) { return m.type === 'image'; })[0];
@@ -736,6 +889,11 @@
   }
 
   function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  // Older projects have no id; their public address comes from the image name (see projects.js), so keep it.
+  function legacyId(p) {
+    var m = /[?&]key=([^&]+)/.exec(p.image || '') || /([^\/]+)$/.exec(p.image || '');
+    return m ? decodeURIComponent(m[1]).replace(/\.\w+$/, '') : '';
+  }
   function slugify(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40); }
 
   var toastTimer;

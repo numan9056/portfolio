@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfolio — Numan</title>
+  <meta name="description" content="UX case studies, UI design, branding and campaign work by Numan, product designer in Norway." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Numan — Product Designer" />
+  <meta property="og:title" content="Portfolio — Numan" />
+  <meta property="og:description" content="UX case studies, UI design, branding and campaign work by Numan, product designer in Norway." />
+  <meta property="og:url" content="https://www.hellonuman.com/portfolio.html" />
+  <meta property="og:image" content="https://www.hellonuman.com/assets/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -422,12 +430,13 @@
   <header class="pg-header">
     <span class="pg-header__eyebrow reveal">Gallery</span>
     <h1 class="pg-header__title reveal" data-delay="1">My Work</h1>
-    <p class="pg-header__sub reveal" data-delay="2">A curated collection of UI design, branding, graphic design and digital campaigns.</p>
+    <p class="pg-header__sub reveal" data-delay="2">UX case studies, UI design, branding, graphic design and digital campaigns.</p>
   </header>
 
   <!-- CATEGORY FILTER -->
   <div class="pg-filter">
     <button class="pg-filter__btn active" data-filter="all">All <span class="pg-filter__count"></span></button>
+    <button class="pg-filter__btn" data-filter="case">Case Studies</button>
     <button class="pg-filter__btn" data-filter="ui">UI Design</button>
     <button class="pg-filter__btn" data-filter="graphic">Graphic Design</button>
     <button class="pg-filter__btn" data-filter="branding">Branding</button>
@@ -468,19 +477,7 @@
       <p class="footer__sub">Feel free to reach out for collaborations or just a friendly hello</p>
       <a href="mailto:numan@hellonuman.com" class="footer__email">numan@hellonuman.com</a>
       <div class="footer__socials">
-        <a href="#" class="footer__social" aria-label="Facebook">
-          <svg width="33" height="33" viewBox="0 0 33 33" fill="none">
-            <path d="M18 33V18h5l1-6h-6v-3.3C18 7 18.5 6 21 6h3V0s-1.5-.2-3.8-.2C13.5.8 11 4 11 9.5V12H6v6h5v15h7z" fill="#636363"/>
-          </svg>
-        </a>
-        <a href="#" class="footer__social" aria-label="Instagram">
-          <svg width="33" height="33" viewBox="0 0 33 33" fill="none">
-            <rect x="2" y="2" width="29" height="29" rx="8" stroke="#636363" stroke-width="2.2"/>
-            <circle cx="16.5" cy="16.5" r="5.5" stroke="#636363" stroke-width="2.2"/>
-            <circle cx="25" cy="8" r="2" fill="#636363"/>
-          </svg>
-        </a>
-        <a href="#" class="footer__social" aria-label="LinkedIn">
+        <a href="https://www.linkedin.com/in/imnuman/" class="footer__social" aria-label="LinkedIn (opens in a new tab)" target="_blank" rel="noopener">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
             <rect x="2" y="2" width="28" height="28" rx="6" stroke="#636363" stroke-width="2.2"/>
             <circle cx="10" cy="10" r="1.5" fill="#636363"/>
@@ -489,29 +486,19 @@
             <path d="M15 14v9" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
           </svg>
         </a>
-        <a href="#" class="footer__social" aria-label="Behance">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <rect x="2" y="2" width="28" height="28" rx="6" stroke="#636363" stroke-width="2.2"/>
-            <path d="M9 9h6c2.5 0 4 1.2 4 3.2s-1.5 3.3-3.5 3.3H9V9z" stroke="#636363" stroke-width="1.8"/>
-            <path d="M9 16h7c2.5 0 4 1.2 4 3.4S18.5 23 16 23H9V16z" stroke="#636363" stroke-width="1.8"/>
-            <path d="M21 11h6" stroke="#636363" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        </a>
       </div>
     </div>
   </footer>
 
   <script src="animations.js"></script>
+  <script src="projects.js"></script>
   <script>
-    var CAT_LABEL = { ui: 'UI Design', graphic: 'Graphic Design', branding: 'Branding', campaign: 'Campaign Design' };
+    var CAT_LABEL = Projects.CAT_LABEL;
+    var escHtml   = Projects.escHtml;
     var currentFilter = 'all';
     var allItems = [];
     var allProjects = [];
     var lbIndex = 0;
-
-    function escHtml(str) {
-      return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
 
     // ── LIGHTBOX ──────────────────────────────────────────
     var lb        = document.getElementById('lb');
@@ -559,23 +546,16 @@
       if (e.key === 'ArrowRight' && lbIndex < allProjects.length - 1) openLightbox(lbIndex + 1);
     });
 
-    // Stable address for a project. Older projects have no id, so use their image name.
-    function projectId(p, index) {
-      if (p.id) return p.id;
-      var m = /[?&]key=([^&]+)/.exec(p.image || '') || /([^\/]+)$/.exec(p.image || '');
-      return m ? decodeURIComponent(m[1]).replace(/\.\w+$/, '') : String(index);
-    }
-
     // ── CARD RENDER ───────────────────────────────────────
     function renderCard(p, index) {
       var a = document.createElement('a');
       a.className = 'pg-item';
-      a.href = 'project-detail.html?id=' + encodeURIComponent(projectId(p, index));
+      a.href = Projects.projectUrl(p, index);
       a.dataset.category = p.category || 'ui';
       a.dataset.index = index;
       var inner = '';
       if (p.image) {
-        inner += '<img src="' + p.image + '" alt="' + escHtml(p.title) + '" class="pg-item__img" loading="lazy" />';
+        inner += '<img src="' + escHtml(p.image) + '" alt="' + escHtml(p.title) + '" class="pg-item__img" loading="lazy" />';
       } else {
         inner += '<div class="pg-item__placeholder" style="aspect-ratio:4/3;background:#f2f1ee;display:flex;align-items:center;justify-content:center;color:#bbb;font-size:13px;">No image</div>';
       }
@@ -607,16 +587,13 @@
     document.querySelectorAll('.pg-filter__btn').forEach(function(btn) {
       btn.addEventListener('click', function() { applyFilter(btn.dataset.filter); });
     });
+    var hashFilter = location.hash.slice(1);
+    if (CAT_LABEL.hasOwnProperty(hashFilter)) currentFilter = hashFilter;
 
     // ── LOAD ──────────────────────────────────────────────
-    // Try live API first (Netlify Blobs), fall back to static JSON for local dev
-    var apiUrl = '/api/admin?action=projects';
-    var jsonUrl = 'data/projects.json?v=' + Date.now();
-    fetch(apiUrl)
-      .then(function(r) { return r.ok ? r.json() : fetch(jsonUrl).then(function(r2) { return r2.json(); }); })
-      .catch(function() { return fetch(jsonUrl).then(function(r) { return r.json(); }); })
-      .then(function(data) {
-        allProjects = (data.projects || []).filter(function(p) { return p.published !== false; });
+    Projects.load()
+      .then(function(published) {
+        allProjects = published;
         var grid = document.getElementById('gallery');
         grid.innerHTML = '';
         allItems = [];
@@ -634,6 +611,12 @@
 
         var countEl = document.querySelector('[data-filter="all"] .pg-filter__count');
         if (countEl) countEl.textContent = '(' + allProjects.length + ')';
+        // Hide tabs that have nothing in them yet.
+        document.querySelectorAll('.pg-filter__btn').forEach(function(b) {
+          var cat = b.dataset.filter;
+          b.hidden = cat !== 'all' && !allProjects.some(function(p) { return (p.category || 'ui') === cat; });
+        });
+        if (currentFilter !== 'all' && document.querySelector('.pg-filter__btn[data-filter="' + currentFilter + '"]').hidden) currentFilter = 'all';
         applyFilter(currentFilter);
       })
       .catch(function() {
@@ -641,6 +624,5 @@
       });
   </script>
 
-  <script>if(window.netlifyIdentity){window.netlifyIdentity.on("init",function(u){if(!u){window.netlifyIdentity.on("login",function(){document.location.href="/admin/";});}})}</script>
 </body>
 </html>

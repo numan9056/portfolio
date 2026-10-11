@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About — Numan</title>
+  <meta name="description" content="Background, experience and education of Numan, a UX and product designer based in Norway." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Numan — Product Designer" />
+  <meta property="og:title" content="About — Numan" />
+  <meta property="og:description" content="Background, experience and education of Numan, a UX and product designer based in Norway." />
+  <meta property="og:url" content="https://www.hellonuman.com/about.html" />
+  <meta property="og:image" content="https://www.hellonuman.com/assets/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,7 +35,7 @@
       font-family: 'Roboto', sans-serif;
       font-size: 13px;
       font-weight: 400;
-      color: #888;
+      color: #6b6b6b;
       line-height: 1.5;
       text-align: center;
       margin-top: 10px;
@@ -87,7 +95,7 @@
     }
 
     /* Inactive tab — both label and sublabel muted */
-    .a-work__head.tab-inactive .a-work__label   { color: #ccc !important; }
+    .a-work__head.tab-inactive .a-work__label   { color: #8a8a8a !important; }
     .a-work__head.tab-inactive .a-work__sublabel { color: #ddd !important; }
 
     .a-work__label--exp  { color: #007891; }
@@ -97,7 +105,7 @@
       font-family: 'Roboto', sans-serif;
       font-size: 14px;
       font-weight: 400;
-      color: #aaa;
+      color: #767676;
       line-height: 1.4;
       margin-top: 6px;
       display: block;
@@ -398,8 +406,8 @@
 
   <!-- HERO PHOTO -->
   <section class="a-hero">
-    <img src="assets/about-hero.png" alt="Finishing My painting — Crazy Astronaut, 2026" class="a-hero__img" />
-    <p class="a-hero__caption">Photo : Finishing My painting ( crazy Astronaut 2026 )</p>
+    <img src="assets/about-hero.webp" alt="Numan finishing his painting Crazy Astronaut, 2026" class="a-hero__img" />
+    <p class="a-hero__caption">Photo: Finishing my painting, “Crazy Astronaut” (2026)</p>
   </section>
 
   <!-- BIO -->
@@ -417,12 +425,12 @@
   <section class="a-work">
 
     <!-- Side-by-side headings exactly as in Figma -->
-    <div class="a-work__heads reveal">
-      <div class="a-work__head" data-tab="exp-list" id="tab-exp">
+    <div class="a-work__heads reveal" role="tablist" aria-label="Experience and education">
+      <div class="a-work__head" data-tab="exp-list" id="tab-exp" role="tab" tabindex="0" aria-selected="true" aria-controls="exp-list">
         <h2 class="a-work__label a-work__label--exp">Experience</h2>
         <span class="a-work__sublabel">2020 — Present</span>
       </div>
-      <div class="a-work__head tab-inactive" data-tab="edu-list" id="tab-edu">
+      <div class="a-work__head tab-inactive" data-tab="edu-list" id="tab-edu" role="tab" tabindex="0" aria-selected="false" aria-controls="edu-list">
         <h2 class="a-work__label a-work__label--edu">Education</h2>
         <span class="a-work__sublabel">2016 — 2026</span>
       </div>
@@ -431,11 +439,11 @@
     <div class="a-work__rule rule--exp" id="work-rule"></div>
 
     <!-- ── EXPERIENCE ENTRIES ── -->
-    <div class="exp-list" id="exp-list">
+    <div class="exp-list" id="exp-list" role="tabpanel" aria-labelledby="tab-exp">
 
       <div class="exp-row reveal">
         <div class="exp-row__left">
-          <div class="exp-row__logo"><img src="assets/logo-big.svg" alt="MistetFunnet" /></div>
+          <div class="exp-row__logo"><img loading="lazy" decoding="async" src="assets/logo-big.svg" alt="MistetFunnet" /></div>
           <div class="exp-row__dates">Jun 2024 — Present</div>
         </div>
         <div class="exp-row__gap"></div>
@@ -449,7 +457,7 @@
 
       <div class="exp-row reveal">
         <div class="exp-row__left">
-          <div class="exp-row__logo"><img src="assets/front.svg" alt="Relentlessly AS" /></div>
+          <div class="exp-row__logo"><img loading="lazy" decoding="async" src="assets/front.svg" alt="Relentlessly AS" /></div>
           <div class="exp-row__dates">Jan 2025 — Present</div>
         </div>
         <div class="exp-row__gap"></div>
@@ -463,12 +471,12 @@
 
       <div class="exp-row reveal">
         <div class="exp-row__left">
-          <div class="exp-row__logo"><img src="assets/brand4.svg" alt="Jets Vacuum AS" /></div>
+          <div class="exp-row__logo"><img loading="lazy" decoding="async" src="assets/brand4.svg" alt="Jets Vacuum AS" /></div>
           <div class="exp-row__dates">Apr 2024 – May 2024</div>
         </div>
         <div class="exp-row__gap"></div>
         <div class="exp-row__main">
-          <p class="exp-row__role">Masters Internship</p>
+          <p class="exp-row__role">Master’s Internship</p>
           <p class="exp-row__company">Jets Vacuum AS</p>
           <p class="exp-row__desc">Contributed to reusable UI component systems supporting internal production workflows; produced marketing animation content for internal and client-facing channels.</p>
         </div>
@@ -477,7 +485,7 @@
 
       <div class="exp-row reveal">
         <div class="exp-row__left">
-          <div class="exp-row__logo"><img src="assets/brand3.svg" alt="Reviner" /></div>
+          <div class="exp-row__logo"><img loading="lazy" decoding="async" src="assets/brand3.svg" alt="Reviner" /></div>
           <div class="exp-row__dates">Mar 2023 – Aug 2023</div>
         </div>
         <div class="exp-row__gap"></div>
@@ -491,7 +499,7 @@
 
       <div class="exp-row reveal">
         <div class="exp-row__left">
-          <div class="exp-row__logo"><img src="assets/brand2.svg" alt="Daraz" /></div>
+          <div class="exp-row__logo"><img loading="lazy" decoding="async" src="assets/brand2.svg" alt="Daraz" /></div>
           <div class="exp-row__dates">Oct 2022 – Feb 2023</div>
         </div>
         <div class="exp-row__gap"></div>
@@ -505,7 +513,7 @@
 
       <div class="exp-row reveal">
         <div class="exp-row__left">
-          <div class="exp-row__logo"><img src="assets/brand1.svg" alt="Immersion Studio" /></div>
+          <div class="exp-row__logo"><img loading="lazy" decoding="async" src="assets/brand1.svg" alt="Immersion Studio" /></div>
           <div class="exp-row__dates">Jan 2020 – Sep 2022</div>
         </div>
         <div class="exp-row__gap"></div>
@@ -520,18 +528,18 @@
     </div>
 
     <!-- ── EDUCATION ENTRIES ── -->
-    <div class="edu-list" id="edu-list" style="display:none">
+    <div class="edu-list" id="edu-list" role="tabpanel" aria-labelledby="tab-edu" style="display:none">
 
       <div class="edu-row reveal">
         <div class="edu-row__left">
           <div class="edu-row__logo">
-            <img src="assets/edu-hvo.png" alt="Høgskulen i Volda" />
+            <img loading="lazy" decoding="async" src="assets/edu-hvo.webp" alt="Høgskulen i Volda" />
           </div>
           <div class="edu-row__dates">2024 — 2026</div>
         </div>
         <div class="exp-row__gap"></div>
         <div class="exp-row__main">
-          <p class="edu-row__degree">Master of Arts, Media Practice (2023–2026)</p>
+          <p class="edu-row__degree">Master of Arts, Media Practice</p>
           <p class="edu-row__school">Høgskulen i Volda (HVO), Norway</p>
           <p class="edu-row__thesis">Thesis: InclusiveLearnBD — designing a bilingual digital platform for inclusive-education rights advocacy in Bangladesh. Grounded in human-centred design: 13 stakeholder interviews, analysis of 25 policy documents, usability evaluation (SUS 72.3), and a WCAG 2.1 AA accessibility audit.</p>
         </div>
@@ -541,13 +549,13 @@
       <div class="edu-row reveal" data-delay="1">
         <div class="edu-row__left">
           <div class="edu-row__logo">
-            <img src="assets/edu-uct.png" alt="Shanto-Marium University of Creative Technology" />
+            <img loading="lazy" decoding="async" src="assets/edu-uct.webp" alt="Shanto-Marium University of Creative Technology" />
           </div>
           <div class="edu-row__dates">2016 — 2021</div>
         </div>
         <div class="exp-row__gap"></div>
         <div class="exp-row__main">
-          <p class="edu-row__degree">Bachelor of Arts, Graphic Design &amp; Multimedia (2016–2021)</p>
+          <p class="edu-row__degree">Bachelor of Arts, Graphic Design &amp; Multimedia</p>
           <p class="edu-row__school">Shanto-Marium University of Creative Technology, Dhaka</p>
           <p class="edu-row__thesis">Foundation in visual design across branding, typography, illustration, and motion — the craft base I still draw on in product work today.</p>
         </div>
@@ -559,10 +567,10 @@
 
   <!-- BEYOND DESIGN -->
   <section class="a-beyond">
-    <span class="a-beyond__eyebrow reveal">MY Activity</span>
+    <span class="a-beyond__eyebrow reveal">Outside work</span>
     <h2 class="a-beyond__heading reveal" data-delay="1">Beyond Design</h2>
 
-    <img src="assets/beyond-design.png" alt="Beyond Design — artworks by Numan" class="a-beyond__combined reveal" data-delay="2" />
+    <img loading="lazy" decoding="async" src="assets/beyond-design.webp" alt="Beyond Design — artworks by Numan" class="a-beyond__combined reveal" data-delay="2" />
   </section>
 
   <!-- DIVIDER -->
@@ -575,33 +583,13 @@
       <p class="footer__sub">Feel free to reach out for collaborations or just a friendly hello</p>
       <a href="mailto:numan@hellonuman.com" class="footer__email">numan@hellonuman.com</a>
       <div class="footer__socials">
-        <a href="#" class="footer__social" aria-label="Facebook">
-          <svg width="33" height="33" viewBox="0 0 33 33" fill="none">
-            <path d="M18 33V18h5l1-6h-6v-3.3C18 7 18.5 6 21 6h3V0s-1.5-.2-3.8-.2C13.5.8 11 4 11 9.5V12H6v6h5v15h7z" fill="#636363"/>
-          </svg>
-        </a>
-        <a href="#" class="footer__social" aria-label="Instagram">
-          <svg width="33" height="33" viewBox="0 0 33 33" fill="none">
-            <rect x="2" y="2" width="29" height="29" rx="8" stroke="#636363" stroke-width="2.2"/>
-            <circle cx="16.5" cy="16.5" r="5.5" stroke="#636363" stroke-width="2.2"/>
-            <circle cx="25" cy="8" r="2" fill="#636363"/>
-          </svg>
-        </a>
-        <a href="#" class="footer__social" aria-label="LinkedIn">
+        <a href="https://www.linkedin.com/in/imnuman/" class="footer__social" aria-label="LinkedIn (opens in a new tab)" target="_blank" rel="noopener">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
             <rect x="2" y="2" width="28" height="28" rx="6" stroke="#636363" stroke-width="2.2"/>
             <circle cx="10" cy="10" r="1.5" fill="#636363"/>
             <path d="M10 14v9" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
             <path d="M15 23v-5c0-2.2 1.2-3.5 3.5-3.5S22 15.8 22 18v5" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
             <path d="M15 14v9" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
-          </svg>
-        </a>
-        <a href="#" class="footer__social" aria-label="Behance">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <rect x="2" y="2" width="28" height="28" rx="6" stroke="#636363" stroke-width="2.2"/>
-            <path d="M9 9h6c2.5 0 4 1.2 4 3.2s-1.5 3.3-3.5 3.3H9V9z" stroke="#636363" stroke-width="1.8"/>
-            <path d="M9 16h7c2.5 0 4 1.2 4 3.4S18.5 23 16 23H9V16z" stroke="#636363" stroke-width="1.8"/>
-            <path d="M21 11h6" stroke="#636363" stroke-width="1.8" stroke-linecap="round"/>
           </svg>
         </a>
       </div>
@@ -619,6 +607,9 @@
       var eduList = document.getElementById('edu-list');
 
       tabs.forEach(function (tab) {
+        tab.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tab.click(); }
+        });
         tab.addEventListener('click', function () {
           var target = tab.dataset.tab;
           var isEdu  = target === 'edu-list';
@@ -628,12 +619,13 @@
 
           expTab.classList.toggle('tab-inactive',  isEdu);
           eduTab.classList.toggle('tab-inactive', !isEdu);
+          expTab.setAttribute('aria-selected', String(!isEdu));
+          eduTab.setAttribute('aria-selected', String(isEdu));
 
           rule.className = 'a-work__rule ' + (isEdu ? 'rule--edu' : 'rule--exp');
         });
       });
     })();
   </script>
-  <script>if(window.netlifyIdentity){window.netlifyIdentity.on("init",function(u){if(!u){window.netlifyIdentity.on("login",function(){document.location.href="/admin/";});}})}</script>
 </body>
 </html>

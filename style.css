@@ -13,6 +13,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   overflow-x: hidden;
+  overflow-x: clip;   /* clip, unlike hidden, keeps the sticky nav working */
 }
 
 /* ─── NAV ─────────────────────────────────────────────────────── */
@@ -313,7 +314,7 @@ body {
 .case__year {
   font-size: 12px;
   font-weight: 500;
-  color: #888;
+  color: #767676;
   letter-spacing: 0.4px;
 }
 
@@ -527,6 +528,73 @@ body {
 .cases__row .case__info {
   flex: 0 0 auto;
 }
+
+/* ── featured case studies (from the admin) ── */
+.fcases {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.fcases:empty { display: none; }
+
+.fcase {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f2f1ee;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.45s cubic-bezier(0.16,1,0.3,1), box-shadow 0.45s cubic-bezier(0.16,1,0.3,1);
+}
+.fcase:hover { transform: translateY(-7px); box-shadow: 0 28px 64px rgba(0,0,0,0.1); }
+.fcase:focus-visible { outline: 3px solid #007891; outline-offset: 3px; }
+
+.fcase__media { aspect-ratio: 16 / 10; background: #e8e7e3; overflow: hidden; }
+.fcase__media img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+.fcase:hover .fcase__media img { transform: scale(1.03); }
+
+.fcase__body { padding: 26px 30px 30px; display: flex; flex-direction: column; flex: 1; }
+.fcase__text { font-size: 15px; line-height: 1.6; color: #444; margin-bottom: 14px; }
+.fcase__outcome { font-size: 14px; color: #636363; margin-bottom: 14px; }
+.fcase__outcome strong { color: #007891; font-size: 18px; margin-right: 4px; }
+.fcase__cta { margin-top: auto; font-size: 14px; font-weight: 500; color: #007891; }
+.fcase__cta span { display: inline-block; transition: transform 0.25s ease; }
+.fcase:hover .fcase__cta span { transform: translateX(4px); }
+
+/* Full-row card: image and text side by side */
+.fcase--wide { grid-column: 1 / -1; flex-direction: row; }
+.fcase--wide .fcase__media { flex: 0 0 58%; aspect-ratio: auto; min-height: 340px; }
+.fcase--wide .fcase__body { justify-content: center; padding: 40px 44px; }
+
+.cases__all {
+  display: inline-block;
+  margin-top: 22px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #007891;
+  text-decoration: none;
+}
+.cases__all:hover { text-decoration: underline; }
+
+@media (max-width: 860px) {
+  .fcases { grid-template-columns: 1fr; }
+  .fcase--wide { flex-direction: column; }
+  .fcase--wide .fcase__media { aspect-ratio: 16 / 10; min-height: 0; }
+  .fcase--wide .fcase__body { padding: 24px 22px 26px; }
+  .fcase__body { padding: 22px 22px 26px; }
+}
+
+[data-theme="dark"] .fcase          { background: #1c1c1c; }
+[data-theme="dark"] .fcase__media   { background: #242424; }
+[data-theme="dark"] .fcase__text    { color: #bbb; }
+[data-theme="dark"] .fcase__outcome { color: #999; }
+[data-theme="dark"] .fcase__outcome strong,
+[data-theme="dark"] .fcase__cta,
+[data-theme="dark"] .cases__all     { color: #1ab8d8; }
 
 /* ── DESIGN SYSTEM visualization ── */
 .dsv {
@@ -1105,7 +1173,7 @@ a:focus-visible, button:focus-visible {
    RESPONSIVE  — mobile overrides (desktop untouched)
    ══════════════════════════════════════════════════════════════════ */
 
-html { overflow-x: hidden; }
+html { overflow-x: hidden; overflow-x: clip; }
 *, *::before, *::after { min-width: 0; }
 
 /* ── Tablet (≤ 860px) ────────────────────────────────────────── */
@@ -1264,3 +1332,19 @@ html { overflow-x: hidden; }
   [data-theme="dark"] .currently__item + .currently__item { border-top-color: #2e2e2e; }
 }
 [data-theme="dark"] .ct-card__icon svg *   { stroke: #888; }
+
+/* ─── KEYBOARD FOCUS ──────────────────────────────────────────── */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #007891;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+[data-theme="dark"] a:focus-visible,
+[data-theme="dark"] button:focus-visible,
+[data-theme="dark"] [tabindex]:focus-visible { outline-color: #1ab8d8; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}

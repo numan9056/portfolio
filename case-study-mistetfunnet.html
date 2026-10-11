@@ -4,6 +4,14 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MistetFunnet — Case Study</title>
+  <meta name="description" content="How Numan designed MistetFunnet.no, a unified lost-and-found platform for Norway, from field research to a shipped product." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Numan — Product Designer" />
+  <meta property="og:title" content="MistetFunnet — Case Study" />
+  <meta property="og:description" content="How Numan designed MistetFunnet.no, a unified lost-and-found platform for Norway, from field research to a shipped product." />
+  <meta property="og:url" content="https://www.hellonuman.com/case-study-mistetfunnet.html" />
+  <meta property="og:image" content="https://www.hellonuman.com/assets/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,6 +63,18 @@ body::after{
 .nav__link--active{color:#007891;}
 .nav__toggle{background:none; border:none; cursor:pointer; margin-left:32px; padding:0; display:flex; align-items:center; flex-shrink:0; transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);}
 .nav__toggle:hover{transform:rotate(20deg);}
+/* ===== next case study ===== */
+.cs-next{max-width:1100px; margin:0 auto; padding:24px 48px 0;}
+.cs-next__card{display:flex; align-items:center; gap:24px; padding:18px; border:1px solid #e4e2de; border-radius:16px; text-decoration:none; color:#111; transition:border-color .2s, transform .2s;}
+.cs-next__card:hover{border-color:#007891; transform:translateY(-2px);}
+.cs-next__card img{width:180px; aspect-ratio:16/10; object-fit:cover; border-radius:10px; background:#f2f1ee; flex:none;}
+.cs-next__label{font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#007891; margin-bottom:6px;}
+.cs-next__title{font-size:20px; font-weight:700; line-height:1.3;}
+.cs-next__all{display:inline-block; margin-top:14px; font-size:14px; color:#007891; text-decoration:none;}
+.cs-next__all:hover{text-decoration:underline;}
+[data-theme="dark"] .cs-next__card{border-color:#333; color:#e8e4dc;}
+@media (max-width:640px){ .cs-next{padding:16px 16px 0;} .cs-next__card{flex-direction:column; align-items:flex-start;} .cs-next__card img{width:100%;} }
+
 /* ===== footer (matches global site footer) ===== */
 .footer-divider{height:1px; background:#ccc; margin-top:60px;}
 .footer{padding:56px 48px;}
@@ -248,8 +268,8 @@ section[id], .glance-sec[id]{scroll-margin-top:70px;}
    ══════════════════════════════════════════ */
 
 /* prevent any element from causing horizontal scroll */
-html{overflow-x:hidden;}
-body{overflow-x:hidden;}
+html{overflow-x:hidden; overflow-x:clip;}
+body{overflow-x:hidden; overflow-x:clip;}
 *{min-width:0;}
 
 /* ── Tablet (≤ 880px) ── */
@@ -467,7 +487,7 @@ body{overflow-x:hidden;}
   <a href="#flows"><span class="dot"></span><span class="lbl">Flows</span></a>
   <a href="#venue"><span class="dot"></span><span class="lbl">Venue side</span></a>
   <a href="#howitworks"><span class="dot"></span><span class="lbl">How it works</span></a>
-  <a href="#reflection"><span class="dot"></span><span class="lbl">Reflection</span></a>
+  <a href="#reflection"><span class="dot"></span><span class="lbl">Lessons</span></a>
 </nav>
 
 <nav class="nav">
@@ -557,7 +577,7 @@ body{overflow-x:hidden;}
       <p>A citizen who loses something has to contact each one alone. <strong>Most give up before their items are ever found.</strong></p>
     </div>
     <div class="figure wide">
-      <img src="assets/The_Problem_Photo.png" alt="A stressed commuter at a train station surrounded by Vy, Ruter, Facebook and hotel lost-and-found logos" />
+      <img loading="lazy" decoding="async" src="assets/the-problem-photo.webp" alt="A stressed commuter at a train station surrounded by Vy, Ruter, Facebook and hotel lost-and-found logos" />
     </div>
     <p class="cap">Illustration: the current "system."</p>
     <div class="stripstat">
@@ -581,22 +601,22 @@ body{overflow-x:hidden;}
     <p style="font-size:14px; color:var(--fg-3); margin:12px 0 24px;">First full-time engineer joins Q3 2026.</p>
     <div class="team">
       <div class="member me">
-        <div class="photo"><img src="assets/Abdullah_profile.png" alt="Abdullah Al Numan" /></div>
+        <div class="photo"><img loading="lazy" decoding="async" src="assets/abdullah-profile.webp" alt="Abdullah Al Numan" /></div>
         <p class="nm">Abdullah Al Numan</p>
         <div class="rl">Founder &amp; Product Designer — product, research, UX/UI, AI-assisted build</div>
       </div>
       <div class="member">
-        <div class="photo"><img src="assets/Wasi_profile.png" alt="Dr. Wasi Ahmed" /></div>
+        <div class="photo"><img loading="lazy" decoding="async" src="assets/wasi-profile.webp" alt="Dr. Wasi Ahmed" /></div>
         <p class="nm">Dr. Wasi Ahmed</p>
         <div class="rl">CFO — financial model. Asst. Professor, NTNU Ålesund</div>
       </div>
       <div class="member">
-        <div class="photo"><img src="assets/Karsten_profile.png" alt="Karsten D Wetteland" /></div>
+        <div class="photo"><img loading="lazy" decoding="async" src="assets/karsten-profile.webp" alt="Karsten D Wetteland" /></div>
         <p class="nm">Karsten D Wetteland</p>
         <div class="rl">Commercial mentor (advisor) — CEO, Relentlessly AS</div>
       </div>
       <div class="member">
-        <div class="photo"><img src="assets/Ivar_profile.png" alt="Ivar John Erdal" /></div>
+        <div class="photo"><img loading="lazy" decoding="async" src="assets/ivar-profile.webp" alt="Ivar John Erdal" /></div>
         <p class="nm">Ivar John Erdal</p>
         <div class="rl">Academic mentor (advisor) — Dean, Høgskulen i Volda</div>
       </div>
@@ -625,7 +645,7 @@ body{overflow-x:hidden;}
       </div>
     </div>
     <div class="figure wide" style="margin-top:30px;">
-      <img src="assets/Rebel_LOI.png" alt="Abdullah Al Numan and Håkon Solheim at the Rebel AS LOI signing, 16 February 2026" />
+      <img loading="lazy" decoding="async" src="assets/rebel-loi.webp" alt="Abdullah Al Numan and Håkon Solheim at the Rebel AS LOI signing, 16 February 2026" />
     </div>
     <p class="cap center">The first design-partner LOI — Rebel AS, signed by CTO Håkon Solheim</p>
   </div>
@@ -641,7 +661,7 @@ body{overflow-x:hidden;}
       <p><strong>So I removed the concept of source from the data layer.</strong></p>
     </div>
     <div class="figure wide" style="margin-top:24px;">
-      <img src="assets/The_design_decision.png" alt="Two phone screens showing AI match notifications and the unified lost-and-found feed" />
+      <img loading="lazy" decoding="async" src="assets/the-design-decision.webp" alt="Two phone screens showing AI match notifications and the unified lost-and-found feed" />
     </div>
     <div class="body" style="margin-top:24px;">
       <p>Every post — whether from a hotel staffer logging a found laptop in the SaaS dashboard, a commuter reporting a lost wallet from the mobile app, or a private finder posting a jacket from the web — lands in the same feed. The AI matches across all of them.</p>
@@ -711,7 +731,7 @@ body{overflow-x:hidden;}
       <p>Norwegian citizens already associate yellow and dark green with state services — Posten, NAV, Skatteetaten. MistetFunnet is not a government service. It needed to read as <strong>trustworthy private infrastructure that works alongside the state</strong>, not as another bureaucratic touchpoint.</p>
     </div>
     <div class="figure wide" style="margin-top:24px;">
-      <img src="assets/Brand_identity.png" alt="MistetFunnet brand identity — Rubik typeface sample, teal-and-mustard palette, and magnifying-glass mascot logo" />
+      <img loading="lazy" decoding="async" src="assets/brand-identity.webp" alt="MistetFunnet brand identity — Rubik typeface sample, teal-and-mustard palette, and magnifying-glass mascot logo" />
     </div>
     <p class="cap">Identity system — Rubik typeface, teal-and-mustard palette, magnifying-glass mascot.</p>
   </div>
@@ -731,7 +751,7 @@ body{overflow-x:hidden;}
       <div class="numitem"><div class="num"></div><div><h4>Norwegian-first content patterns.</h4><p>Every text component is built around Norwegian first, with English fallback. Long compound nouns like <code>hentegodkjenningsforespørsel</code> break standard 14px body grids — so the text component has built-in word-wrap and overflow handling that English-first design systems don't typically need.</p></div></div>
     </div>
     <div class="figure wide" style="margin-top:28px;">
-      <img src="assets/Design_system.png" alt="MistetFunnet Figma component library — color tokens, typography scale, spacing, radius, icons, and post card components" />
+      <img loading="lazy" decoding="async" src="assets/design-system.webp" alt="MistetFunnet Figma component library — color tokens, typography scale, spacing, radius, icons, and post card components" />
     </div>
     <p class="cap">Component library, MistetFunnet design system.</p>
   </div>
@@ -753,7 +773,7 @@ body{overflow-x:hidden;}
       <p class="goal"><b>Wireframe goal —</b> get from app launch to submitted post in under 30 seconds, on a mobile screen, while the user is stressed.</p>
       <p class="changed"><b>What I changed —</b> the wireframe had four screens: category, photo, details, confirm. Testing showed users skipped the category screen or chose wrong because they were panicking — and the AI didn't need it. I removed the category step and let the AI infer category from the photo. Final flow: photo, location, optional description, submit. Three screens. <b>Design target: under 30 seconds. Every tested user hit it — on both the app and the dashboard.</b></p>
       <div class="figure wide">
-        <img src="assets/wireframe_flow1.png" alt="Wireframe screens versus the shipped 3-step report flow: photo, location, publish" />
+        <img loading="lazy" decoding="async" src="assets/wireframe-flow1.webp" alt="Wireframe screens versus the shipped 3-step report flow: photo, location, publish" />
       </div>
     </div>
 
@@ -764,7 +784,7 @@ body{overflow-x:hidden;}
       <p class="goal"><b>Wireframe goal —</b> show confidence in a match without making the user click through five screens to see the original item.</p>
       <p class="changed"><b>What I changed —</b> the wireframe showed the match as a notification leading to a separate details screen. Testing showed users wanted to see the found item's photo immediately, in the notification itself. The final design shows the photo, the confidence score, and the next action in the feed directly — no second screen. <b>No second screen — the decision happens in the feed.</b></p>
       <div class="figure wide">
-        <img src="assets/wireframe_flow_2.png" alt="Wireframe versus shipped match notification — showing AI confidence percentages directly in the feed" />
+        <img loading="lazy" decoding="async" src="assets/wireframe-flow-2.webp" alt="Wireframe versus shipped match notification — showing AI confidence percentages directly in the feed" />
       </div>
     </div>
 
@@ -776,7 +796,7 @@ body{overflow-x:hidden;}
       <p class="changed"><b>What I designed —</b> a three-step handover flow built around venue approval, not just a code. The owner sends a pickup request from the item page with their phone number and details (P1–P2). The request lands in the venue's dashboard, where staff see who's asking and approve or decline — the decision stays with the people holding the item. On approval, the owner receives a pickup code together with the venue's address and pickup time window (P3), and staff verify the code at handover.</p>
       <p class="changed">Behind this visible flow sits a layered verification system — identity checks, ownership challenges, and documented handover receipts for the venue's records. I'm keeping the specifics out of a public case study deliberately: it's the anti-fraud layer, and describing it in detail would weaken it. Every step is logged — request, approval, verification, timestamp — creating the custody trail Norwegian lost-property law expects. Happy to walk through the full verification design in a conversation.</p>
       <div class="figure wide">
-        <img src="assets/wireframe_flow_3.png" alt="Three screens: found item page, approved pickup code F4081 with venue address and hours, and the pickup request form" />
+        <img loading="lazy" decoding="async" src="assets/wireframe-flow-3.webp" alt="Three screens: found item page, approved pickup code F4081 with venue address and hours, and the pickup request form" />
       </div>
     </div>
   </div>
@@ -797,7 +817,7 @@ body{overflow-x:hidden;}
       <p class="goal"><b>The problem —</b> Items are found on the floor, at the counter, in a corridor — never at the back-office laptop. Every step between finding an item and logging it ("I'll photograph it and enter it later") is where logging dies. Unlogged items can never be matched.</p>
       <p class="changed"><b>The design —</b> Venue staff log in as Bedrift in the same mobile app citizens use. Find an item, open the app, photograph it where it lies — the AI fills category, brand, and description from the photo; staff confirm and post. Under 30 seconds, standing up. The item's full lifecycle — pickup requests, custody, the 30-day legal timer — is then managed from the dashboard. The phone captures; the dashboard manages.</p>
       <div class="figure wide">
-        <img src="assets/Portfolio Screen 1.png" alt="Venue mobile registration — photograph where the item lies, AI fills the rest" />
+        <img loading="lazy" decoding="async" src="assets/portfolio-screen-1.webp" alt="Venue mobile registration — photograph where the item lies, AI fills the rest" />
       </div>
       <p class="cap">Venue mobile registration — photograph where the item lies, AI fills the rest · Demo venue account</p>
     </div>
@@ -808,7 +828,7 @@ body{overflow-x:hidden;}
       <p class="goal"><b>The problem —</b> Staff at the counter deciding whether a stranger owns a wallet — with a queue behind them.</p>
       <p class="changed"><b>The design —</b> The decision moves off the counter. Requests arrive in a queue with the claimant's details; staff approve or decline between tasks, on their own time. By the time someone walks in, they're already expected — the counter moment is just a code check.</p>
       <div class="figure wide">
-        <img src="assets/Portfolio Screen 2.png" alt="Pickup requests — approve or decline before anyone arrives at the counter" />
+        <img loading="lazy" decoding="async" src="assets/portfolio-screen-2.webp" alt="Pickup requests — approve or decline before anyone arrives at the counter" />
       </div>
       <p class="cap">Pickup requests — approve or decline before anyone arrives at the counter · Demo venue account</p>
     </div>
@@ -819,7 +839,7 @@ body{overflow-x:hidden;}
       <p class="goal"><b>The problem —</b> Norwegian law gives venues real duties — 30-day holding, police handover documents, finder's fee — and most venues quietly fail them because the paperwork is manual.</p>
       <p class="changed"><b>The design —</b> The law runs itself. The 30-day timer starts when the item is logged. The handover document and fee calculation generate automatically when it expires. Staff never operate compliance — the system does it while they work.</p>
       <div class="figure wide">
-        <img src="assets/Portfolio Screen 3.png" alt="Compliance view — 30-day timers, Lost and Found Act export, DPIA status" />
+        <img loading="lazy" decoding="async" src="assets/portfolio-screen-3.webp" alt="Compliance view — 30-day timers, Lost and Found Act export, DPIA status" />
       </div>
       <p class="cap">Compliance view — 30-day timers, Lost and Found Act export, DPIA status · Demo venue account</p>
     </div>
@@ -879,16 +899,47 @@ body{overflow-x:hidden;}
 
 </main>
 
+<!-- Next case study (first case study from the admin) -->
+<nav class="cs-next" aria-label="More case studies">
+  <div id="cs-next-slot"></div>
+  <a class="cs-next__all" href="portfolio.html#case">See all case studies →</a>
+</nav>
+
 <div class="footer-divider"></div>
 <footer class="footer">
   <div class="footer__inner">
     <p class="footer__heading">Let's Connect</p>
     <p class="footer__sub">Feel free to reach out for collaborations or just a friendly hello</p>
     <a href="mailto:numan@hellonuman.com" class="footer__email">numan@hellonuman.com</a>
+    <div class="footer__socials">
+      <a href="https://www.linkedin.com/in/imnuman/" class="footer__social" aria-label="LinkedIn (opens in a new tab)" target="_blank" rel="noopener">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect x="2" y="2" width="28" height="28" rx="6" stroke="#636363" stroke-width="2.2"/>
+          <circle cx="10" cy="10" r="1.5" fill="#636363"/>
+          <path d="M10 14v9" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M15 23v-5c0-2.2 1.2-3.5 3.5-3.5S22 15.8 22 18v5" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M15 14v9" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+      </a>
+    </div>
   </div>
 </footer>
 
 <script src="animations.js"></script>
+<script src="projects.js"></script>
+<script>
+  Projects.load().then(function(published) {
+    var esc = Projects.escHtml;
+    var i = published.findIndex(function(p) { return p.category === 'case'; });
+    if (i < 0) return;
+    var p = published[i];
+    document.getElementById('cs-next-slot').innerHTML =
+      '<a class="cs-next__card" href="' + esc(Projects.projectUrl(p, i)) + '">'
+      + (p.image ? '<img src="' + esc(p.image) + '" alt="" loading="lazy" />' : '')
+      + '<span><span class="cs-next__label" style="display:block">Next case study →</span>'
+      + '<span class="cs-next__title">' + esc(p.title) + '</span></span></a>';
+  }).catch(function() {});
+</script>
 <script>
 (function(){
   var bar = document.querySelector('.progress');

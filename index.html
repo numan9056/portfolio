@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Numan — Product Designer</title>
+  <meta name="description" content="Numan is a research-led product designer in Norway. UX case studies, UI design and branding, including MistetFunnet.no." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Numan — Product Designer" />
+  <meta property="og:title" content="Numan — Product Designer" />
+  <meta property="og:description" content="Numan is a research-led product designer in Norway. UX case studies, UI design and branding, including MistetFunnet.no." />
+  <meta property="og:url" content="https://www.hellonuman.com/" />
+  <meta property="og:image" content="https://www.hellonuman.com/assets/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,11 +23,11 @@
 
   <!-- NAV -->
   <nav class="nav">
-    <a href="#" class="nav__logo">
+    <a href="index.html" class="nav__logo">
       <img src="assets/logo.svg" alt="nümnʊ" height="34" />
     </a>
     <ul class="nav__links">
-      <li><a href="#" class="nav__link nav__link--active">Home</a></li>
+      <li><a href="index.html" class="nav__link nav__link--active" aria-current="page">Home</a></li>
       <li><a href="about.html" class="nav__link">About</a></li>
       <li><a href="portfolio.html" class="nav__link">Portfolio</a></li>
       <li><a href="contact.html" class="nav__link">Contact</a></li>
@@ -50,7 +58,7 @@
       <p class="hero__bio">I design digital products that turn complex problems into measurable business results. Research-led, Founder of <a href="https://mistetfunnet.no" class="hero__bio-link">MistetFunnet.no</a></p>
     </div>
     <div class="hero__visual">
-      <img src="assets/hero_photo.png" alt="Numan — Product Designer" class="hero__photo-img" />
+      <img src="assets/hero-photo.webp" alt="Numan — Product Designer" class="hero__photo-img" />
       <div class="hero__location">
         <svg width="16" height="22" viewBox="0 0 29 41" fill="none">
           <path d="M14.5 0C6.492 0 0 6.492 0 14.5 0 25.375 14.5 41 14.5 41S29 25.375 29 14.5C29 6.492 22.508 0 14.5 0zm0 19.5a5 5 0 1 1 0-10 5 5 0 0 1 0 10z" fill="#636363"/>
@@ -64,12 +72,12 @@
   <div class="logos-section">
     <div class="logos-section__line"></div>
     <div class="logos-section__row reveal">
-      <img src="assets/logo-big.svg" alt="MistetFunnet" class="logo-img" />
-      <img src="assets/front.svg" alt="Front" class="logo-img" />
-      <img src="assets/brand4.svg" alt="Brand" class="logo-img" />
-      <img src="assets/brand3.svg" alt="Brand" class="logo-img" />
-      <img src="assets/brand2.svg" alt="Brand" class="logo-img" />
-      <img src="assets/brand1.svg" alt="Brand" class="logo-img" />
+      <img loading="lazy" decoding="async" src="assets/logo-big.svg" alt="MistetFunnet" class="logo-img" />
+      <img loading="lazy" decoding="async" src="assets/front.svg" alt="Relentlessly AS" class="logo-img" />
+      <img loading="lazy" decoding="async" src="assets/brand4.svg" alt="Jets Vacuum AS" class="logo-img" />
+      <img loading="lazy" decoding="async" src="assets/brand3.svg" alt="Reviner" class="logo-img" />
+      <img loading="lazy" decoding="async" src="assets/brand2.svg" alt="Daraz" class="logo-img" />
+      <img loading="lazy" decoding="async" src="assets/brand1.svg" alt="Immersion Studio" class="logo-img" />
     </div>
   </div>
 
@@ -127,23 +135,13 @@
 
     <!-- Featured: MistetFunnet -->
     <a href="case-study-mistetfunnet.html" class="case reveal" style="display:block; margin-bottom:14px;">
-      <img src="assets/MistetFunnet.png" alt="MistetFunnet — Norway's lost-and-found platform" style="width:100%; display:block;" />
+      <img loading="lazy" decoding="async" src="assets/mistetfunnet.webp" alt="MistetFunnet — Norway's lost-and-found platform" style="width:100%; display:block;" />
     </a>
 
-    <!-- Grid row -->
-    <div class="cases__row">
+    <!-- Featured case studies from the admin ("Feature on home page") -->
+    <div class="fcases" id="featured-cases"></div>
 
-      <!-- Inclusive Learn BD -->
-      <article class="case reveal" style="padding:0;">
-        <img src="assets/InclusiveLearn_BD.png" alt="Inclusive Learn BD — bilingual rights-advocacy platform" style="width:100%; display:block;" />
-      </article>
-
-      <!-- Teardown Trivia -->
-      <article class="case reveal" data-delay="1" style="padding:0;">
-        <img src="assets/Teardown_Trivia.png" alt="Teardown Trivia — mobile quiz game" style="width:100%; display:block;" />
-      </article>
-
-    </div>
+    <a href="portfolio.html#case" class="cases__all">See all case studies and work →</a>
   </section>
 
   <!-- CURRENTLY -->
@@ -205,19 +203,7 @@
       <p class="footer__sub">Feel free to reach out for collaborations or just a friendly hello</p>
       <a href="mailto:numan@hellonuman.com" class="footer__email">numan@hellonuman.com</a>
       <div class="footer__socials">
-        <a href="#" class="footer__social" aria-label="Facebook">
-          <svg width="33" height="33" viewBox="0 0 33 33" fill="none">
-            <path d="M18 33V18h5l1-6h-6v-3.3C18 7 18.5 6 21 6h3V0s-1.5-.2-3.8-.2C13.5.8 11 4 11 9.5V12H6v6h5v15h7z" fill="#636363"/>
-          </svg>
-        </a>
-        <a href="#" class="footer__social" aria-label="Instagram">
-          <svg width="33" height="33" viewBox="0 0 33 33" fill="none">
-            <rect x="2" y="2" width="29" height="29" rx="8" stroke="#636363" stroke-width="2.2"/>
-            <circle cx="16.5" cy="16.5" r="5.5" stroke="#636363" stroke-width="2.2"/>
-            <circle cx="25" cy="8" r="2" fill="#636363"/>
-          </svg>
-        </a>
-        <a href="#" class="footer__social" aria-label="LinkedIn">
+        <a href="https://www.linkedin.com/in/imnuman/" class="footer__social" aria-label="LinkedIn (opens in a new tab)" target="_blank" rel="noopener">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
             <rect x="2" y="2" width="28" height="28" rx="6" stroke="#636363" stroke-width="2.2"/>
             <circle cx="10" cy="10" r="1.5" fill="#636363"/>
@@ -226,19 +212,40 @@
             <path d="M15 14v9" stroke="#636363" stroke-width="2.2" stroke-linecap="round"/>
           </svg>
         </a>
-        <a href="#" class="footer__social" aria-label="Behance">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <rect x="2" y="2" width="28" height="28" rx="6" stroke="#636363" stroke-width="2.2"/>
-            <path d="M9 9h6c2.5 0 4 1.2 4 3.2s-1.5 3.3-3.5 3.3H9V9z" stroke="#636363" stroke-width="1.8"/>
-            <path d="M9 16h7c2.5 0 4 1.2 4 3.4S18.5 23 16 23H9V16z" stroke="#636363" stroke-width="1.8"/>
-            <path d="M21 11h6" stroke="#636363" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        </a>
       </div>
     </div>
   </footer>
 
   <script src="animations.js"></script>
-  <script>if(window.netlifyIdentity){window.netlifyIdentity.on("init",function(u){if(!u){window.netlifyIdentity.on("login",function(){document.location.href="/admin/";});}})}</script>
+  <script src="projects.js"></script>
+  <script>
+    // Case studies ticked "Feature on home page" in the admin, in their chosen order.
+    Projects.load().then(function(published) {
+      var esc = Projects.escHtml;
+      var featured = published
+        .map(function(p, i) { return { p: p, i: i }; })
+        .filter(function(x) { return x.p.featured; })
+        .sort(function(a, b) { return (a.p.featuredOrder || 999) - (b.p.featuredOrder || 999) || a.i - b.i; });
+      var box = document.getElementById('featured-cases');
+      box.innerHTML = featured.map(function(x, n) {
+        var p = x.p;
+        // With an odd number of cards the first one spans the full row, so the grid stays even.
+        var wide = n === 0 && featured.length % 2 === 1;
+        var outcome = ((p.caseStudy || {}).outcomes || [])[0];
+        var text = p.summary || (p.caseStudy || {}).problem || p.description || '';
+        if (text.length > 160) text = text.slice(0, 157).replace(/\s+\S*$/, '') + '…';
+        return '<a class="fcase' + (wide ? ' fcase--wide' : '') + '" href="' + esc(Projects.projectUrl(p, x.i)) + '">'
+          + '<div class="fcase__media">' + (p.image ? '<img src="' + esc(p.image) + '" alt="" loading="lazy" />' : '') + '</div>'
+          + '<div class="fcase__body">'
+          +   '<div class="case__tags"><span class="case__tag">' + esc(Projects.CAT_LABEL[p.category] || p.category) + '</span>'
+          +     (p.year ? '<span class="case__tag">' + esc(p.year) + '</span>' : '') + '</div>'
+          +   '<h3 class="case__name">' + esc(p.title) + '</h3>'
+          +   (text ? '<p class="fcase__text">' + esc(text) + '</p>' : '')
+          +   (outcome && outcome.value ? '<p class="fcase__outcome"><strong>' + esc(outcome.value) + '</strong> ' + esc(outcome.label) + '</p>' : '')
+          +   '<span class="fcase__cta">Read case study <span aria-hidden="true">→</span></span>'
+          + '</div></a>';
+      }).join('');
+    }).catch(function() {});
+  </script>
 </body>
 </html>
