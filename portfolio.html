@@ -243,9 +243,10 @@
       display: none;
       padding: 80px 48px;
       text-align: center;
-      color: #aaa;
+      color: #666;
       font-size: 15px;
     }
+    .pg-empty a { color: inherit; text-decoration: underline; }
 
     /* ── LIGHTBOX ────────────────────────────────────────── */
     .lb-backdrop {
@@ -448,6 +449,7 @@
     <!-- cards injected by JS -->
 
   </main>
+  <p class="pg-empty" id="pg-empty">More case studies are on the way. Meanwhile, read the <a href="case-study-mistetfunnet.html">MistetFunnet case study</a>.</p>
 
   <!-- LIGHTBOX -->
   <div class="lb-backdrop" id="lb">
@@ -579,6 +581,8 @@
       allItems.forEach(function(item) {
         item.classList.toggle('is-hidden', cat !== 'all' && item.dataset.category !== cat);
       });
+      var shown = allItems.some(function(item) { return !item.classList.contains('is-hidden'); });
+      document.getElementById('pg-empty').style.display = shown ? 'none' : 'block';
       document.querySelectorAll('.pg-filter__btn').forEach(function(b) {
         b.classList.toggle('active', b.dataset.filter === cat);
       });
@@ -611,10 +615,10 @@
 
         var countEl = document.querySelector('[data-filter="all"] .pg-filter__count');
         if (countEl) countEl.textContent = '(' + allProjects.length + ')';
-        // Hide tabs that have nothing in them yet.
+        // Hide tabs that have nothing in them yet, except Case Studies, which always shows.
         document.querySelectorAll('.pg-filter__btn').forEach(function(b) {
           var cat = b.dataset.filter;
-          b.hidden = cat !== 'all' && !allProjects.some(function(p) { return (p.category || 'ui') === cat; });
+          b.hidden = cat !== 'all' && cat !== 'case' && !allProjects.some(function(p) { return (p.category || 'ui') === cat; });
         });
         if (currentFilter !== 'all' && document.querySelector('.pg-filter__btn[data-filter="' + currentFilter + '"]').hidden) currentFilter = 'all';
         applyFilter(currentFilter);
