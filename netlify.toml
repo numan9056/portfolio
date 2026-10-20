@@ -9,3 +9,9 @@
   from = "/admin"
   to   = "/admin/index.html"
   status = 200
+
+# The old hand-built MistetFunnet page now lives in the admin as a case study.
+[[redirects]]
+  from   = "/case-study-mistetfunnet.html"
+  to     = "/project-detail.html?id=mistetfunnet-product-ux-case-study-mvgtsw3y"
+  status = 301
